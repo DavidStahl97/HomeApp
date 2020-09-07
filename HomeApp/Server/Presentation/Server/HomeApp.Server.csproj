@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Client\Client\HomeApp.Client.csproj" />
+    <ProjectReference Include="..\..\..\Shared\HomeApp.Shared.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\HomeApp.Infrastructure\HomeApp.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+</Project>
