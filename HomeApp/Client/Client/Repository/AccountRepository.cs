@@ -27,5 +27,16 @@ namespace HomeApp.Client.Repository
 
             return response.Response;
         }
+
+        public async Task<UserToken> Login(UserInfo userInfo)
+        {
+            var response = await _httpService.Post<UserInfo, UserToken>($"{BASE_URL}/login", userInfo);
+            if (!response.Success)
+            {
+                throw new ApplicationException(await response.GetBody());
+            }
+
+            return response.Response;
+        }
     }
 }
