@@ -12,6 +12,10 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using HomeApp.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using HomeApp.Infrastructure.Repository.EntityFramework;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System;
 
 namespace HomeApp.Server
 {
@@ -38,7 +42,16 @@ namespace HomeApp.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddAuthentication();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:secretKey"])),
+                    ClockSkew = TimeSpan.Zero
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

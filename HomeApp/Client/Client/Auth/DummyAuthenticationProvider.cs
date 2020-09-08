@@ -16,7 +16,7 @@ namespace HomeApp.Client.Auth
                 new Claim("key1", "value1"),
                 new Claim(ClaimTypes.Name, "David"),
                 new Claim(ClaimTypes.Role, "Admin")
-            } );
+            }, "sdsd");
             return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(anonymous)));
         }
     }
