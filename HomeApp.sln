@@ -21,11 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{C23E48E0-EBC3-4033-A9A0-FCB6028E1C39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApp.Domain", "HomeApp\Server\Domain\HomeApp.Domain\HomeApp.Domain.csproj", "{D9E13FAA-F4EF-4D2E-8FDA-B70B81C7B0EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeApp.Domain", "HomeApp\Server\Domain\HomeApp.Domain\HomeApp.Domain.csproj", "{D9E13FAA-F4EF-4D2E-8FDA-B70B81C7B0EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApp.Infrastructure", "HomeApp\Server\Infrastructure\HomeApp.Infrastructure\HomeApp.Infrastructure.csproj", "{DF0AAC4F-6703-4D24-8FE0-09B09FD1288D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeApp.Infrastructure", "HomeApp\Server\Infrastructure\HomeApp.Infrastructure\HomeApp.Infrastructure.csproj", "{DF0AAC4F-6703-4D24-8FE0-09B09FD1288D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApp.Application", "HomeApp\Server\Application\HomeApp.Application\HomeApp.Application.csproj", "{B7DD3B86-DB6C-4C8D-B1F5-2515935323C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeApp.Application", "HomeApp\Server\Application\HomeApp.Application\HomeApp.Application.csproj", "{B7DD3B86-DB6C-4C8D-B1F5-2515935323C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Components.Authorization;
 using HomeApp.Client.Auth;
 using HomeApp.Client.Services;
+using HomeApp.Client.Repository;
 
 namespace HomeApp.Client
 {
@@ -29,6 +30,7 @@ namespace HomeApp.Client
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthorizationCore();
+            services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ILocalStorage, LocalStorage>();
             
             services.AddScoped<JwtAuthenticationStateProvider>();
@@ -36,6 +38,8 @@ namespace HomeApp.Client
                 provider => provider.GetRequiredService<JwtAuthenticationStateProvider>());
             services.AddScoped<ILoginService, JwtAuthenticationStateProvider>(
                 provider => provider.GetRequiredService<JwtAuthenticationStateProvider>());
+
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
     }
 }
