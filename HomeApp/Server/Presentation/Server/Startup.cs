@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using HomeApp.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -39,20 +38,7 @@ namespace HomeApp.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddAuthentication(options => {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            })
-            .AddCookie()
-            .AddOpenIdConnect(o =>
-            {
-                var google = Configuration.GetSection("Authentication:Google");
-                o.ClientId = google["ClientId"];
-                o.ClientSecret = google["ClientSecret"];
-                o.Authority = "https://accounts.google.com";
-                o.ResponseType = OpenIdConnectResponseType.Code;
-                o.GetClaimsFromUserInfoEndpoint = true;
-            });
+            services.AddAuthentication();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
