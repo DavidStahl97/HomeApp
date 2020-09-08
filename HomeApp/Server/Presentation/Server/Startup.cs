@@ -6,6 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace HomeApp.Server
 {
@@ -22,9 +27,23 @@ namespace HomeApp.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAuthentication(options => {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddOpenIdConnect(o =>
+            {
+                var google = Configuration.GetSection("Authentication:Google");
+                o.ClientId = google["ClientId"];
+                o.ClientSecret = google["ClientSecret"];
+                o.Authority = "https://accounts.google.com";
+                o.ResponseType = OpenIdConnectResponseType.Code;
+                o.GetClaimsFromUserInfoEndpoint = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +66,10 @@ namespace HomeApp.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // Must be before UseEndPoints
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
