@@ -40,6 +40,7 @@ namespace HomeApp.Client
                 provider => provider.GetRequiredService<JwtAuthenticationStateProvider>());
 
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IWeatherForcastRepository, WeatherForacastRepository>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<AuthorizeView Roles="Admin">
+<AuthorizeView>
     <Authorized>
         You are Authorized, @context.User.Identity.Name 
     </Authorized>

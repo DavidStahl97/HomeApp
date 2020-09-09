@@ -1,6 +1,9 @@
 @page "/fetchdata"
+
 @using HomeApp.Shared
-@inject HttpClient Http
+@using HomeApp.Client.Repository;
+
+@inject IWeatherForcastRepository weatherForecastRepository
 
 <h1>Weather forecast</h1>
 
@@ -40,11 +43,10 @@
 </AuthorizeView>
 
 @code {
-    private WeatherForecast[] forecasts;
+    private IEnumerable<WeatherForecast> forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        forecasts = await weatherForecastRepository.Get();
     }
-
 }

@@ -9,6 +9,7 @@ using HomeApp.Shared;
 using HomeApp.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -18,15 +19,18 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HomeApp.Server.Controllers
 {
-    [AllowAnonymous, Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public AccountController(
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,8 +44,8 @@ namespace HomeApp.Server.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                return BuildToken(model);
-            } 
+                return await BuildToken(model);
+            }
             else
             {
                 return BadRequest("Username or password invalid");
@@ -49,14 +53,14 @@ namespace HomeApp.Server.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<UserToken>> Login([FromBody] UserInfo info)
+        public async Task<ActionResult<UserToken>> Login([FromBody] UserInfo userInfo)
         {
-            var result = await _signInManager.PasswordSignInAsync(info.Email, info.Password,
-                isPersistent: false, lockoutOnFailure: false);
-            
+            var result = await _signInManager.PasswordSignInAsync(userInfo.Email,
+                userInfo.Password, isPersistent: false, lockoutOnFailure: false);
+
             if (result.Succeeded)
             {
-                return BuildToken(info);
+                return await BuildToken(userInfo);
             }
             else
             {
@@ -64,32 +68,51 @@ namespace HomeApp.Server.Controllers
             }
         }
 
-        private UserToken BuildToken(UserInfo userInfo)
+        [HttpGet("RenewToken")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<UserToken>> Renew()
+        {
+            var userInfo = new UserInfo()
+            {
+                Email = HttpContext.User.Identity.Name
+            };
+
+            return await BuildToken(userInfo);
+        }
+
+        private async Task<UserToken> BuildToken(UserInfo userinfo)
         {
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, userInfo.Email),
-                new Claim(ClaimTypes.Email, userInfo.Email)
+                new Claim(ClaimTypes.Name, userinfo.Email),
+                new Claim(ClaimTypes.Email, userinfo.Email),
+                new Claim("myvalue", "whatever I want")
             };
+
+            var identityUser = await _userManager.FindByEmailAsync(userinfo.Email);
+            var claimsDB = await _userManager.GetClaimsAsync(identityUser);
+
+            claims.AddRange(claimsDB);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:secretKey"]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var expiration = DateTime.UtcNow.AddDays(1);
+            var expiration = DateTime.UtcNow.AddYears(1);
 
-            var jsonWebToken = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
-                claims: claims,
-                expires: expiration,
-                signingCredentials: credentials
-            );
+            var token = new JwtSecurityToken(
+                  issuer: null,
+               audience: null,
+               claims: claims,
+               expires: expiration,
+               signingCredentials: creds);
 
-            return new UserToken
+            var userToken = new UserToken()
             {
-                Token = new JwtSecurityTokenHandler().WriteToken(jsonWebToken),
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration
             };
+
+            return userToken;
         }
     }
 }
