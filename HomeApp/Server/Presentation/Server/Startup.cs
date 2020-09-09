@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using HomeApp.Application.Identity;
+using HomeApp.Infrastructure.Identity;
 
 namespace HomeApp.Server
 {
@@ -52,6 +54,8 @@ namespace HomeApp.Server
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:secretKey"])),
                     ClockSkew = TimeSpan.Zero
                 });
+
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
