@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Client\Client\HomeApp.Client.csproj" />
+    <ProjectReference Include="..\..\..\Client\HomeApp.Client\HomeApp.Client.csproj" />
     <ProjectReference Include="..\..\..\Shared\HomeApp.Shared.csproj" />
     <ProjectReference Include="..\..\Infrastructure\HomeApp.Infrastructure\HomeApp.Infrastructure.csproj" />
   </ItemGroup>

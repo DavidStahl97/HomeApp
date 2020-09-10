@@ -1,6 +1,6 @@
 {
-  "name": "HomeApp",
-  "short_name": "HomeApp",
+  "name": "HomeApp.Client",
+  "short_name": "HomeApp.Client",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
