@@ -41,6 +41,8 @@ namespace HomeApp.Client
 
             ConfigureServices(builder.Services);
 
+            builder.Services.AddAuthorizationCore();
+
             await builder.Build().RunAsync();
         }
 
@@ -50,9 +52,7 @@ namespace HomeApp.Client
             services.AddScoped<IStorage, Storage>();
             services.AddScoped<IJwtStorage, JwtStorage>();            
 
-            services.AddScoped<IWeatherForcastRepository, WeatherForacastRepository>();
-
-            //services.AddAuthorizationCore();
+            services.AddScoped<IWeatherForcastRepository, WeatherForacastRepository>();            
         }
     }
 }
