@@ -20,6 +20,12 @@ namespace HomeApp.Client.Services
             where T : class
         {
             string json = await _runtime.InvokeAsync<string>("sessionStorage.getItem", key);
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
             return JsonSerializer.Deserialize<T>(json);
         }
     }

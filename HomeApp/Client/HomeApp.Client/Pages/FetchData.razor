@@ -48,40 +48,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        string key = "Microsoft.AspNetCore.Components.WebAssembly.Authentication.CachedAuthSettings";
-        var authSettings = await storage.Get<CachedAuthSettings>(key);
-        var user = await storage.Get<CognitoUser>(authSettings?.OIDCUserKey);
-
-
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.id_token);
-
-        var auth = client.DefaultRequestHeaders.Authorization;
-
         forecasts = await repository.GetAllAsync();
-    }
-
-    public class CachedAuthSettings
-    {
-        public string authority { get; set; }
-        public string metadataUrl { get; set; }
-        public string client_id { get; set; }
-        public string[] defaultScopes { get; set; }
-        public string redirect_uri { get; set; }
-        public string post_logout_redirect_uri { get; set; }
-        public string response_type { get; set; }
-        public string response_mode { get; set; }
-        public string scope { get; set; }
-
-        public string OIDCUserKey => $"oidc.user:{authority}:{client_id}";
-    }
-
-    public class CognitoUser
-    {
-        public string id_token { get; set; }
-        public string access_token { get; set; }
-        public string refresh_token { get; set; }
-        public string token_type { get; set; }
-        public string scope { get; set; }
-        public int expires_at { get; set; }
-    }
+    }    
 }

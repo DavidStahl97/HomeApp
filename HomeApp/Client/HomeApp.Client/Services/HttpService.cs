@@ -1,7 +1,9 @@
-﻿using System;
+﻿using HomeApp.Client.Authentication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -10,20 +12,31 @@ namespace HomeApp.Client.Services
 {
     public class HttpService : IHttpService
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient _httpClient;
+        private readonly IJwtStorage _jwtStorage;
 
         private JsonSerializerOptions DefaultJsonSerializerOptions =>
             new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 
-        public HttpService(HttpClient httpClient)
+        public HttpService(HttpClient httpClient, IJwtStorage jwtStorage)
         {
-            this.httpClient = httpClient;
+            _httpClient = httpClient;
+            _jwtStorage = jwtStorage;
         }
 
         public async Task<HttpResponseWrapper<T>> Get<T>(string url)
         {
-            var auth = httpClient.DefaultRequestHeaders.Authorization;
-            var responseHTTP = await httpClient.GetAsync(url);
+            var userIdentity = await _jwtStorage.Get();
+            if (userIdentity is null)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = null;
+            }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userIdentity.IdToken);
+            }
+
+            var responseHTTP = await _httpClient.GetAsync(url);
 
             if (responseHTTP.IsSuccessStatusCode)
             {
@@ -40,7 +53,7 @@ namespace HomeApp.Client.Services
         {
             var dataJson = JsonSerializer.Serialize(data);
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(url, stringContent);
+            var response = await _httpClient.PostAsync(url, stringContent);
             return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
         }
 
@@ -48,7 +61,7 @@ namespace HomeApp.Client.Services
         {
             var dataJson = JsonSerializer.Serialize(data);
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await httpClient.PutAsync(url, stringContent);
+            var response = await _httpClient.PutAsync(url, stringContent);
             return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
         }
 
@@ -56,7 +69,7 @@ namespace HomeApp.Client.Services
         {
             var dataJson = JsonSerializer.Serialize(data);
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(url, stringContent);
+            var response = await _httpClient.PostAsync(url, stringContent);
             if (response.IsSuccessStatusCode)
             {
                 var responseDeserialized = await Deserialize<TResponse>(response, DefaultJsonSerializerOptions);
@@ -70,7 +83,7 @@ namespace HomeApp.Client.Services
 
         public async Task<HttpResponseWrapper<object>> Delete(string url)
         {
-            var responseHTTP = await httpClient.DeleteAsync(url);
+            var responseHTTP = await _httpClient.DeleteAsync(url);
             return new HttpResponseWrapper<object>(null, responseHTTP.IsSuccessStatusCode, responseHTTP);
         }
 

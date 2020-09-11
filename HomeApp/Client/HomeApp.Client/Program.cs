@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using HomeApp.Client.Services;
 using HomeApp.Client.Repository;
+using HomeApp.Client.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace HomeApp.Client
 {
@@ -37,8 +39,6 @@ namespace HomeApp.Client
                 options.UserOptions.AuthenticationType = "google";                
             });
 
-            builder.Services.AddApiAuthorization();
-
             ConfigureServices(builder.Services);
 
             await builder.Build().RunAsync();
@@ -48,8 +48,11 @@ namespace HomeApp.Client
         {
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<IStorage, Storage>();
+            services.AddScoped<IJwtStorage, JwtStorage>();            
 
             services.AddScoped<IWeatherForcastRepository, WeatherForacastRepository>();
+
+            //services.AddAuthorizationCore();
         }
     }
 }
