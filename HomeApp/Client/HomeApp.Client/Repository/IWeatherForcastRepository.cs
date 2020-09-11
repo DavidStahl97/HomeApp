@@ -8,6 +8,6 @@ namespace HomeApp.Client.Repository
 {
     public interface IWeatherForcastRepository
     {
-        Task<IEnumerable<WeatherForecast>> Get();
+        Task<IEnumerable<WeatherForecast>> GetAllAsync();
     }
 }

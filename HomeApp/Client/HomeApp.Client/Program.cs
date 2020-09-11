@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using HomeApp.Client.Services;
+using HomeApp.Client.Repository;
 
 namespace HomeApp.Client
 {
@@ -17,7 +20,7 @@ namespace HomeApp.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             builder.Services.AddOidcAuthentication(options =>
             {
@@ -26,10 +29,27 @@ namespace HomeApp.Client
                 options.ProviderOptions.Authority = "https://accounts.google.com/";
                 options.ProviderOptions.ClientId = "484017769198-51sqbl5eb8erjmnk4m9sk5vludjo24h6.apps.googleusercontent.com";
                 options.ProviderOptions.ResponseType = "id_token";
-                options.UserOptions.AuthenticationType = "google";
+
+                var scopes = options.ProviderOptions.DefaultScopes;
+                scopes.Add("openid");
+                scopes.Add("email");
+
+                options.UserOptions.AuthenticationType = "google";                
             });
 
+            builder.Services.AddApiAuthorization();
+
+            ConfigureServices(builder.Services);
+
             await builder.Build().RunAsync();
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<IHttpService, HttpService>();
+            services.AddScoped<IStorage, Storage>();
+
+            services.AddScoped<IWeatherForcastRepository, WeatherForacastRepository>();
         }
     }
 }

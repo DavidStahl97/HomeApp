@@ -22,6 +22,7 @@ namespace HomeApp.Client.Services
 
         public async Task<HttpResponseWrapper<T>> Get<T>(string url)
         {
+            var auth = httpClient.DefaultRequestHeaders.Authorization;
             var responseHTTP = await httpClient.GetAsync(url);
 
             if (responseHTTP.IsSuccessStatusCode)

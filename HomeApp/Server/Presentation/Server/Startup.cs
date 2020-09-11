@@ -18,7 +18,6 @@ using System.Text;
 using System;
 using HomeApp.Application.Identity;
 using HomeApp.Infrastructure.Identity;
-using HomeApp.Server.Authentication;
 
 namespace HomeApp.Server
 {
@@ -45,16 +44,10 @@ namespace HomeApp.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:secretKey"])),
-            //        ClockSkew = TimeSpan.Zero
-            //    });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(jwt => jwt.UseGoogle(
+                    clientId: "484017769198-51sqbl5eb8erjmnk4m9sk5vludjo24h6.apps.googleusercontent.com"
+                ));
 
             services.AddScoped<IAccountService, AccountService>();
         }
@@ -80,8 +73,8 @@ namespace HomeApp.Server
 
             app.UseRouting();
 
-            // Must be before UseEndPoints
-            app.UseMiddleware<AuthenticationMiddleware>();
+            // Must be before UseEndPoints            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

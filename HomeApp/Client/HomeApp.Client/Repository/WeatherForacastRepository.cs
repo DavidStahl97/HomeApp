@@ -17,7 +17,7 @@ namespace HomeApp.Client.Repository
             _httpService = httpService;
         }
 
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        public async Task<IEnumerable<WeatherForecast>> GetAllAsync()
         {
             var response = await _httpService.Get<IEnumerable<WeatherForecast>>(BASE_URL);
 
