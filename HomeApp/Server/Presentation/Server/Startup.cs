@@ -18,6 +18,7 @@ using System.Text;
 using System;
 using HomeApp.Application.Identity;
 using HomeApp.Infrastructure.Identity;
+using HomeApp.Server.Authentication;
 
 namespace HomeApp.Server
 {
@@ -44,16 +45,16 @@ namespace HomeApp.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:secretKey"])),
-                    ClockSkew = TimeSpan.Zero
-                });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:secretKey"])),
+            //        ClockSkew = TimeSpan.Zero
+            //    });
 
             services.AddScoped<IAccountService, AccountService>();
         }
@@ -80,7 +81,7 @@ namespace HomeApp.Server
             app.UseRouting();
 
             // Must be before UseEndPoints
-            app.UseAuthentication();
+            app.UseMiddleware<AuthenticationMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
