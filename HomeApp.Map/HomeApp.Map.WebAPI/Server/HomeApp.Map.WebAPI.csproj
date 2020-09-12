@@ -4,12 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>ac51c86b-f2fc-4cf1-90c2-421e18df2bd9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..\..</DockerfileContext>
+    <DockerfileContext>..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Auth" Version="1.49.0" />
     <PackageReference Include="Hellang.Authentication.JwtBearer.Google" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
@@ -23,9 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Client\HomeApp.Client\HomeApp.Client.csproj" />
-    <ProjectReference Include="..\..\..\Shared\HomeApp.Shared.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\HomeApp.Infrastructure\HomeApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\HomeApp.Map.Client\HomeApp.Client\HomeApp.Map.Client.csproj" />
+    <ProjectReference Include="..\HomeApp.Infrastructure\HomeApp.Map.Infrastructure.csproj" />
   </ItemGroup>
 
 

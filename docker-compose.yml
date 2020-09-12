@@ -7,9 +7,9 @@ services:
       context: .
       dockerfile: HomeApp.Gateway/Dockerfile
 
-  homeapp.server:
-    image: ${DOCKER_REGISTRY-}homeappserver
+  homeapp.map.webapi:
+    image: ${DOCKER_REGISTRY-}homeappmapwebapi
     build:
       context: .
-      dockerfile: HomeApp/Server/Presentation/Server/Dockerfile
+      dockerfile: HomeApp.Map/HomeApp.Map.WebAPI/Server/Dockerfile
 

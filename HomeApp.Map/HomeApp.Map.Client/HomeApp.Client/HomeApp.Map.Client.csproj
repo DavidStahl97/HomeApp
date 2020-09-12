@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\HomeApp.Shared.csproj" />
+    <ProjectReference Include="..\..\HomeApp.Map.Shared\HomeApp.Map.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

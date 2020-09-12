@@ -13,7 +13,7 @@ using HomeApp.Client.Repository;
 using HomeApp.Client.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace HomeApp.Client
+namespace HomeApp.Map.Client
 {
     public class Program
     {

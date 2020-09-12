@@ -1,0 +1,26 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["HomeApp.Map/HomeApp.Map.WebAPI/Server/HomeApp.Map.WebAPI.csproj", "HomeApp.Map/HomeApp.Map.WebAPI/Server/"]
+COPY ["HomeApp.Map/HomeApp.Map.WebAPI/HomeApp.Infrastructure/HomeApp.Map.Infrastructure.csproj", "HomeApp.Map/HomeApp.Map.WebAPI/HomeApp.Infrastructure/"]
+COPY ["HomeApp.Map/HomeApp.Map.WebAPI/HomeApp.Application/HomeApp.Map.Application.csproj", "HomeApp.Map/HomeApp.Map.WebAPI/HomeApp.Application/"]
+COPY ["HomeApp.Map/HomeApp.Map.WebAPI/HomeApp.Domain/HomeApp.Map.Domain.csproj", "HomeApp.Map/HomeApp.Map.WebAPI/HomeApp.Domain/"]
+COPY ["HomeApp.Map/HomeApp.Map.Shared/HomeApp.Map.Shared.csproj", "HomeApp.Map/HomeApp.Map.Shared/"]
+RUN dotnet restore "HomeApp.Map/HomeApp.Map.WebAPI/Server/HomeApp.Map.WebAPI.csproj"
+COPY . .
+WORKDIR "/src/HomeApp.Map/HomeApp.Map.WebAPI/Server"
+RUN dotnet build "HomeApp.Map.WebAPI.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "HomeApp.Map.WebAPI.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "HomeApp.Map.WebAPI.dll"]
