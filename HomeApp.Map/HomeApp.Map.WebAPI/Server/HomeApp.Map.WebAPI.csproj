@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\HomeApp.Map.Client\HomeApp.Client\HomeApp.Map.Client.csproj" />
     <ProjectReference Include="..\HomeApp.Infrastructure\HomeApp.Map.Infrastructure.csproj" />
   </ItemGroup>
 
