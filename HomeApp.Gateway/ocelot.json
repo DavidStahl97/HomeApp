@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/WeatherForecast",
+      "DownstreamPathTemplate": "/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -9,11 +9,12 @@
           "Port": 44387
         }
       ],
-      "UpstreamPathTemplate": "/api/WeatherForecast",
+      "UpstreamPathTemplate": "/test/",
       "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44345"
+
   }
+
 }
