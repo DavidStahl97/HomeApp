@@ -48,7 +48,12 @@ namespace HomeCloud.Home.Client
         {
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<IStorage, Storage>();
-            services.AddScoped<IJwtStorage, JwtStorage>();            
+            services.AddScoped<IJwtStorage, JwtStorage>();       
+            
+            foreach (var app in Apps.AppStartups) 
+            {
+                app.ConfigureServices(services);
+            }
         }
     }
 }

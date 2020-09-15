@@ -10,5 +10,10 @@ namespace HomeCloud.Home.Client
     public static class Apps
     {
         public static IStartup MapApp = new Map.Client.Startup();
+
+        public static IEnumerable<IStartup> AppStartups = new[] 
+        { 
+            MapApp 
+        };
     }
 }
