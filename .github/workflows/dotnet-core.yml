@@ -17,9 +17,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
+    
+    - name: Install dependencies HomeApp.Gateway
+      run: dotnet restore HomeApp.Gateway
+    - name: Build HomeApp.Gateway
       run: dotnet build HomeApp.Gateway --configuration Release --no-restore
+    
+    - name: Install dependencies HomeApp.Map/HomeApp.Map.WebAPI/Server
+      run: dotnet restore HomeApp.Map/HomeApp.Map.WebAPI/Server
     - name: Build
       run: dotnet build HomeApp.Map/HomeApp.Map.WebAPI/Server --configuration Release --no-restore
