@@ -1,15 +1,15 @@
 version: '3.4'
 
 services:
-  homeapp.gateway:
-    image: ${DOCKER_REGISTRY-}homeappgateway
+  HomeCloud.gateway:
+    image: ${DOCKER_REGISTRY-}HomeCloudgateway
     build:
       context: .
-      dockerfile: HomeApp.Gateway/Dockerfile
+      dockerfile: HomeCloud.Gateway/Dockerfile
 
-  homeapp.map.webapi:
-    image: ${DOCKER_REGISTRY-}homeappmapwebapi
+  HomeCloud.map.webapi:
+    image: ${DOCKER_REGISTRY-}HomeCloudmapwebapi
     build:
       context: .
-      dockerfile: HomeApp.Map/HomeApp.Map.WebAPI/Server/Dockerfile
+      dockerfile: HomeCloud.Map/HomeCloud.Map.WebAPI/Server/Dockerfile
 

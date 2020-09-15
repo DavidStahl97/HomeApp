@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{E1B5B3DE-468A-42E7-9E4D-01E5E4C28F65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{D41359B7-BFFF-4CAB-9923-87E67DA6760F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HomeCloud.Map", "HomeCloud.Map", "{E97F1ED8-5600-4DE6-B33A-CADB6F3D16FF}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0826B7A9-04FA-415F-B071-B2092B8A32DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Gateway", "HomeCloud.Gateway\HomeCloud.Gateway.csproj", "{FBB1BAA0-0D7E-4001-B11A-EF437FCBA2C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.Client", "HomeCloud.Map\HomeCloud.Map.Client\HomeCloud.Map.Client\HomeCloud.Map.Client.csproj", "{57E993C9-E015-45F7-B2E2-06DA73538709}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.WebAPI", "HomeCloud.Map\HomeCloud.Map.WebAPI\HomeCloud.Presentation\HomeCloud.Map.WebAPI.csproj", "{C59B0E1D-A385-47F9-9F49-631149C6FEF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.Infrastructure", "HomeCloud.Map\HomeCloud.Map.WebAPI\HomeCloud.Infrastructure\HomeCloud.Map.Infrastructure.csproj", "{1455D16D-3065-466E-AF93-727FFAC74547}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.Domain", "HomeCloud.Map\HomeCloud.Map.WebAPI\HomeCloud.Domain\HomeCloud.Map.Domain.csproj", "{7D4863D9-5B21-4371-A9EC-6D053A88BFA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.Application", "HomeCloud.Map\HomeCloud.Map.WebAPI\HomeCloud.Application\HomeCloud.Map.Application.csproj", "{F1F854DB-5B3B-4F28-8ED9-926B2D9B6E86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.Shared", "HomeCloud.Map\HomeCloud.Map.Shared\HomeCloud.Map.Shared.csproj", "{D1209BD9-23F8-4E6F-85C8-C4860E15E393}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0826B7A9-04FA-415F-B071-B2092B8A32DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0826B7A9-04FA-415F-B071-B2092B8A32DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0826B7A9-04FA-415F-B071-B2092B8A32DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0826B7A9-04FA-415F-B071-B2092B8A32DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBB1BAA0-0D7E-4001-B11A-EF437FCBA2C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB1BAA0-0D7E-4001-B11A-EF437FCBA2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB1BAA0-0D7E-4001-B11A-EF437FCBA2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB1BAA0-0D7E-4001-B11A-EF437FCBA2C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E993C9-E015-45F7-B2E2-06DA73538709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E993C9-E015-45F7-B2E2-06DA73538709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E993C9-E015-45F7-B2E2-06DA73538709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E993C9-E015-45F7-B2E2-06DA73538709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C59B0E1D-A385-47F9-9F49-631149C6FEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C59B0E1D-A385-47F9-9F49-631149C6FEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C59B0E1D-A385-47F9-9F49-631149C6FEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C59B0E1D-A385-47F9-9F49-631149C6FEF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1455D16D-3065-466E-AF93-727FFAC74547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1455D16D-3065-466E-AF93-727FFAC74547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1455D16D-3065-466E-AF93-727FFAC74547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1455D16D-3065-466E-AF93-727FFAC74547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4863D9-5B21-4371-A9EC-6D053A88BFA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4863D9-5B21-4371-A9EC-6D053A88BFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4863D9-5B21-4371-A9EC-6D053A88BFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4863D9-5B21-4371-A9EC-6D053A88BFA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F854DB-5B3B-4F28-8ED9-926B2D9B6E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F854DB-5B3B-4F28-8ED9-926B2D9B6E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F854DB-5B3B-4F28-8ED9-926B2D9B6E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F854DB-5B3B-4F28-8ED9-926B2D9B6E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1209BD9-23F8-4E6F-85C8-C4860E15E393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1209BD9-23F8-4E6F-85C8-C4860E15E393}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1209BD9-23F8-4E6F-85C8-C4860E15E393}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1209BD9-23F8-4E6F-85C8-C4860E15E393}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E1B5B3DE-468A-42E7-9E4D-01E5E4C28F65} = {E97F1ED8-5600-4DE6-B33A-CADB6F3D16FF}
+		{D41359B7-BFFF-4CAB-9923-87E67DA6760F} = {E97F1ED8-5600-4DE6-B33A-CADB6F3D16FF}
+		{57E993C9-E015-45F7-B2E2-06DA73538709} = {D41359B7-BFFF-4CAB-9923-87E67DA6760F}
+		{C59B0E1D-A385-47F9-9F49-631149C6FEF0} = {E1B5B3DE-468A-42E7-9E4D-01E5E4C28F65}
+		{1455D16D-3065-466E-AF93-727FFAC74547} = {E1B5B3DE-468A-42E7-9E4D-01E5E4C28F65}
+		{7D4863D9-5B21-4371-A9EC-6D053A88BFA4} = {E1B5B3DE-468A-42E7-9E4D-01E5E4C28F65}
+		{F1F854DB-5B3B-4F28-8ED9-926B2D9B6E86} = {E1B5B3DE-468A-42E7-9E4D-01E5E4C28F65}
+		{D1209BD9-23F8-4E6F-85C8-C4860E15E393} = {E97F1ED8-5600-4DE6-B33A-CADB6F3D16FF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {512CEDFD-DA45-429C-AD13-10A0ACE60ACB}
+	EndGlobalSection
+EndGlobal

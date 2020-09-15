@@ -1,0 +1,27 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["HomeCloud/Server/Presentation/Server/HomeCloud.Server.csproj", "HomeCloud/Server/Presentation/Server/"]
+COPY ["HomeCloud/Client/HomeCloud.Client/HomeCloud.Client.csproj", "HomeCloud/Client/HomeCloud.Client/"]
+COPY ["HomeCloud/Shared/HomeCloud.Shared.csproj", "HomeCloud/Shared/"]
+COPY ["HomeCloud/Server/Infrastructure/HomeCloud.Infrastructure/HomeCloud.Infrastructure.csproj", "HomeCloud/Server/Infrastructure/HomeCloud.Infrastructure/"]
+COPY ["HomeCloud/Server/Application/HomeCloud.Application/HomeCloud.Application.csproj", "HomeCloud/Server/Application/HomeCloud.Application/"]
+COPY ["HomeCloud/Server/Domain/HomeCloud.Domain/HomeCloud.Domain.csproj", "HomeCloud/Server/Domain/HomeCloud.Domain/"]
+RUN dotnet restore "HomeCloud/Server/Presentation/Server/HomeCloud.Server.csproj"
+COPY . .
+WORKDIR "/src/HomeCloud/Server/Presentation/Server"
+RUN dotnet build "HomeCloud.Server.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "HomeCloud.Server.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "HomeCloud.Server.dll"]
