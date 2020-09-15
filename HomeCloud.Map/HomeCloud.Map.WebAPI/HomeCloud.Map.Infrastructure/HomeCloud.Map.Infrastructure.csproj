@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HomeCloud.Application\HomeCloud.Map.Application.csproj" />
+    <ProjectReference Include="..\HomeCloud.Map.Application\HomeCloud.Map.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HomeCloud.Infrastructure\HomeCloud.Map.Infrastructure.csproj" />
+    <ProjectReference Include="..\HomeCloud.Map.Infrastructure\HomeCloud.Map.Infrastructure.csproj" />
   </ItemGroup>
 
 

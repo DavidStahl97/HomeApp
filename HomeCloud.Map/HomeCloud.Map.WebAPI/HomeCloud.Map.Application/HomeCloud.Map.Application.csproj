@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HomeCloud.Domain\HomeCloud.Map.Domain.csproj" />
+    <ProjectReference Include="..\HomeCloud.Map.Domain\HomeCloud.Map.Domain.csproj" />
   </ItemGroup>
 
 </Project>

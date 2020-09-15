@@ -8,8 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["HomeCloud.Gateway/HomeCloud.Gateway.csproj", "HomeCloud.Gateway/"]
-COPY ["HomeCloud.Map/HomeCloud.Map.Client/HomeCloud.Map.Client/HomeCloud.Map.Client.csproj", "HomeCloud.Map/HomeCloud.Map.Client/HomeCloud.Map.Client/"]
-COPY ["HomeCloud.Map/HomeCloud.Map.Shared/HomeCloud.Map.Shared.csproj", "HomeCloud.Map/HomeCloud.Map.Shared/"]
 RUN dotnet restore "HomeCloud.Gateway/HomeCloud.Gateway.csproj"
 COPY . .
 WORKDIR "/src/HomeCloud.Gateway"
