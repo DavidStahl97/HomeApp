@@ -1,19 +1,22 @@
 ﻿@using HomeCloud.Client.Common.Model
 
+@inject NavigationManager Navigation
+
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">HomeCloud.Home.Client</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <HomeCloud.Client.Common.Components.IconButton Color="white" 
+                                                   Icon="arrow-back-outline" 
+                                                   Size="32"
+                                                   OnClick="() => Navigation.NavigateTo(string.Empty)"/>        
+    <p class="navbar-brand">@App.Name</p>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+<div>
     <ul class="nav flex-column">
-        @foreach (var navItem in NavigationItems)
+        @foreach (var navItem in App.NavigationItems)
         {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="@navItem.Link"
-                         Match="@(NavigationItems.First() == navItem ? NavLinkMatch.All : NavLinkMatch.Prefix)">
+                         Match="@(App.NavigationItems.First() == navItem ? NavLinkMatch.All : NavLinkMatch.Prefix)">
                     <span class="oi @navItem.Icon" aria-hidden="true"></span> @navItem.Title
                 </NavLink>
             </li>
@@ -22,14 +25,5 @@
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-
-    [Parameter] public IEnumerable<NavigationItem> NavigationItems { get; set; }
+    [Parameter] public HomeCloud.Client.Common.Model.App App { get; set; }
 }

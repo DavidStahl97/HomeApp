@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HomeCloud.Client.Common.Model
@@ -11,5 +12,7 @@ namespace HomeCloud.Client.Common.Model
         public string Description { get; set; }
 
         public IEnumerable<NavigationItem> NavigationItems { get; set; }
+
+        public NavigationItem FirstNavigationItem => NavigationItems.First();
     }
 }
