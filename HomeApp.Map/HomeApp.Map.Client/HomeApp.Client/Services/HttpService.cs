@@ -36,16 +36,23 @@ namespace HomeApp.Client.Services
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userIdentity.IdToken);
             }
 
-            var responseHTTP = await _httpClient.GetAsync(url);
-
-            if (responseHTTP.IsSuccessStatusCode)
+            try
             {
-                var response = await Deserialize<T>(responseHTTP, DefaultJsonSerializerOptions);
-                return new HttpResponseWrapper<T>(response, true, responseHTTP);
+                var responseHTTP = await _httpClient.GetAsync(url);
+                if (responseHTTP.IsSuccessStatusCode)
+                {
+                    var response = await Deserialize<T>(responseHTTP, DefaultJsonSerializerOptions);
+                    return new HttpResponseWrapper<T>(response, true, responseHTTP);
+                }
+                else
+                {
+                    return new HttpResponseWrapper<T>(default, false, responseHTTP);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return new HttpResponseWrapper<T>(default, false, responseHTTP);
+                Console.WriteLine("test");
+                return null;
             }
         }
 

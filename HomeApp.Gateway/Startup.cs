@@ -23,8 +23,8 @@ namespace HomeApp.Gateway
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            //services.AddControllersWithViews();
+            services.AddRazorPages();             
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwt => jwt.UseGoogle(
@@ -35,7 +35,7 @@ namespace HomeApp.Gateway
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -47,34 +47,49 @@ namespace HomeApp.Gateway
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }            
+
+            app.UseHttpsRedirection();                        
+
+            app.UseWhen(context => IsApiCall(context) == false,
+                builder =>
+                {
+                    builder.UseBlazorFrameworkFiles();
+                    builder.UseStaticFiles();
+
+                    builder.UseRouting();
+
+                    // Must be before UseEndPoints   
+                    builder.UseAuthentication();
+                    builder.UseAuthorization();
+
+                    builder.UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapRazorPages();
+                        endpoints.MapFallbackToFile("index.html");
+                    });
+                });
+
+
+            app.UseWhen(context => IsApiCall(context),
+                async builder =>
+                {
+                    builder.UseRouting();
+
+                    await app.UseOcelot();
+                });            
+        }
+
+        private static bool IsApiCall(HttpContext context)
+        {
+            var path = context.Request.Path;
+            if (path.HasValue == false)
+            {
+                return false;
             }
 
-            app.UseHttpsRedirection();
-            app.UseBlazorFrameworkFiles();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            /*app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });*/
-
-            // Must be before UseEndPoints   
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-                endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
-            });
-
-            app.UseOcelot();
+            bool isApiCall = path.Value.StartsWith("/api/");
+            return isApiCall;
         }
     }
 }

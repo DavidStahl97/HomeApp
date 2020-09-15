@@ -21,14 +21,6 @@ namespace HomeApp.Server.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public WeatherForecastController(UserManager<IdentityUser> userManager)
-        {
-            _userManager = userManager;
-        }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WeatherForecast>>> Get()
         {
