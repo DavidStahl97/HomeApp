@@ -3,9 +3,14 @@
 @using HomeCloud.Client.Common.Model
 @using HomeCloud.Map.Client
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+@inject NavigationManager Navigation
+
+@if (isInApp)
+{
+    <div class="sidebar">
+        <NavMenu NavigationItems="Apps.MapApp.App.NavigationItems" />
+    </div>
+}
 
 <div class="main">
     <div class="top-row px-4 auth">
@@ -17,3 +22,15 @@
         @Body
     </div>
 </div>
+
+@code {
+    private bool isInApp = false;
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += (sender, e) =>
+        {
+            isInApp = e.Location.Contains("/app/");
+        };
+    }
+}

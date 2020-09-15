@@ -8,6 +8,8 @@ namespace HomeCloud.Client.Common.Model
     {
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public IEnumerable<NavigationItem> NavigationItems { get; set; }
     }
 }
