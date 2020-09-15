@@ -1,4 +1,5 @@
-﻿using HomeCloud.Shared;
+﻿using HomeCloud.Map.Shared;
+using HomeCloud.Shared;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

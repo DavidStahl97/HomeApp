@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HomeCloud.Shared
+namespace HomeCloud.Map.Shared
 {
     public class WeatherForecast
     {

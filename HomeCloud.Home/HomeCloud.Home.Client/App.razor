@@ -1,5 +1,8 @@
+@using System.Reflection
+
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(Program).Assembly">
+    <Router AppAssembly="@typeof(Program).Assembly"
+            AdditionalAssemblies="@assemblies">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
@@ -21,3 +24,10 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    private IEnumerable<Assembly> assemblies = new List<Assembly>
+    {
+        typeof(HomeCloud.Map.Client.Startup).Assembly
+    };
+}
