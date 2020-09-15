@@ -18,12 +18,12 @@ jobs:
       with:
         dotnet-version: 3.1.301
     
-    - name: Install dependencies HomeApp.Gateway
-      run: dotnet restore HomeApp.Gateway
-    - name: Build HomeApp.Gateway
-      run: dotnet build HomeApp.Gateway --configuration Release --no-restore
+    - name: Install dependencies HomeCloud.Gateway
+      run: dotnet restore HomeCloud.Gateway
+    - name: Build HomeCloud.Gateway
+      run: dotnet build HomeCloud.Gateway --configuration Release --no-restore
     
-    - name: Install dependencies HomeApp.Map/HomeApp.Map.WebAPI/Server
-      run: dotnet restore HomeApp.Map/HomeApp.Map.WebAPI/Server
-    - name: Build
-      run: dotnet build HomeApp.Map/HomeApp.Map.WebAPI/Server --configuration Release --no-restore
+    - name: Install dependencies HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation
+      run: dotnet restore HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation
+    - name: Build HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation
+      run: dotnet build HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation --configuration Release --no-restore
