@@ -54,10 +54,10 @@ jobs:
       - name: executing remote docker pull
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secret.HOST }}
-          username: ${{ secret.HOST_USERNAME }}
-          password: ${{ secret.HOST_PASSWORD }}
-          port: ${{ secret.SSH_PORT }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             docker pull ${{ secrets.DOCKER_REPO }}
             docker stop homecloudapp
