@@ -8,7 +8,7 @@
 @if (isInApp)
 {
     <div class="sidebar">
-        <NavMenu App="Apps.MapApp.App" />
+        <NavMenu App="SelectedApp" />
     </div>
 }
 
@@ -25,6 +25,8 @@
 
 @code {
     private bool isInApp = false;
+
+    private HomeCloud.Client.Common.Model.App SelectedApp;
 
     protected override void OnInitialized()
     {

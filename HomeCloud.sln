@@ -25,11 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Home.Client", "Ho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Client.Common", "HomeCloud.Client.Common\HomeCloud.Client.Common.csproj", "{E6321ED4-3A41-4E68-B842-4E718B7BDCA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Map.Client", "HomeCloud.Map\HomeCloud.Map.Client\HomeCloud.Map.Client.csproj", "{4E57A67B-220D-4983-9D70-796D32253BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Map.Client", "HomeCloud.Map\HomeCloud.Map.Client\HomeCloud.Map.Client.csproj", "{4E57A67B-220D-4983-9D70-796D32253BC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HomeCloud.Book", "HomeCloud.Book", "{2F40CAB5-43C4-422D-A271-7DECCFF5632A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Book.Client", "HomeCloud.Book\HomeCloud.Book.Client\HomeCloud.Book.Client.csproj", "{75C09867-D57D-44CA-A25E-26B5B8AAAFFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Book.Client", "HomeCloud.Book\HomeCloud.Book.Client\HomeCloud.Book.Client.csproj", "{75C09867-D57D-44CA-A25E-26B5B8AAAFFE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F2573664-DBB2-44DA-998B-399203418ED9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{75C09867-D57D-44CA-A25E-26B5B8AAAFFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75C09867-D57D-44CA-A25E-26B5B8AAAFFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75C09867-D57D-44CA-A25E-26B5B8AAAFFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2573664-DBB2-44DA-998B-399203418ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2573664-DBB2-44DA-998B-399203418ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2573664-DBB2-44DA-998B-399203418ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2573664-DBB2-44DA-998B-399203418ED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
