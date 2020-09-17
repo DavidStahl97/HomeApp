@@ -49,7 +49,7 @@ namespace HomeCloud.Gateway
                 app.UseHsts();
             }            
 
-            app.UseHttpsRedirection();                        
+            //app.UseHttpsRedirection();                        
 
             app.UseWhen(context => IsApiCall(context) == false,
                 builder =>
