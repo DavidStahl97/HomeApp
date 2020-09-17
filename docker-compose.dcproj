@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>f2573664-dbb2-44da-998b-399203418ed9</ProjectGuid>
+    <ProjectGuid>deabcaeb-48f8-4d72-876a-29881e2598e9</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>homecloud.gateway</DockerServiceName>
