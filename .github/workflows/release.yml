@@ -48,3 +48,22 @@ jobs:
       - name: Logout
         run: docker logout  
         
+  publish:
+    name: Publish - Server
+    runs-on: ubuntu-latest
+    needs: [ docker ]
+    steps:
+      - name: executing remote docker pull
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /
+            cd homecloud
+            curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.yml   
+            docker pull davidstahl97/homecloud-gateway
+            docker pull davidstahl97/homecloud-map-webapi
+            docker-compose up -d
