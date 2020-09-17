@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   homecloud.gateway:
-    image: ${DOCKER_REGISTRY-}homecloudgateway
+    image: davidstahl97/homecloud-gateway
     build:
       context: .
       dockerfile: HomeCloud.Gateway/Dockerfile
@@ -12,7 +12,7 @@ services:
         - ASPNETCORE_URLS=http://+:5001
 
   homecloud.map.webapi:
-    image: ${DOCKER_REGISTRY-}homecloudmapwebapi
+    image: davidstahl97/homecloud-map-webapi
     build:
       context: .
       dockerfile: HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation/Dockerfile
