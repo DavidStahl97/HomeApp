@@ -42,7 +42,7 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       - name: Build Docker Compose
-        run: docker-compose build --pull
+        run: docker-compose build
       - name: Publish Docker images
         run: docker-compose push
       - name: Logout
