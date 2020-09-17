@@ -8,8 +8,11 @@ services:
       dockerfile: HomeCloud.Gateway/Dockerfile
     ports:
         - "80:5001"
+        - "443:5000"
     environment:
-        - ASPNETCORE_URLS=http://+:5001
+        - ASPNETCORE_URLS=http://+:5001;https://+:5000
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
+        - ASPNETCORE_Kestrel__Certificates__Default__Path=/homecloud/homecloud-david.private_key.pfx
 
   homecloud.map.webapi:
     image: davidstahl97/homecloud-map-webapi
