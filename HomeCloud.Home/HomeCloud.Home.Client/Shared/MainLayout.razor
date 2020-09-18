@@ -8,7 +8,7 @@
 @if (isInApp)
 {
     <div class="sidebar">
-        <NavMenu App="SelectedApp" />
+        <NavMenu App="App"/>
     </div>
 }
 
@@ -26,13 +26,21 @@
 @code {
     private bool isInApp = false;
 
-    private HomeCloud.Client.Common.Model.App SelectedApp;
+    private HomeCloud.Client.Common.Model.App App;
 
     protected override void OnInitialized()
     {
         Navigation.LocationChanged += (sender, e) =>
         {
             isInApp = e.Location.Contains("/app/");
+            if (isInApp)
+            {
+                App = Apps.AppStartups.Single(a => e.Location.Contains($"/app/{ a.App.AppLink }")).App;
+            }
+            else
+            {
+                App = null;
+            }
         };
     }
 }

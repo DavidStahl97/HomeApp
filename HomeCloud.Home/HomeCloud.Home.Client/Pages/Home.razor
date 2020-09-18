@@ -33,6 +33,6 @@
 @code {
     private void Navigate(HomeCloud.Client.Common.Model.App app)
     {
-        Navigation.NavigateTo(app.NavigationItems.First().Link);
+        Navigation.NavigateTo(app.NavigationLink(app.NavigationItems.First()));
     }
 }

@@ -13,9 +13,10 @@ namespace HomeCloud.Book.Client
         {
             Name = "Books",
             Description = "Search Books and get suggestions",
+            AppLink = "books",
             NavigationItems = new List<NavigationItem>
             {
-                new NavigationItem { Icon = "oi-plus", Link = "/app/book/counter", Title = "Counter" },
+                new NavigationItem { Icon = "oi-plus", Link = "counter", Title = "Counter" },
             }
         };
 

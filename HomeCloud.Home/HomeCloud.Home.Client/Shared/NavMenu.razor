@@ -3,10 +3,10 @@
 @inject NavigationManager Navigation
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <HomeCloud.Client.Common.Components.IconButton Color="white" 
-                                                   Icon="arrow-back-outline" 
+    <HomeCloud.Client.Common.Components.IconButton Color="white"
+                                                   Icon="arrow-back-outline"
                                                    Size="32"
-                                                   OnClick="() => Navigation.NavigateTo(string.Empty)"/>        
+                                                   OnClick="() => Navigation.NavigateTo(string.Empty)" />
     <p class="navbar-brand">@App.Name</p>
 </div>
 
@@ -15,7 +15,7 @@
         @foreach (var navItem in App.NavigationItems)
         {
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@navItem.Link"
+                <NavLink class="nav-link" href="@App.NavigationLink(navItem)"
                          Match="@(App.NavigationItems.First() == navItem ? NavLinkMatch.All : NavLinkMatch.Prefix)">
                     <span class="oi @navItem.Icon" aria-hidden="true"></span> @navItem.Title
                 </NavLink>
@@ -26,4 +26,9 @@
 
 @code {
     [Parameter] public HomeCloud.Client.Common.Model.App App { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
 }

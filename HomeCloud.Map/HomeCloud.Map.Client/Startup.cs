@@ -14,10 +14,11 @@ namespace HomeCloud.Map.Client
         {
             Name = "Map",
             Description = "Inspect your Routes that your take",
+            AppLink = "map",
             NavigationItems = new List<NavigationItem>
             {
-                new NavigationItem { Icon = "oi-plus", Link = "/app/map/counter", Title = "Counter" },
-                new NavigationItem { Icon = "oi-list-rich", Link = "/app/map/fetchdata", Title = "Fetch data" }
+                new NavigationItem { Icon = "oi-plus", Link = "counter", Title = "Counter" },
+                new NavigationItem { Icon = "oi-list-rich", Link = "fetchdata", Title = "Fetch data" }
             }
         };
 
