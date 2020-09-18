@@ -1,20 +1,14 @@
-﻿using HomeCloud.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using HomeCloud.Map.Shared;
 
-namespace HomeCloud.Server.Controllers
+namespace HomeCloud.Users.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -22,8 +16,15 @@ namespace HomeCloud.Server.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<WeatherForecast>>> Get()
+        public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

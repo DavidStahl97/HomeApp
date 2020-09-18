@@ -66,10 +66,6 @@ namespace HomeCloud.Gateway
 
                     builder.UseRouting();
 
-                    // Must be before UseEndPoints   
-                    builder.UseAuthentication();
-                    builder.UseAuthorization();
-
                     builder.UseEndpoints(endpoints =>
                     {
                         endpoints.MapRazorPages();
@@ -82,6 +78,11 @@ namespace HomeCloud.Gateway
                 async builder =>
                 {
                     builder.UseRouting();
+
+                    // Must be before UseEndPoints   
+                    builder.UseAuthentication();
+
+                    builder.UseMiddleware<IdentityMiddleware>();
 
                     await app.UseOcelot();
                 });            
