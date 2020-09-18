@@ -18,9 +18,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-
-test123
-
 namespace HomeCloud.Server.Controllers
 {
     [ApiController]
