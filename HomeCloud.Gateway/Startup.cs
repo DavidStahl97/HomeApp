@@ -19,6 +19,13 @@ namespace HomeCloud.Gateway
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -28,7 +35,7 @@ namespace HomeCloud.Gateway
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(jwt => jwt.UseGoogle(
-                    clientId: "484017769198-51sqbl5eb8erjmnk4m9sk5vludjo24h6.apps.googleusercontent.com"
+                    clientId: Configuration["Google:ClientId"]
             ));
 
             services.AddOcelot();
