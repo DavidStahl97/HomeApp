@@ -26,15 +26,17 @@ namespace HomeCloud.Home.Client
             {
                 // Configure your authentication provider options here.
                 // For more information, see https://aka.ms/blazor-standalone-auth
-                options.ProviderOptions.Authority = "https://accounts.google.com/";
-                options.ProviderOptions.ClientId = "484017769198-51sqbl5eb8erjmnk4m9sk5vludjo24h6.apps.googleusercontent.com";
-                options.ProviderOptions.ResponseType = "id_token";
+                options.ProviderOptions.Authority = builder.Configuration["Google:Authority"];
+                options.ProviderOptions.ClientId = builder.Configuration["Google:ClientId"];
+                options.ProviderOptions.ResponseType = builder.Configuration["Google:ResponseType"];
 
                 var scopes = options.ProviderOptions.DefaultScopes;
-                scopes.Add("openid");
-                scopes.Add("email");
+                foreach (var scope in builder.Configuration["Google:Scopes"].Split(";"))
+                {
+                    scopes.Add(scope);
+                }
 
-                options.UserOptions.AuthenticationType = "google";
+                options.UserOptions.AuthenticationType = builder.Configuration["Google:AuthenticationType"];
             });
 
             ConfigureServices(builder.Services);
