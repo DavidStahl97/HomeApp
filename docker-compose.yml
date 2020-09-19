@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   homecloud.gateway:
+    container_name: homecloud.gateway
     image: davidstahl97/homecloud-gateway
     build:
       context: .
@@ -18,6 +19,7 @@ services:
         - ~/.aspnet/https:/https:ro
 
   homecloud.map.webapi:
+    container_name: homecloud.map.webapi
     image: davidstahl97/homecloud-map-webapi
     build:
       context: .
@@ -29,6 +31,7 @@ services:
         - ASPNETCORE_ENVIRONMENT=Production
         
   homecloud.users.service:
+    container_name: homecloud.users.service
     image: davidstahl97/homecloud-users-service
     build:
         context: .

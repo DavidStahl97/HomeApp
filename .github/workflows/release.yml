@@ -61,7 +61,9 @@ jobs:
           script: |
             cd /
             cd homecloud
-            curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.yml   
+            curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.yml
+            
+            docker-compose down
             docker pull davidstahl97/homecloud-gateway
             docker pull davidstahl97/homecloud-map-webapi
             docker pull davidstahl97/homecloud-users-service
