@@ -27,4 +27,14 @@ services:
     environment:
         - ASPNETCORE_URLS=http://+:5010
         - ASPNETCORE_ENVIRONMENT=Production
+        
+  homecloud.users.service:
+    image: davidstahl97/homecloud-users-service
+    build:
+        context: .
+        dockerfile: HomeCloud.Users/HomeCloud.Users.Service/Dockerfile
+    ports:
+        - "64676:64676"
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Production
 

@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Book.Client", "Ho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HomeCloud.Users", "HomeCloud.Users", "{77BA8CBC-AF92-451E-AAC1-1EF01B947B61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.User.Server", "HomeCloud.Users\HomeCloud.Users.Service\HomeCloud.User.Server.csproj", "{D49A664B-3C2A-4E2F-86A3-D5445684157E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Users.Service", "HomeCloud.Users\HomeCloud.Users.Service\HomeCloud.Users.Service.csproj", "{D49A664B-3C2A-4E2F-86A3-D5445684157E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
