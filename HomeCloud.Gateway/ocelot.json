@@ -11,6 +11,18 @@
       ],
       "UpstreamPathTemplate": "/api/WeatherForecast",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Identity/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 64676
+        }
+      ],
+      "UpstreamPathTemplate": "/Identity/{everything}",
+      "UpstreamHttpMethod":  [ "Get", "Post" ]
     }
   ],
   "GlobalConfiguration": {
