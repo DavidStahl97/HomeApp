@@ -58,7 +58,7 @@ namespace HomeCloud.Gateway
 
             app.UseHttpsRedirection();                        
 
-            app.UseWhen(context => IsApiCall(context) == false,
+            app.UseWhen(context => IsBlazorWebassembly(context),
                 builder =>
                 {
                     builder.UseBlazorFrameworkFiles();
@@ -74,7 +74,7 @@ namespace HomeCloud.Gateway
                 });
 
 
-            app.UseWhen(context => IsApiCall(context),
+            app.UseWhen(context => IsBlazorWebassembly(context) == false,
                 async builder =>
                 {
                     builder.UseRouting();
@@ -82,13 +82,11 @@ namespace HomeCloud.Gateway
                     // Must be before UseEndPoints   
                     builder.UseAuthentication();
 
-                    builder.UseMiddleware<IdentityMiddleware>();
-
                     await app.UseOcelot();
                 });            
         }
 
-        private static bool IsApiCall(HttpContext context)
+        private static bool IsBlazorWebassembly(HttpContext context)
         {
             var path = context.Request.Path;
             if (path.HasValue == false)
@@ -97,7 +95,9 @@ namespace HomeCloud.Gateway
             }
 
             bool isApiCall = path.Value.StartsWith("/api/");
-            return isApiCall;
+            bool isIdentityCall = path.Value.StartsWith("/Identity/");
+
+            return (isApiCall || isIdentityCall) == false;
         }
     }
 }
