@@ -38,7 +38,7 @@ services:
     depends_on:
         - usersdb
     volumes:
-      - ~/.aspnet/https:/https:ro    
+      - ~/.homecloud/userservice:/userservice
         
   usersdb:
     container_name: homecloud.users.db
@@ -48,6 +48,6 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD="BigPassw0rd"      
     volumes:
-      - ./data/mssql:/var/opt/mssql/data
+      - ~/.homecloud/usersdb/mssql:/var/opt/mssql/data
     ports:
       - '1433:1433'  

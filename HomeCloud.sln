@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HomeCloud.Users", "HomeClou
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Users.Service", "HomeCloud.Users\HomeCloud.Users.Service\HomeCloud.Users.Service.csproj", "{D49A664B-3C2A-4E2F-86A3-D5445684157E}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DEABCAEB-48F8-4D72-876A-29881E2598E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{D49A664B-3C2A-4E2F-86A3-D5445684157E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D49A664B-3C2A-4E2F-86A3-D5445684157E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D49A664B-3C2A-4E2F-86A3-D5445684157E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEABCAEB-48F8-4D72-876A-29881E2598E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEABCAEB-48F8-4D72-876A-29881E2598E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEABCAEB-48F8-4D72-876A-29881E2598E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEABCAEB-48F8-4D72-876A-29881E2598E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

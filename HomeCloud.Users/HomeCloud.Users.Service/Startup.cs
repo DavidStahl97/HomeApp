@@ -13,6 +13,10 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using HomeCloud.User.Server.Data;
 using HomeCloud.User.Server.Models;
+using IdentityServer4.Stores;
+using HomeCloud.Users.Service;
+using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace HomeCloud.User.Server
 {
@@ -28,13 +32,15 @@ namespace HomeCloud.User.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        {           
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+        {
+            var sqlConnection = Configuration.GetConnectionString("SqlConnection");
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(sqlConnection));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
+                .LoadSigningCredentialFrom(Configuration["certificates:signing"])
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
@@ -45,7 +51,7 @@ namespace HomeCloud.User.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
