@@ -3,6 +3,9 @@ version: '3.4'
 services:
   homecloud.gateway:
     container_name: homecloud.gateway
+    build:
+      context: .
+      dockerfile: HomeCloud.Gateway/Dockerfile    
     ports:
       - "80:5001"
       - "443:5000"
@@ -13,6 +16,9 @@ services:
 
   homecloud.map.webapi:
     container_name: homecloud.map.webapi
+    build:
+      context: .
+      dockerfile: HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation/Dockerfile    
     ports:
         - "5010:5010"
     environment:
@@ -21,6 +27,9 @@ services:
         
   homecloud.users.service:
     container_name: homecloud.users.service
+    build:
+        context: .
+        dockerfile: HomeCloud.Users/HomeCloud.Users.Service/Dockerfile    
     ports:
         - "64676:64676"
     environment:

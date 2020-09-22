@@ -2,24 +2,15 @@ version: '3.4'
 
 services:
   homecloud.gateway:
-    build:
-      context: .
-      dockerfile: HomeCloud.Gateway/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
 
   homecloud.map.webapi:
-    build:
-      context: .
-      dockerfile: HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation/Dockerfile
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         
   homecloud.users.service:    
-    build:
-        context: .
-        dockerfile: HomeCloud.Users/HomeCloud.Users.Service/Dockerfile
     environment:
         - ASPNETCORE_ENVIRONMENT=Development        
