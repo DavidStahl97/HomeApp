@@ -38,6 +38,8 @@ namespace HomeCloud.Gateway
                     clientId: Configuration["Google:ClientId"]
             ));
 
+            services.AddHttpsRedirection(options => options.HttpsPort = 5000);
+
             services.AddOcelot();
         }
 
@@ -54,13 +56,13 @@ namespace HomeCloud.Gateway
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }            
+            }
 
-            app.UseHttpsRedirection();                        
+            app.UseHttpsRedirection();
 
             app.UseWhen(context => IsBlazorWebassembly(context),
                 builder =>
-                {
+                {                    
                     builder.UseBlazorFrameworkFiles();
                     builder.UseStaticFiles();
 
@@ -76,7 +78,7 @@ namespace HomeCloud.Gateway
 
             app.UseWhen(context => IsBlazorWebassembly(context) == false,
                 async builder =>
-                {
+                {                    
                     builder.UseRouting();
 
                     // Must be before UseEndPoints   

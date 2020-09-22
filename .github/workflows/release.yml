@@ -40,7 +40,7 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
       - name: Build Docker Compose
-        run: docker-compose build
+        run: docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
       - name: Publish Docker images
         run: docker-compose push
       - name: Logout
@@ -62,9 +62,10 @@ jobs:
             cd /
             cd homecloud
             curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.yml
+            curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.prod.yml
             
             docker-compose down
             docker pull davidstahl97/homecloud-gateway
             docker pull davidstahl97/homecloud-map-webapi
             docker pull davidstahl97/homecloud-users-service
-            docker-compose up -d
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d

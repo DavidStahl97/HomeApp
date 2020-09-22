@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  homecloud.gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+
+  homecloud.map.webapi:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        
+  homecloud.users.service:    
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development        
