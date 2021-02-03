@@ -34,20 +34,20 @@ services:
         - "64676:64676"
     environment:
         - ASPNETCORE_URLS=http://+:64676
-        - ConnectionStrings__SqlConnection=Server=usersdb;Database=UsersDb;User=sa;Password=BigPassw0rd
+        - ConnectionStrings__SqlConnection=Server=usersdb;Database=UsersDb;User=sa;Password=sadjfljsLJSDFJlalfdjk235slfdjS
     depends_on:
         - usersdb
     volumes:
-      - ~/.homecloud/userservice:/userservice
+      - ./data/userservice:/userservice
         
   usersdb:
     container_name: homecloud.users.db
     image: mcr.microsoft.com/mssql/server:2019-latest
     hostname: 'usersdb'
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD="BigPassw0rd"      
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "sadjfljsLJSDFJlalfdjk235slfdjS"
     volumes:
-      - ~/.homecloud/usersdb/mssql:/var/opt/mssql/data
+      - ./data/mssql:/var/opt/mssql/data
     ports:
       - '1433:1433'  

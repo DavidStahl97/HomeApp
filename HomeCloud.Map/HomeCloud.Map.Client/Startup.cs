@@ -13,12 +13,13 @@ namespace HomeCloud.Map.Client
         public App App => new App
         {
             Name = "Map",
-            Description = "Inspect your Routes that your take",
+            Description = "Inspect your Routes that your take. Cycling",
             AppLink = "map",
             NavigationItems = new List<NavigationItem>
             {
                 new NavigationItem { Icon = "oi-plus", Link = "counter", Title = "Counter" },
-                new NavigationItem { Icon = "oi-list-rich", Link = "fetchdata", Title = "Fetch data" }
+                new NavigationItem { Icon = "oi-list-rich", Link = "fetchdata", Title = "Fetch data" },
+                new NavigationItem { Icon = "oi-home", Link = "maps", Title = "Maps" },
             }
         };
 

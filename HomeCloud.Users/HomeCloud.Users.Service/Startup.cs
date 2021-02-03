@@ -39,7 +39,7 @@ namespace HomeCloud.User.Server
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer()                
                 .LoadSigningCredentialFrom(Configuration["certificates:signing"])
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 

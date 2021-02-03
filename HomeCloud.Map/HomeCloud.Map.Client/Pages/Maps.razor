@@ -1,0 +1,27 @@
+﻿@page "/app/map/maps"
+
+@using BlazorLeaflet
+@using BlazorLeaflet.Models
+
+@inject IJSRuntime jsRuntime
+
+<h3>Maps</h3>
+
+<div style="height: 500px; width: 500px;">
+    <LeafletMap Map="_map" />
+</div>
+
+@code {
+    private Map _map;
+
+    protected override void OnInitialized()
+    {
+        _map = new Map(jsRuntime);
+
+        _map.Layers.Add(new TileLayer
+        {
+            UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+        });
+    }
+}

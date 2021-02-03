@@ -46,7 +46,7 @@ namespace HomeCloud.Users.Service
                 else
                 {
                     Thread.Sleep(10000);
-                    Migrate<T>(scope, attempts--);
+                    Migrate<T>(scope, attempts - 1);
                 }
             }
             catch (Exception ex)
