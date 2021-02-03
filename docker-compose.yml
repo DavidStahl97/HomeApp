@@ -2,10 +2,11 @@ version: '3.4'
 
 services:
   homecloud.maps.server:
-    container_name: homecloud.maps.server
+    container_name: homecloud-maps-server
+    image: davidstahl97/homecloud-maps-server
     build:
       context: .
-      dockerfile: src/backend/HomeCloud.Maps.Server/Dockerfile
+      dockerfile: ./src/backend/HomeCloud.Maps.Server/Dockerfile
     ports:
       - "80:5001"
       - "443:5000"
