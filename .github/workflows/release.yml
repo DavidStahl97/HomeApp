@@ -63,5 +63,5 @@ jobs:
             curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.prod.yml
             
             docker-compose down
-            docker pull davidstahl97/homecloud.maps.server
+            docker pull davidstahl97/homecloud-maps-server
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
