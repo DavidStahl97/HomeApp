@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  homecloud.maps.server:
+    image: ${DOCKER_REGISTRY-}homecloudmapsserver
+    build:
+      context: .
+      dockerfile: src/backend/HomeCloud.Maps.Server/Dockerfile
