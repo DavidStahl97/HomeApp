@@ -10,20 +10,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET 5
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        dotnet-version: 5.0.100
     
-    - name: Install dependencies HomeCloud.Gateway
-      run: dotnet restore HomeCloud.Gateway
-    - name: Build HomeCloud.Gateway
-      run: dotnet build HomeCloud.Gateway --configuration Release --no-restore
-    
-    - name: Install dependencies HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation
-      run: dotnet restore HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation
-    - name: Build HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation
-      run: dotnet build HomeCloud.Map/HomeCloud.Map.WebAPI/HomeCloud.Map.Presentation --configuration Release --no-restore
+    - name: Install dependencies HomeCloud.Maps.Server
+      run: dotnet restore src/backend/HomeCloud.Maps.Server
+    - name: Build HomeCloud.Maps.Server
+      run: dotnet build src/backend/HomeCloud.Maps.Server --configuration Release --no-restore
 
   docker:
     name: Publish - Docker Hub
@@ -38,7 +33,10 @@ jobs:
         with:
           java-version: 11.0.4
       - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
       - name: Build Docker Compose
         run: docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
       - name: Publish Docker images
@@ -65,7 +63,5 @@ jobs:
             curl --remote-name https://raw.githubusercontent.com/DavidStahl97/HomeCloud/master/docker-compose.prod.yml
             
             docker-compose down
-            docker pull davidstahl97/homecloud-gateway
-            docker pull davidstahl97/homecloud-map-webapi
-            docker pull davidstahl97/homecloud-users-service
+            docker pull davidstahl97/homecloud-maps-server
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
