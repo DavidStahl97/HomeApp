@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  homecloud.maps.server:
+  homecloud-maps-server:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_Kestrel__Certificates__Default__Password=test123

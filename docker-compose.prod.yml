@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  homecloud.gateway:
+  homecloud-maps-server:
     image: davidstahl97/homecloud-maps-server
     environment:
         - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
