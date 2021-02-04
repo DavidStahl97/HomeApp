@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Shared", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Client", "src\frontend\HomeCloud.Maps.Client\HomeCloud.Maps.Client.csproj", "{3F74E434-967D-45D8-B178-DE9B69C860ED}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{4AA0F4EA-82AE-4D55-AB27-C02F74342AE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Client.UnitTests", "test\frontend\HomeCloud.Maps.Client.UnitTests\HomeCloud.Maps.Client.UnitTests.csproj", "{B7D479F7-A777-4960-85DB-3690746D0203}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +39,10 @@ Global
 		{3F74E434-967D-45D8-B178-DE9B69C860ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F74E434-967D-45D8-B178-DE9B69C860ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F74E434-967D-45D8-B178-DE9B69C860ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7D479F7-A777-4960-85DB-3690746D0203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7D479F7-A777-4960-85DB-3690746D0203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7D479F7-A777-4960-85DB-3690746D0203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7D479F7-A777-4960-85DB-3690746D0203}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +53,8 @@ Global
 		{7A492078-F503-45C5-A4B9-784E47CFE3B0} = {57FBDA05-8274-4448-88F9-8ED12A237F80}
 		{E701998E-7E2B-449A-A6BF-3DFF771FC1FD} = {57FBDA05-8274-4448-88F9-8ED12A237F80}
 		{3F74E434-967D-45D8-B178-DE9B69C860ED} = {B73706EC-C846-43C8-906B-CB67E885FC33}
+		{4AA0F4EA-82AE-4D55-AB27-C02F74342AE5} = {578927A2-95F6-4D72-B5EF-076A40DAF25B}
+		{B7D479F7-A777-4960-85DB-3690746D0203} = {4AA0F4EA-82AE-4D55-AB27-C02F74342AE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {512CEDFD-DA45-429C-AD13-10A0ACE60ACB}
