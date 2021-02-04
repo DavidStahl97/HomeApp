@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gpx version="1.1" creator="https://www.komoot.de" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Hattsteinweier</name>
+    <author>
+      <link href="https://www.komoot.de">
+        <text>komoot</text>
+        <type>text/html</type>
+      </link>
+    </author>
+  </metadata>
+  <trk>
+    <name>Hattsteinweier</name>
+    <trkseg>
+      <trkpt lat="50.433216" lon="8.497126">
+        <ele>242.217311</ele>
+        <time>2021-01-31T15:08:45.427Z</time>
+      </trkpt>
+      <trkpt lat="50.433220" lon="8.497147">
+        <ele>242.217311</ele>
+        <time>2021-01-31T15:08:45.839Z</time>
+      </trkpt>
+      <trkpt lat="50.433248" lon="8.497235">
+        <ele>242.217311</ele>
+        <time>2021-01-31T15:08:47.715Z</time>
+      </trkpt>      
+    </trkseg>
+  </trk>
+</gpx>
