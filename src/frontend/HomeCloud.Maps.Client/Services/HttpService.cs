@@ -26,15 +26,7 @@ namespace HomeCloud.Maps.Client.Services
 
         public async Task<HttpResponseWrapper<T>> GetAsync<T>(string url)
         {
-            var userIdentity = await _jwtStorage.Get();
-            if (userIdentity is null)
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = null;
-            }
-            else
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userIdentity.IdToken);
-            }
+            await AddAuthenticationAsync();
 
             var responseHTTP = await _httpClient.GetAsync(url);
             if (responseHTTP.IsSuccessStatusCode)
@@ -50,6 +42,8 @@ namespace HomeCloud.Maps.Client.Services
 
         public async Task<HttpResponseWrapper<object>> PostAsync<T>(string url, T data)
         {
+            await AddAuthenticationAsync();
+
             var dataJson = JsonSerializer.Serialize(data);
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, stringContent);
@@ -58,6 +52,8 @@ namespace HomeCloud.Maps.Client.Services
 
         public async Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T data)
         {
+            await AddAuthenticationAsync();
+
             var dataJson = JsonSerializer.Serialize(data);
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync(url, stringContent);
@@ -66,6 +62,8 @@ namespace HomeCloud.Maps.Client.Services
 
         public async Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T data)
         {
+            await AddAuthenticationAsync();
+
             var dataJson = JsonSerializer.Serialize(data);
             var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(url, stringContent);
@@ -82,6 +80,8 @@ namespace HomeCloud.Maps.Client.Services
 
         public async Task<HttpResponseWrapper<object>> DeleteAsync(string url)
         {
+            await AddAuthenticationAsync();
+
             var responseHTTP = await _httpClient.DeleteAsync(url);
             return new HttpResponseWrapper<object>(null, responseHTTP.IsSuccessStatusCode, responseHTTP);
         }
@@ -90,6 +90,19 @@ namespace HomeCloud.Maps.Client.Services
         {
             var responseString = await httpResponse.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(responseString, options);
+        }
+
+        private async Task AddAuthenticationAsync()
+        {
+            var userIdentity = await _jwtStorage.Get();
+            if (userIdentity is null)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = null;
+            }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userIdentity.IdToken);
+            }
         }
     }
 }

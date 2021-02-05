@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj" />
+    <ProjectReference Include="..\HomeCloud.Maps.Shared\HomeCloud.Maps.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Bson" Version="2.11.6" />
   </ItemGroup>
 
 </Project>

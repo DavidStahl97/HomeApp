@@ -1,3 +1,5 @@
+using HomeCloud.Maps.Application.Commands;
+using HomeCloud.Maps.Infrastructure.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,13 @@ namespace HomeCloud.Maps.Server
                 .AddJwtBearer(jwt => jwt.UseGoogle(
                     clientId: Configuration["Google:ClientId"]
                 ));
+
+            services.AddDatabase(new DatabaseSettings
+            {
+                ConnectionString = Configuration["MongoDb:ConnectionString"]
+            });
+
+            AddApplicationServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +71,11 @@ namespace HomeCloud.Maps.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+        }
+
+        private static void AddApplicationServices(IServiceCollection services)
+        {
+            services.AddScoped<IInsertUserSettings, InsertUserSettings>();
         }
     }
 }
