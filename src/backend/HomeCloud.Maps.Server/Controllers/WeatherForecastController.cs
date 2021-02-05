@@ -1,4 +1,5 @@
 ﻿using HomeCloud.Maps.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Server.Controllers
-{
+{    
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
