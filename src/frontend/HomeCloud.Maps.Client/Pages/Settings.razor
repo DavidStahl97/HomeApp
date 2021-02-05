@@ -2,6 +2,19 @@
 
 <h3>Settings</h3>
 
-@code {
+<form>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Komoot User Id</label>
+        <input class="form-control" aria-describedby="emailHelp" value="@_userId"/>
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="@OnSubmitAsync">Submit</button>
+</form>
 
+@code {
+    private string _userId;
+
+    private async Task OnSubmitAsync()
+    {
+        Console.WriteLine("Submit: " + _userId);
+    }
 }
