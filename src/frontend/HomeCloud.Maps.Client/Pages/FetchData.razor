@@ -1,6 +1,6 @@
 ﻿@page "/fetchdata"
 @using HomeCloud.Maps.Shared
-@inject HttpClient Http
+@inject IHttpService httpService
 
 <h1>Weather forecast</h1>
 
@@ -36,11 +36,12 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private IEnumerable<WeatherForecast> forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        var result = await httpService.GetAsync<IEnumerable<WeatherForecast>>("WeatherForecast");
+        forecasts = result.Response;
     }
 
 }
