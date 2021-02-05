@@ -23,6 +23,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Client.UnitT
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Infrastructure", "src\backend\HomeCloud.Maps.Infrastructure\HomeCloud.Maps.Infrastructure.csproj", "{2107B5B8-B653-44C3-A148-74733944E569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Application", "src\backend\HomeCloud.Maps.Application\HomeCloud.Maps.Application.csproj", "{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Domain", "src\backend\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj", "{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +55,18 @@ Global
 		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2107B5B8-B653-44C3-A148-74733944E569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2107B5B8-B653-44C3-A148-74733944E569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2107B5B8-B653-44C3-A148-74733944E569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2107B5B8-B653-44C3-A148-74733944E569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +79,9 @@ Global
 		{3F74E434-967D-45D8-B178-DE9B69C860ED} = {B73706EC-C846-43C8-906B-CB67E885FC33}
 		{4AA0F4EA-82AE-4D55-AB27-C02F74342AE5} = {578927A2-95F6-4D72-B5EF-076A40DAF25B}
 		{B7D479F7-A777-4960-85DB-3690746D0203} = {4AA0F4EA-82AE-4D55-AB27-C02F74342AE5}
+		{2107B5B8-B653-44C3-A148-74733944E569} = {57FBDA05-8274-4448-88F9-8ED12A237F80}
+		{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B} = {57FBDA05-8274-4448-88F9-8ED12A237F80}
+		{CA19973E-D7B7-43CF-A680-F5A4D05E2D53} = {57FBDA05-8274-4448-88F9-8ED12A237F80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {512CEDFD-DA45-429C-AD13-10A0ACE60ACB}
