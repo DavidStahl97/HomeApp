@@ -16,6 +16,12 @@
 @code {
     private UserSettingsRequest userSettings = new UserSettingsRequest();
 
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpService.GetAsync<UserSettingsRequest>("api/UserSettings");
+        userSettings = result.Response;
+    }
+
     private async Task OnSubmitAsync()
     {
         await httpService.PostAsync("api/UserSettings", userSettings);

@@ -16,10 +16,12 @@ namespace HomeCloud.Maps.Server.Controllers
     public class UserSettingsController : ControllerBase
     {
         private readonly IInsertUserSettings _insertUserSettings;
+        private readonly IReadUserSettings _readUserSettings;
 
-        public UserSettingsController(IInsertUserSettings insertUserSettings)
+        public UserSettingsController(IInsertUserSettings insertUserSettings, IReadUserSettings readUserSettings)
         {
             _insertUserSettings = insertUserSettings;
+            _readUserSettings = readUserSettings;
         }
 
         [HttpPost]
@@ -27,6 +29,13 @@ namespace HomeCloud.Maps.Server.Controllers
         {
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
             await _insertUserSettings.ExecuteAsync(body, userId);
+        }
+
+        [HttpGet]
+        public async Task<UserSettingsRequest> Get()
+        {
+            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
+            return await _readUserSettings.ExecuteAsync(userId);
         }
     }
 }

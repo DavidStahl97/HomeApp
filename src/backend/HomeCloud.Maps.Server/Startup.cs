@@ -76,6 +76,7 @@ namespace HomeCloud.Maps.Server
         private static void AddApplicationServices(IServiceCollection services)
         {
             services.AddScoped<IInsertUserSettings, InsertUserSettings>();
+            services.AddScoped<IReadUserSettings, ReadUserSettings>();
         }
     }
 }
