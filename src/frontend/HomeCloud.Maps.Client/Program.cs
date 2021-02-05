@@ -17,7 +17,26 @@ namespace HomeCloud.Maps.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });            
+
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                // Configure your authentication provider options here.
+                // For more information, see https://aka.ms/blazor-standalone-auth
+                options.ProviderOptions.Authority = builder.Configuration["Google:Authority"];
+                options.ProviderOptions.ClientId = builder.Configuration["Google:ClientId"];
+                options.ProviderOptions.ResponseType = builder.Configuration["Google:ResponseType"];
+
+                var scopes = options.ProviderOptions.DefaultScopes;
+                foreach (var scope in builder.Configuration["Google:Scopes"].Split(";"))
+                {
+                    scopes.Add(scope);
+                }
+
+                options.UserOptions.AuthenticationType = builder.Configuration["Google:AuthenticationType"];
+            });            
+
+            builder.Services.AddAuthorizationCore();
 
             await builder.Build().RunAsync();
         }
