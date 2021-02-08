@@ -40,7 +40,7 @@ namespace HomeCloud.Maps.Client.Shared
         {
             //refresh nav menu because no parameters change in nav menu
             //but internal data does
-            _navMenuRef.Refresh();
+            //_navMenuRef.Refresh();
         }
 
         #region Theme        
