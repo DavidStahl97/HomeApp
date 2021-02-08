@@ -1,6 +1,8 @@
 <MudNavMenu Class="mudblazor-navmenu">
     <MudNavLink Href="/">Home</MudNavLink>
     <MudNavLink Href="/counter">Counter</MudNavLink>
-    <MudNavLink Href="/fetchdata">Fetch Data</MudNavLink>
-    <MudNavLink Href="/settings">Settings</MudNavLink>
+    <AuthorizeView>
+        <MudNavLink Href="/fetchdata">Fetch Data</MudNavLink>
+        <MudNavLink Href="/settings">Settings</MudNavLink>
+    </AuthorizeView>
 </MudNavMenu>
