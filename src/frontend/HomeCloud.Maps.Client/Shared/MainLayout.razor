@@ -4,11 +4,11 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudLayout RightToLeft="@_rightToLeft">
+<MudLayout>
     <MudAppBar Elevation="25">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-            <MudText Typo="Typo.h5" Class="mudblazor-appbar-brand-text">Mudblazor</MudText>
+            <MudText Typo="Typo.h5" Class="mudblazor-appbar-brand-text">Maps</MudText>
         </MudHidden>
         <MudAppBarSpacer />
         <MudAppBarSpacer />
@@ -22,10 +22,16 @@
     </MudAppBar>
 
     <MudDrawer @bind-Open=_drawerOpen Elevation="25" Class="mudblazor-appbar-band">
-        <NavMenu @ref="@_navMenuRef" />
+        <span style="margin: 10px">
+            <MudIcon Icon="@Icons.Material.Filled.Home" />
+            <MudText Typo="Typo.h5">Home</MudText>
+        </span>
+        <NavMenu />
     </MudDrawer>
     <MudMainContent Class="mudblazor-main-content">
-        @Body
+        <div style="margin: 50px">
+            @Body
+        </div>
         <MudScrollToTop TopOffset="400">
             <MudFab Icon="@Icons.Material.Filled.KeyboardArrowUp" Color="Color.Primary" />
         </MudScrollToTop>
