@@ -1,8 +1,11 @@
 version: '3.4'
 
 services:
-  homecloud-maps-server:    
+  homecloud-maps-server: 
+    ports:
+      - "80:5001"
+      - "443:5000"  
     environment:
-        - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
-        - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/homecloud-david.private_key.pfx
-        - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/homecloud-david.private_key.pfx
+      - ASPNETCORE_ENVIRONMENT=Production
