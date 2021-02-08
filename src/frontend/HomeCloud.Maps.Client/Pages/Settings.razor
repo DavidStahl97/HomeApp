@@ -1,7 +1,29 @@
 ﻿@page "/settings"
 
+@using HomeCloud.Maps.Shared
+@attribute [Authorize]
+
+@inject IHttpService httpService
+
 <h3>Settings</h3>
 
-@code {
+<div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Komoot User Id</label>
+    <input class="form-control" aria-describedby="emailHelp" @bind="@userSettings.KomootUserId" />
+</div>
+<button class="btn btn-primary" @onclick="@OnSubmitAsync">Submit</button>
 
+@code {
+    private UserSettingsRequest userSettings = new UserSettingsRequest();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpService.GetAsync<UserSettingsRequest>("api/UserSettings");
+        userSettings = result.Response;
+    }
+
+    private async Task OnSubmitAsync()
+    {
+        await httpService.PostAsync("api/UserSettings", userSettings);
+    }
 }

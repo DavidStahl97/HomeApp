@@ -12,10 +12,14 @@
     <PackageReference Include="Hellang.Authentication.JwtBearer.Google" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\frontend\HomeCloud.Maps.Client\HomeCloud.Maps.Client.csproj" />
+    <ProjectReference Include="..\HomeCloud.Maps.Application\HomeCloud.Maps.Application.csproj" />
+    <ProjectReference Include="..\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj" />
+    <ProjectReference Include="..\HomeCloud.Maps.Infrastructure\HomeCloud.Maps.Infrastructure.csproj" />
     <ProjectReference Include="..\HomeCloud.Maps.Shared\HomeCloud.Maps.Shared.csproj" />
   </ItemGroup>
 
