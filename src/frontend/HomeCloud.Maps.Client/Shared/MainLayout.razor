@@ -1,17 +1,40 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-    <div class="main">
-        <div class="top-row px-4 auth">
+<MudLayout>
+    <MudAppBar Elevation="25">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudText Typo="Typo.h5" Class="mudblazor-appbar-brand-text">Maps</MudText>
+        </MudHidden>
+        <MudAppBarSpacer />
+        <MudAppBarSpacer />
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
             <LoginDisplay />
-        </div>
+            <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-5" />
+            <MudTooltip Text="GitHub repository">
+                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/DavidStahl97/HomeCloud" Target="_blank" />
+            </MudTooltip>
+        </MudHidden>        
+    </MudAppBar>
 
-        <div class="content px-4">
+    <MudDrawer @bind-Open=_drawerOpen Elevation="25" Class="mudblazor-appbar-band">
+        <span style="margin: 10px">
+            <MudIcon Icon="@Icons.Material.Filled.Home" />
+            <MudText Typo="Typo.h5">Home</MudText>
+        </span>
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Class="mudblazor-main-content">
+        <div style="margin: 50px">
             @Body
         </div>
-    </div>
-</div>
+        <MudScrollToTop TopOffset="400">
+            <MudFab Icon="@Icons.Material.Filled.KeyboardArrowUp" Color="Color.Primary" />
+        </MudScrollToTop>
+    </MudMainContent>
+
+</MudLayout>
