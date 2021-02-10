@@ -26,6 +26,7 @@ namespace HomeCloud.Maps.Application.Commands
 
             var tours = await _komootService.GetAllTours(settings.KomootUserId, request.Cookies);
             var tourInfo = tours.Select(x => x.Info).ToList();
+            tourInfo.ForEach(x => x.UserId = userId);
 
             await _repository.TourInfoCollection.InsertManyAsync(tourInfo);
         }

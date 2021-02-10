@@ -34,6 +34,12 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collection
             return result;
         }
 
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
+        {
+            var result = await GetCollection().FindAsync(expression);
+            return result.Current;
+        }
+
         public Task ReplaceOrInsert(Expression<Func<T, bool>> expression, T document)
         {
             return GetCollection().ReplaceOneAsync(expression, document, new ReplaceOptions

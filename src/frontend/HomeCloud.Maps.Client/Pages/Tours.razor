@@ -1,0 +1,25 @@
+﻿@page "/tours"
+
+@attribute [Authorize]
+
+@inject IHttpService httpService
+
+<h3>Tours</h3>
+
+@foreach (var tour in tours)
+{
+    <MudPaper Elevation="3">
+        <MudText>@tour.Name</MudText>
+    </MudPaper>
+}
+
+@code {
+    private IEnumerable<TourInfoDto> tours = new List<TourInfoDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpService.GetAsync<List<TourInfoDto>>("api/tours");
+
+        tours = result.Response;
+    }
+}

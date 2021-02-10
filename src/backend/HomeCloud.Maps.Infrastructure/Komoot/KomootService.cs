@@ -27,7 +27,6 @@ namespace HomeCloud.Maps.Infrastructure.Komoot
             {
                 Info = new Domain.Tours.TourInfo
                 {
-                    UserId = userId,
                     TourId = x.Id.ToString(),
                     Date = x.Date,
                     Distance = x.Distance,
