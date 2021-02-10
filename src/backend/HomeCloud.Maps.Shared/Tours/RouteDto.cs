@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeCloud.Maps.Shared
+namespace HomeCloud.Maps.Shared.Tours
 {
-    public class ToursDto
+    public class RouteDto
     {
-        public IEnumerable<TourDto> Tours { get; set; }
+        public IEnumerable<PositionDto> Positions { get; set; }
     }
 }
