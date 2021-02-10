@@ -12,5 +12,7 @@ namespace HomeCloud.Maps.Application.Database
         IUserSettingsCollection UserSettingsCollection { get; }
 
         ITourInfoCollection TourInfoCollection { get; }
+
+        IRouteCollection RouteCollection { get; }
     }
 }

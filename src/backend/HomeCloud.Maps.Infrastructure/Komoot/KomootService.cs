@@ -1,4 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Komoot;
+using HomeCloud.Maps.Infrastructure.GPX.Model;
 using HomeCloud.Maps.Infrastructure.Komoot.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,27 +14,52 @@ namespace HomeCloud.Maps.Infrastructure.Komoot
     public class KomootService : IKomootService
     {
         private const string URL = "https://www.komoot.de/api/v007";
+        
         private readonly IHttpClientFactory _clientFactory;
+        private readonly IGPXSerializer _gpxSerializer;
 
-        public KomootService(IHttpClientFactory clientFactory)
+        public KomootService(IHttpClientFactory clientFactory, IGPXSerializer gpxSerializer)
         {
             _clientFactory = clientFactory;
+            _gpxSerializer = gpxSerializer;
         }
 
         public async Task<IEnumerable<Domain.Tours.Tour>> GetAllTours(string userId, string cookies)
         {
-            var tours = await GetToursAsync(userId, cookies);
-            return tours.Select(x => new Domain.Tours.Tour
+            var toursInfos = await GetToursAsync(userId, cookies);
+
+            var tours = new List<Domain.Tours.Tour>();
+            foreach (var info in toursInfos)
             {
-                Info = new Domain.Tours.TourInfo
+                var route = await GetRouteAsync(info.Id, cookies);
+
+                var positions = route.Track.Points.Select(x => new Domain.Tours.Position
                 {
-                    TourId = x.Id.ToString(),
-                    Date = x.Date,
-                    Distance = x.Distance,
-                    Name = x.Name,
-                    ImageUrl = x.MapImagePreview.Source
-                }
-            }).ToList();
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude,
+                }).ToList();
+
+                var tour = new Domain.Tours.Tour
+                {
+                    Info = new Domain.Tours.TourInfo
+                    {
+                        TourId = info.Id.ToString(),
+                        Date = info.Date,
+                        Distance = info.Distance,
+                        Name = info.Name,
+                        ImageUrl = info.MapImagePreview.Source
+                    },
+                    Route = new Domain.Tours.Route
+                    {
+                        TourId = info.Id.ToString(),
+                        Positions = positions
+                    }
+                };
+
+                tours.Add(tour);
+            }
+
+            return tours;
         }
 
         private async Task<IEnumerable<Tour>> GetToursAsync(string userId, string cookies)
@@ -81,6 +107,24 @@ namespace HomeCloud.Maps.Infrastructure.Komoot
             var root = JsonSerializer.Deserialize<Root>(s);
 
             return root;
+        }
+
+        private async Task<Route> GetRouteAsync(int tourId, string cookies)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{URL}/tours/{tourId}.gpx");
+            request.Headers.Add("Cookie", cookies);
+
+            var client = _clientFactory.CreateClient();
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                return null;
+            }
+
+            var stream = await response.Content.ReadAsStreamAsync();
+            var route = _gpxSerializer.Deserialize(stream);
+            return route;
         }
     }
 }

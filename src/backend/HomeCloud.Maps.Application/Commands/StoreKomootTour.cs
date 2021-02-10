@@ -1,5 +1,6 @@
 ﻿using HomeCloud.Maps.Application.Database;
 using HomeCloud.Maps.Application.Komoot;
+using HomeCloud.Maps.Domain.Tours;
 using HomeCloud.Maps.Shared;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,25 @@ namespace HomeCloud.Maps.Application.Commands
             var settings = await _repository.UserSettingsCollection.SingleAsync(x => x.UserId == userId);
 
             var tours = await _komootService.GetAllTours(settings.KomootUserId, request.Cookies);
+            
+            await AddTourInfos(userId, tours);
+            await AddRoutes(userId, tours);
+        }
+
+        private async Task AddTourInfos(string userId, IEnumerable<Tour> tours)
+        {
             var tourInfo = tours.Select(x => x.Info).ToList();
             tourInfo.ForEach(x => x.UserId = userId);
 
             await _repository.TourInfoCollection.InsertManyAsync(tourInfo);
+        }
+
+        private async Task AddRoutes(string userId, IEnumerable<Tour> tours)
+        {
+            var routes = tours.Select(x => x.Route).ToList();
+            routes.ForEach(x => x.UserId = userId);
+
+            await _repository.RouteCollection.InsertManyAsync(routes);
         }
     }
 }

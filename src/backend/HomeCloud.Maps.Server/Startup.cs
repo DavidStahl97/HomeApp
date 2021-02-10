@@ -1,6 +1,7 @@
 using HomeCloud.Maps.Application.Commands;
 using HomeCloud.Maps.Application.Komoot;
 using HomeCloud.Maps.Infrastructure.Database;
+using HomeCloud.Maps.Infrastructure.GPX.Model;
 using HomeCloud.Maps.Infrastructure.Komoot;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -80,6 +81,7 @@ namespace HomeCloud.Maps.Server
         private static void AddApplicationServices(IServiceCollection services)
         {
             services.AddScoped<IKomootService, KomootService>();
+            services.AddScoped<IGPXSerializer, GPXSerializer>();
 
             services.AddScoped<IInsertUserSettings, InsertUserSettings>();
             services.AddScoped<IReadUserSettings, ReadUserSettings>();            

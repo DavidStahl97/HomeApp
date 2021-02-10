@@ -18,10 +18,13 @@ namespace HomeCloud.Maps.Infrastructure.Database
 
             UserSettingsCollection = new UserSettingsCollection(_client);
             TourInfoCollection = new TourInfoCollection(_client);
+            RouteCollection = new RouteCollection(_client);
         }
 
         public IUserSettingsCollection UserSettingsCollection { get; }
 
         public ITourInfoCollection TourInfoCollection { get; }
+
+        public IRouteCollection RouteCollection { get; }
     }
 }
