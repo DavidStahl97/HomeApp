@@ -1,5 +1,7 @@
 using HomeCloud.Maps.Application.Commands;
+using HomeCloud.Maps.Application.Komoot;
 using HomeCloud.Maps.Infrastructure.Database;
+using HomeCloud.Maps.Infrastructure.Komoot;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +27,8 @@ namespace HomeCloud.Maps.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -75,8 +79,11 @@ namespace HomeCloud.Maps.Server
 
         private static void AddApplicationServices(IServiceCollection services)
         {
+            services.AddScoped<IKomootService, KomootService>();
+
             services.AddScoped<IInsertUserSettings, InsertUserSettings>();
-            services.AddScoped<IReadUserSettings, ReadUserSettings>();
+            services.AddScoped<IReadUserSettings, ReadUserSettings>();            
+            services.AddScoped<IStoreKomootTour, StoreKomootTour>();
         }
     }
 }

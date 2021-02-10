@@ -17,16 +17,16 @@ namespace HomeCloud.Maps.Application.Commands
             _repository = repository;
         }
 
-        public async Task<UserSettingsRequest> ExecuteAsync(string userId)
+        public async Task<UserSettingsDto> ExecuteAsync(string userId)
         {
             var settings = await _repository.UserSettingsCollection.SingleAsync(x => x.UserId == userId);
 
             if (settings == null)
             {
-                return new UserSettingsRequest { KomootUserId = string.Empty };
+                return new UserSettingsDto { KomootUserId = string.Empty };
             }
 
-            return new UserSettingsRequest
+            return new UserSettingsDto
             {
                 KomootUserId = settings.KomootUserId
             };

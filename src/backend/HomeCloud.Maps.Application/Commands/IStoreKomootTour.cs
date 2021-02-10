@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Application.Commands
 {
-    public interface IReadUserSettings
+    public interface IStoreKomootTour
     {
-        Task<UserSettingsDto> ExecuteAsync(string userId);
+        Task ExecuteAsync(string userId, KomootToursRequest request);
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeCloud.Maps.Application.Database.Models
+namespace HomeCloud.Maps.Domain.Settings
 {
     public class UserSettings
     {

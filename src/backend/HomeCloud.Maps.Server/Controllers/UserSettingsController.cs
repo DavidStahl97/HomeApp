@@ -25,14 +25,14 @@ namespace HomeCloud.Maps.Server.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody] UserSettingsRequest body)
+        public async Task Post([FromBody] UserSettingsDto body)
         {
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
             await _insertUserSettings.ExecuteAsync(body, userId);
         }
 
         [HttpGet]
-        public async Task<UserSettingsRequest> Get()
+        public async Task<UserSettingsDto> Get()
         {
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
             return await _readUserSettings.ExecuteAsync(userId);

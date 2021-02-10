@@ -11,6 +11,8 @@ namespace HomeCloud.Maps.Application.Database.Collections
     {
         Task InsertAsync(T document);
 
+        Task InsertManyAsync(IEnumerable<T> documents);
+
         Task<T> SingleAsync(Expression<Func<T, bool>> expression);
 
         Task ReplaceOrInsert(Expression<Func<T, bool>> expression, T document);

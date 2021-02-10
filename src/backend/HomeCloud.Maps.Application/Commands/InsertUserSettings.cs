@@ -1,5 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Database;
-using HomeCloud.Maps.Application.Database.Models;
+using HomeCloud.Maps.Domain.Settings;
 using HomeCloud.Maps.Shared;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace HomeCloud.Maps.Application.Commands
             _repository = repository;
         }
 
-        public async Task ExecuteAsync(UserSettingsRequest request, string userId)
+        public async Task ExecuteAsync(UserSettingsDto request, string userId)
         {
             var userSettings = new UserSettings
             {

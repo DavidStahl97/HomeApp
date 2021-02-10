@@ -10,5 +10,7 @@ namespace HomeCloud.Maps.Application.Database
     public interface IRepository
     {
         IUserSettingsCollection UserSettingsCollection { get; }
+
+        ITourInfoCollection TourInfoCollection { get; }
     }
 }

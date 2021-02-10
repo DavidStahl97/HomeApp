@@ -60,6 +60,15 @@ namespace HomeCloud.Maps.Client.Services
             return new HttpResponseWrapper<object>(null, response.IsSuccessStatusCode, response);
         }
 
+        public async Task PatchAsync<T>(string url, T data)
+        {
+            await AddAuthenticationAsync();
+
+            var dataJson = JsonSerializer.Serialize(data);
+            var stringContent = new StringContent(dataJson, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PatchAsync(url, stringContent);
+        }
+
         public async Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T data)
         {
             await AddAuthenticationAsync();

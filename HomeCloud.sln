@@ -23,11 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Client.UnitT
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EB5F47C7-27EE-47CE-8B84-7837AB9725C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Infrastructure", "src\backend\HomeCloud.Maps.Infrastructure\HomeCloud.Maps.Infrastructure.csproj", "{2107B5B8-B653-44C3-A148-74733944E569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Infrastructure", "src\backend\HomeCloud.Maps.Infrastructure\HomeCloud.Maps.Infrastructure.csproj", "{2107B5B8-B653-44C3-A148-74733944E569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Application", "src\backend\HomeCloud.Maps.Application\HomeCloud.Maps.Application.csproj", "{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Application", "src\backend\HomeCloud.Maps.Application\HomeCloud.Maps.Application.csproj", "{B943FCAE-B59E-43D9-B9F5-9F4EED709C4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Domain", "src\backend\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj", "{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Domain", "src\backend\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj", "{CA19973E-D7B7-43CF-A680-F5A4D05E2D53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
