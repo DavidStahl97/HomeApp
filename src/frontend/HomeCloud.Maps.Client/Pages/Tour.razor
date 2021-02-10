@@ -1,0 +1,18 @@
+﻿@page "/tours/{TourId}"
+
+@attribute [Authorize]
+
+<h3></h3>
+
+@code {
+
+    private TourInfoDto tour = new TourInfoDto();
+
+    [Parameter]
+    public string TourId { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+}
