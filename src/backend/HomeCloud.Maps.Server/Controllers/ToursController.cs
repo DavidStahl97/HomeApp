@@ -1,6 +1,7 @@
 ﻿using HomeCloud.Maps.Application.Commands;
 using HomeCloud.Maps.Shared.Tours;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace HomeCloud.Maps.Server.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    [ApiController]    
+    [ApiController]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public class ToursController : ControllerBase
     {
 
@@ -25,16 +28,9 @@ namespace HomeCloud.Maps.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<TourDto> Get(string id)
+        public async Task<TourDto> Get(string id, [FromServices] IReadTour service)
         {
-            //return await service.ExecuteAsync(tourId.ToString());
-            return new TourDto
-            {
-                TourInfo = new TourInfoDto
-                {
-                    Name = "test"
-                }
-            };
+            return await service.ExecuteAsync(id);
         }
     }
 }

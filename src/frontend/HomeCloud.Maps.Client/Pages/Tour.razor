@@ -9,7 +9,7 @@
 @inject IHttpService httpService
 @inject IJSRuntime jsRuntime
 
-<h3>@tour.TourInfo.Name</h3>
+<h3>@tour?.TourInfo?.Name</h3>
 
 <div style="height: 700px; width: 1200px;">
     <LeafletMap Map="_map" InitialPosition="_startAt" InitialZoom="4.8f" />
@@ -32,8 +32,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpService.GetAsync<TourDto>($"api/tours/{TourId}");
-        tour = result.Response;
+        _startAt = new PointF(Lat, Lng);
 
         _map = new Map(jsRuntime);
 
@@ -42,6 +41,9 @@
             UrlTemplate = "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
             Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
         });
+
+        var result = await httpService.GetAsync<TourDto>($"api/Tours/{TourId}");
+        tour = result.Response;
 
         var polygons = new RouteDrawer().Draw(tour.Route.Positions);
 

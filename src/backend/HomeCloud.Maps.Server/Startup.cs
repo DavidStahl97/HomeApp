@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System.Linq;
 
 namespace HomeCloud.Maps.Server
@@ -44,6 +45,8 @@ namespace HomeCloud.Maps.Server
             });
 
             AddApplicationServices(services);
+
+            services.AddSwaggerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +67,12 @@ namespace HomeCloud.Maps.Server
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HomeCloud.Maps V1");
+            });
 
             app.UseRouting();
 
