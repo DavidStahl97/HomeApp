@@ -27,6 +27,7 @@ namespace HomeCloud.Maps.Infrastructure.Komoot
         public async Task<IEnumerable<Domain.Tours.Tour>> GetAllTours(string userId, string cookies)
         {
             var toursInfos = await GetToursAsync(userId, cookies);
+            toursInfos = toursInfos.Where(x => x.Type == "tour_recorded").ToList();
 
             var tours = new List<Domain.Tours.Tour>();
             foreach (var info in toursInfos)
