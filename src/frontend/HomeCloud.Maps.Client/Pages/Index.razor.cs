@@ -1,6 +1,5 @@
 ﻿using BlazorLeaflet;
 using BlazorLeaflet.Models;
-using HomeCloud.Maps.Client.GPX;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -31,23 +30,6 @@ namespace HomeCloud.Maps.Client.Pages
                 UrlTemplate = "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
                 Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
             });
-        }
-
-        private async Task OnInputFileChanged(InputFileChangeEventArgs e)
-        {
-            var fileStream = e.File.OpenReadStream();
-            var bytes = new byte[fileStream.Length];
-            await fileStream.ReadAsync(bytes.AsMemory(0, (int)fileStream.Length));
-
-            var serializer = new GPXSerializer();
-            var route = serializer.Deserialize(new MemoryStream(bytes));
-
-            var polygons = new RouteDrawer().Draw(route.Track.Points);
-
-            foreach (var polygon in polygons)
-            {
-                _map.Layers.Add(polygon);
-            }
         }
     }
 }

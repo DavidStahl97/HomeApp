@@ -24,10 +24,17 @@ namespace HomeCloud.Maps.Server.Controllers
             return service.ExecuteAsync(userId);
         }
 
-        [HttpGet("{tourId})")]
-        public Task<TourDto> Get(string tourId, [FromServices] IReadTour service)
+        [HttpGet("{id}")]
+        public async Task<TourDto> Get(string id)
         {
-            return service.ExecuteAsync(tourId);
+            //return await service.ExecuteAsync(tourId.ToString());
+            return new TourDto
+            {
+                TourInfo = new TourInfoDto
+                {
+                    Name = "test"
+                }
+            };
         }
     }
 }
