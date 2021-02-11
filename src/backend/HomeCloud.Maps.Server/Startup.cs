@@ -97,6 +97,7 @@ namespace HomeCloud.Maps.Server
             services.AddScoped<IStoreKomootTour, StoreKomootTour>();
             services.AddScoped<IReadTours, ReadTours>();
             services.AddScoped<IReadTour, ReadTour>();
+            services.AddScoped<IReadAllRoutes, ReadAllRoutes>();
         }
     }
 }

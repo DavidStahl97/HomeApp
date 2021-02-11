@@ -15,7 +15,7 @@ namespace HomeCloud.Maps.Server.Controllers
     [ApiController]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public class ToursController : ControllerBase
+    public class TourInfosController : ControllerBase
     {
 
         [HttpGet]
