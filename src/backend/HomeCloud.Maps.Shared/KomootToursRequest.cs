@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Shared
 {
-    public class UserSettingsRequest
+    public class KomootToursRequest
     {
-        public string KomootUserId { get; set; }
+        public string Cookies { get; set; }
     }
 }

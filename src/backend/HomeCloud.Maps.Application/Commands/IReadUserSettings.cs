@@ -5,6 +5,6 @@ namespace HomeCloud.Maps.Application.Commands
 {
     public interface IReadUserSettings
     {
-        Task<UserSettingsRequest> ExecuteAsync(string userId);
+        Task<UserSettingsDto> ExecuteAsync(string userId);
     }
 }

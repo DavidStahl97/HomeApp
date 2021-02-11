@@ -23,10 +23,20 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collection
             return GetCollection().InsertOneAsync(document);                
         }
 
+        public Task InsertManyAsync(IEnumerable<T> documents)
+        {
+            return GetCollection().InsertManyAsync(documents);
+        }
+
         public async Task<T> SingleAsync(Expression<Func<T, bool>> expression)
         {
             var result = await GetCollection().Find(expression).SingleOrDefaultAsync();
             return result;
+        }
+
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
+        {
+            return await GetCollection().Find(expression).ToListAsync();
         }
 
         public Task ReplaceOrInsert(Expression<Func<T, bool>> expression, T document)

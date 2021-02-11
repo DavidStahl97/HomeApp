@@ -1,5 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Database.Collections;
-using HomeCloud.Maps.Application.Database.Models;
+using HomeCloud.Maps.Domain.Settings;
 using HomeCloud.Maps.Infrastructure.Database.Collection;
 using MongoDB.Driver;
 using System;

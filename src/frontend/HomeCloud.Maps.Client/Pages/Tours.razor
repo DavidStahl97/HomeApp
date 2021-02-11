@@ -1,0 +1,33 @@
+﻿@page "/tours"
+
+@attribute [Authorize]
+
+@inject IHttpService httpService
+@inject NavigationManager Navigation
+
+<h3>Tours</h3>
+
+@foreach (var tour in tours)
+{
+    <MudPaper Elevation="3" Style="margin: 10px">
+        <MudButton Variant="Variant.Text" Style="margin: 10px" OnClick="@(() => OnTourClicked(tour.TourId))">
+            @tour.Name
+        </MudButton>
+    </MudPaper>
+}
+
+@code {
+    private IEnumerable<TourInfoDto> tours = new List<TourInfoDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await httpService.GetAsync<List<TourInfoDto>>("api/tours");
+
+        tours = result.Response;
+    }
+
+    private void OnTourClicked(string tourId)
+    {
+        Navigation.NavigateTo($"/tours/{tourId}");
+    }
+}

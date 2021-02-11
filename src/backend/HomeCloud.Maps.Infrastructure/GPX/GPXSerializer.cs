@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using HomeCloud.Maps.Client.GPX.Model;
 
-namespace HomeCloud.Maps.Client.GPX
+namespace HomeCloud.Maps.Infrastructure.GPX.Model
 {
     public class GPXSerializer : IGPXSerializer
     {

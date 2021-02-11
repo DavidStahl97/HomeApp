@@ -1,4 +1,4 @@
-﻿using HomeCloud.Maps.Application.Database.Models;
+﻿using HomeCloud.Maps.Domain.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;

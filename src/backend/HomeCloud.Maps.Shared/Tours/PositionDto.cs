@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
-namespace HomeCloud.Maps.Client.GPX.Model
+namespace HomeCloud.Maps.Shared.Tours
 {
-    public class Point
+    public class PositionDto
     {
-        [XmlAttribute(AttributeName = "lat")]
         public float Latitude { get; set; }
 
-        [XmlAttribute(AttributeName = "lon")]
         public float Longitude { get; set; }
     }
 }

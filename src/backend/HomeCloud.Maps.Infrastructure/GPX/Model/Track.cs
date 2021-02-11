@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace HomeCloud.Maps.Client.GPX.Model
+namespace HomeCloud.Maps.Infrastructure.GPX.Model
 {
     public class Track
     {

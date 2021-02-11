@@ -16,5 +16,7 @@ namespace HomeCloud.Maps.Client.Services
         Task<HttpResponseWrapper<TResponse>> PostAsync<T, TResponse>(string url, T data);
         
         Task<HttpResponseWrapper<object>> PutAsync<T>(string url, T data);
+
+        Task PatchAsync<T>(string url, T data);
     }
 }

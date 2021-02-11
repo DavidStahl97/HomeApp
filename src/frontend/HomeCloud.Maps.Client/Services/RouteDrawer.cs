@@ -1,5 +1,5 @@
 ﻿using BlazorLeaflet.Models;
-using HomeCloud.Maps.Client.GPX.Model;
+using HomeCloud.Maps.Shared.Tours;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +10,7 @@ namespace HomeCloud.Maps.Client
 {
     public class RouteDrawer
     {
-        public IEnumerable<Polygon> Draw(IEnumerable<GPX.Model.Point> routePoints)
+        public IEnumerable<Polygon> Draw(IEnumerable<PositionDto> routePoints)
         {
             var points = routePoints.Select(x => new PointF(x.Latitude, x.Longitude)).ToList();
 

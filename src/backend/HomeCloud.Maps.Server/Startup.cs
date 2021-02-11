@@ -1,5 +1,8 @@
 using HomeCloud.Maps.Application.Commands;
+using HomeCloud.Maps.Application.Komoot;
 using HomeCloud.Maps.Infrastructure.Database;
+using HomeCloud.Maps.Infrastructure.GPX.Model;
+using HomeCloud.Maps.Infrastructure.Komoot;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +11,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System.Linq;
 
 namespace HomeCloud.Maps.Server
@@ -25,6 +29,8 @@ namespace HomeCloud.Maps.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -39,6 +45,8 @@ namespace HomeCloud.Maps.Server
             });
 
             AddApplicationServices(services);
+
+            services.AddSwaggerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +68,12 @@ namespace HomeCloud.Maps.Server
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HomeCloud.Maps V1");
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -75,8 +89,15 @@ namespace HomeCloud.Maps.Server
 
         private static void AddApplicationServices(IServiceCollection services)
         {
+            services.AddScoped<IKomootService, KomootService>();
+            services.AddScoped<IGPXSerializer, GPXSerializer>();
+
             services.AddScoped<IInsertUserSettings, InsertUserSettings>();
-            services.AddScoped<IReadUserSettings, ReadUserSettings>();
+            services.AddScoped<IReadUserSettings, ReadUserSettings>();            
+            services.AddScoped<IStoreKomootTour, StoreKomootTour>();
+            services.AddScoped<IReadTours, ReadTours>();
+            services.AddScoped<IReadTour, ReadTour>();
+            services.AddScoped<IReadAllRoutes, ReadAllRoutes>();
         }
     }
 }

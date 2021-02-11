@@ -13,17 +13,30 @@
 </div>
 <button class="btn btn-primary" @onclick="@OnSubmitAsync">Submit</button>
 
+<div class="mb-3">
+    <label>Cookie</label>
+    <input class="form-control" @bind="@komootToursRequest.Cookies" />
+</div>
+<button @onclick="OnUpdateKommotTourAsync">Update Komoot Tours</button>
+
 @code {
-    private UserSettingsRequest userSettings = new UserSettingsRequest();
+    private UserSettingsDto userSettings = new UserSettingsDto();
+    private KomootToursRequest komootToursRequest = new KomootToursRequest();
+
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpService.GetAsync<UserSettingsRequest>("api/UserSettings");
+        var result = await httpService.GetAsync<UserSettingsDto>("api/UserSettings");
         userSettings = result.Response;
     }
 
     private async Task OnSubmitAsync()
     {
         await httpService.PostAsync("api/UserSettings", userSettings);
+    }
+
+    private async Task OnUpdateKommotTourAsync()
+    {
+        await httpService.PatchAsync("api/Komoot", komootToursRequest);
     }
 }

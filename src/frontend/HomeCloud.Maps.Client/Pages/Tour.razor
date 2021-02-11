@@ -1,0 +1,55 @@
+﻿@page "/tours/{TourId}"
+
+@using BlazorLeaflet
+@using BlazorLeaflet.Models
+@using System.Drawing
+
+@attribute [Authorize]
+
+@inject IHttpService httpService
+@inject IJSRuntime jsRuntime
+
+<h3>@tour?.TourInfo?.Name</h3>
+
+<div style="height: 700px; width: 1200px;">
+    <LeafletMap Map="_map" InitialPosition="_startAt" InitialZoom="4.8f" />
+</div>
+
+@code {
+
+    private TourDto tour = new TourDto();
+
+    private Map _map;
+
+    private float Lat { get; set; } = 47.5574007f;
+
+    private float Lng { get; set; } = 16.3918687f;
+
+    private PointF _startAt = new PointF(50.433216f, 8.497126f);
+
+    [Parameter]
+    public string TourId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _startAt = new PointF(Lat, Lng);
+
+        _map = new Map(jsRuntime);
+
+        _map.Layers.Add(new TileLayer
+        {
+            UrlTemplate = "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
+            Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+        });
+
+        var result = await httpService.GetAsync<TourDto>($"api/Tours/{TourId}");
+        tour = result.Response;
+
+        var polygons = new RouteDrawer().Draw(tour.Route.Positions);
+
+        foreach (var polygon in polygons)
+        {
+            _map.Layers.Add(polygon);
+        }
+    }
+}
