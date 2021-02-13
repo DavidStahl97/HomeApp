@@ -16,6 +16,7 @@
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
+	<None Include="docker-compose.logs.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
 </Project>
