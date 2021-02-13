@@ -92,6 +92,7 @@ namespace HomeCloud.Maps.Server
             services.AddScoped<IKomootService, KomootService>();
             services.AddScoped<IGPXSerializer, GPXSerializer>();
 
+
             services.AddScoped<IInsertUserSettings, InsertUserSettings>();
             services.AddScoped<IReadUserSettings, ReadUserSettings>();            
             services.AddScoped<IStoreKomootTour, StoreKomootTour>();
