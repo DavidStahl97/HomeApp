@@ -8,15 +8,21 @@ services:
       context: .
       dockerfile: ./src/backend/HomeCloud.Maps.Server/Dockerfile
     environment:
-      - ASPNETCORE_URLS=https://+:5000;http://+:5001
-      - MongoDb__ConnectionString=mongodb://mongo:27017
+      - ASPNETCORE_URLS=https://+:5000;http://+:5001      
     volumes:
       - ~/.aspnet/https:/https:ro
     external_links:
-      - mongo 
+      - mongo
+    env_file:
+      - homecloud-maps-server.env
   
   mongo:
-    container_name: mongo
     image: mongo
+    container_name: mongo
+    restart: always
     ports:
-      - '27017:27017'
+      - 27018:27017
+    env_file:
+      - mongo.env
+    volumes:
+      - ./mongo-volumne:/data/db   
