@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeCloud.Maps.Server
+namespace HomeCloud.Maps.Server.Configure
 {
     public static class SwaggerExtensions
     {
@@ -34,7 +34,7 @@ namespace HomeCloud.Maps.Server
                                   Id = "Bearer"
                               }
                           },
-                          System.Array.Empty<string>()
+                          Array.Empty<string>()
                     }
                 });
             });

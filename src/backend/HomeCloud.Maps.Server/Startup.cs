@@ -3,6 +3,7 @@ using HomeCloud.Maps.Application.Komoot;
 using HomeCloud.Maps.Infrastructure.Database;
 using HomeCloud.Maps.Infrastructure.GPX.Model;
 using HomeCloud.Maps.Infrastructure.Komoot;
+using HomeCloud.Maps.Server.Configure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Linq;
 
 namespace HomeCloud.Maps.Server
@@ -49,7 +51,8 @@ namespace HomeCloud.Maps.Server
             services.AddSwaggerDocumentation();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -74,17 +77,10 @@ namespace HomeCloud.Maps.Server
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HomeCloud.Maps V1");
             });
 
-            app.UseRouting();
+            app.UseSerilogRequestLogging();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-                endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
-            });
+            app.AddApiRouting();
+            app.AddBlazorRouting();
         }
 
         private static void AddApplicationServices(IServiceCollection services)

@@ -21,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpService.GetAsync<List<TourInfoDto>>("api/tours");
+        var result = await httpService.GetAsync<List<TourInfoDto>>("api/TourInfos");
 
         tours = result.Response;
     }
