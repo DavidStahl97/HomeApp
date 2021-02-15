@@ -7,9 +7,12 @@ services:
     build:
       context: .
       dockerfile: ./src/backend/HomeCloud.Maps.Server/Dockerfile
+    ports:
+      - "80:5001"
+      - "443:5000"  
     environment:
       - ASPNETCORE_URLS=https://+:5000;http://+:5001      
-      - MongoDb__ConnectionString=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false
+      - MongoDb__ConnectionString=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false      
     volumes:
       - ~/.aspnet/https:/https:ro
     external_links:

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Linq;
 
 namespace HomeCloud.Maps.Server
@@ -73,6 +74,8 @@ namespace HomeCloud.Maps.Server
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HomeCloud.Maps V1");
             });
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

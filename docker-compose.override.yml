@@ -1,11 +1,8 @@
 version: '3.4'
 
 services:
-  homecloud-maps-server:  
-    ports:
-      - "63897:5001"
-      - "44382:5000"
+  homecloud-maps-server:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_Kestrel__Certificates__Default__Password=test123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx

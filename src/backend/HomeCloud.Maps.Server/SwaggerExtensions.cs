@@ -34,7 +34,7 @@ namespace HomeCloud.Maps.Server
                                   Id = "Bearer"
                               }
                           },
-                          System.Array.Empty<string>()
+                          Array.Empty<string>()
                     }
                 });
             });
