@@ -1,5 +1,6 @@
 ﻿using HomeCloud.Maps.Application.Dto;
 using HomeCloud.Maps.Application.Services;
+using HomeCloud.Maps.Server.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,16 +29,15 @@ namespace HomeCloud.Maps.Server.Controllers
         [HttpPost(Name = nameof(PostUserSettings))]
         public async Task PostUserSettings([FromBody] UserSettingsDto body)
         {
-            _logger.LogInformation($"Post UserSettings { body.KomootUserId }");
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-            await _userSettingsService.InsertUserSettingsAsync(body, userId);
+            var jwt = HttpContext.GetJsonWebToken();
+            await _userSettingsService.InsertUserSettingsAsync(body, jwt.Subject);
         }
 
         [HttpGet(Name = nameof(GetUserSettings))]
         public async Task<UserSettingsDto> GetUserSettings()
         {
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-            return await _userSettingsService.GetUserSettingsAsync(userId);
+            var jwt = HttpContext.GetJsonWebToken();
+            return await _userSettingsService.GetUserSettingsAsync(jwt.Subject);
         }
     }
 }

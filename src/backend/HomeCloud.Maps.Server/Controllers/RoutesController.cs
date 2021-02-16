@@ -1,5 +1,6 @@
 ﻿using HomeCloud.Maps.Application.Dto.Tours;
 using HomeCloud.Maps.Application.Services;
+using HomeCloud.Maps.Server.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +28,8 @@ namespace HomeCloud.Maps.Server.Controllers
         [HttpGet(Name = nameof(GetAllRoutes))]
         public async Task<IEnumerable<RouteDto>> GetAllRoutes()
         {
-            // To-Do
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-
-            return await _tourService.GetAllRoutes(userId);
+            var jwt = HttpContext.GetJsonWebToken();
+            return await _tourService.GetAllRoutes(jwt.Subject);
         }
     }
 }
