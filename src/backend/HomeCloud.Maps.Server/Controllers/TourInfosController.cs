@@ -18,8 +18,8 @@ namespace HomeCloud.Maps.Server.Controllers
     public class TourInfosController : ControllerBase
     {
 
-        [HttpGet]
-        public Task<IEnumerable<TourInfoDto>> Get([FromServices] IReadTours service) 
+        [HttpGet(Name = nameof(GetAllTourInfos))]
+        public Task<IEnumerable<TourInfoDto>> GetAllTourInfos([FromServices] IReadTours service) 
         {
             // To-Do
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
@@ -27,8 +27,8 @@ namespace HomeCloud.Maps.Server.Controllers
             return service.ExecuteAsync(userId);
         }
 
-        [HttpGet("{id}")]
-        public async Task<TourDto> Get(string id, [FromServices] IReadTour service)
+        [HttpGet("{id}", Name = nameof(GetTourInfosById))]
+        public async Task<TourDto> GetTourInfosById(string id, [FromServices] IReadTour service)
         {
             return await service.ExecuteAsync(id);
         }

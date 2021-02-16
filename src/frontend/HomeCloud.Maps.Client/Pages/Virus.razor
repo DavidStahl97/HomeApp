@@ -40,7 +40,7 @@
             Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
         });
 
-        var routes = await Client.SendAsync(x => x.RoutesAsync());
+        var routes = await Client.SendAsync(x => x.GetAllRoutesAsync());
 
         var drawer = new RouteDrawer();
 
@@ -50,6 +50,8 @@
 
             foreach (var polygon in polygons)
             {
+
+
                 _map.Layers.Add(polygon);
             }
         }

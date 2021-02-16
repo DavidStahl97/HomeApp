@@ -21,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        tours = await Client.SendAsync(x => x.TourInfosAllAsync());
+        tours = await Client.SendAsync(x => x.GetAllTourInfosAsync());
     }
 
     private void OnTourClicked(string tourId)

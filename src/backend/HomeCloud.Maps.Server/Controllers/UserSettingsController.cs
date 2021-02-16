@@ -27,16 +27,16 @@ namespace HomeCloud.Maps.Server.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
-        public async Task Post([FromBody] UserSettingsDto body)
+        [HttpPost(Name = nameof(PostUserSettings))]
+        public async Task PostUserSettings([FromBody] UserSettingsDto body)
         {
             _logger.LogInformation($"Post UserSettings { body.KomootUserId }");
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
             await _insertUserSettings.ExecuteAsync(body, userId);
         }
 
-        [HttpGet]
-        public async Task<UserSettingsDto> Get()
+        [HttpGet(Name = nameof(GetUserSettings))]
+        public async Task<UserSettingsDto> GetUserSettings()
         {
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
             return await _readUserSettings.ExecuteAsync(userId);

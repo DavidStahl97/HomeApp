@@ -14,8 +14,8 @@ namespace HomeCloud.Maps.Server.Controllers
     [ApiController]
     public class KomootController : ControllerBase
     {
-        [HttpPatch]
-        public async Task<IActionResult> Patch([FromBody] KomootToursRequest request, [FromServices] IStoreKomootTour service)
+        [HttpPatch(Name = nameof(PatchKomootRoutes))]
+        public async Task<IActionResult> PatchKomootRoutes([FromBody] KomootToursRequest request, [FromServices] IStoreKomootTour service)
         {
             // To-Do
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;

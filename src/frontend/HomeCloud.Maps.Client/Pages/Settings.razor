@@ -25,16 +25,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        userSettings = await Client.SendAsync(x => x.UserSettings2Async());
+        userSettings = await Client.SendAsync(x => x.GetUserSettingsAsync());
     }
 
     private async Task OnSubmitAsync()
     {
-        await Client.SendAsync(x => x.UserSettingsAsync(userSettings));
+        await Client.SendAsync(x => x.PostUserSettingsAsync(userSettings));
     }
 
     private async Task OnUpdateKommotTourAsync()
     {
-        await Client.SendAsync(x => x.KomootAsync(komootToursRequest));
+        await Client.SendAsync(x => x.PatchKomootRoutesAsync(komootToursRequest));
     }
 }

@@ -17,8 +17,8 @@ namespace HomeCloud.Maps.Server.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public class RoutesController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IEnumerable<RouteDto>> GetAll([FromServices] IReadAllRoutes service)
+        [HttpGet(Name = nameof(GetAllRoutes))]
+        public async Task<IEnumerable<RouteDto>> GetAllRoutes([FromServices] IReadAllRoutes service)
         {
             // To-Do
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
