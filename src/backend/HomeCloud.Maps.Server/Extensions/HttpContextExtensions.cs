@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Server.Extensions
 {
-    record JsonWebToken(string Subject);
+    public record JsonWebToken(string Subject);
 
-    static class HttpContextExtensions
+    public static class HttpContextExtensions
     {
         public static JsonWebToken GetJsonWebToken(this HttpContext httpContext)
         {
