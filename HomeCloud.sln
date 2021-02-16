@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Client.WebAp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{F2EC0BC3-F04E-49AB-BE9F-F1127463B3EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Server.UnitTests", "test\backend\HomeCloud.Maps.Server.UnitTests\HomeCloud.Maps.Server.UnitTests.csproj", "{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Server.UnitTests", "test\backend\HomeCloud.Maps.Server.UnitTests\HomeCloud.Maps.Server.UnitTests.csproj", "{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Infrastructure.UnitTests", "test\backend\HomeCloud.Maps.Infrastructure.UnitTests\HomeCloud.Maps.Infrastructure.UnitTests.csproj", "{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{AB42C617-0737-422B-8BBC-89996AB3F51F} = {B73706EC-C846-43C8-906B-CB67E885FC33}
 		{F2EC0BC3-F04E-49AB-BE9F-F1127463B3EA} = {578927A2-95F6-4D72-B5EF-076A40DAF25B}
 		{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4} = {F2EC0BC3-F04E-49AB-BE9F-F1127463B3EA}
+		{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5} = {F2EC0BC3-F04E-49AB-BE9F-F1127463B3EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {512CEDFD-DA45-429C-AD13-10A0ACE60ACB}

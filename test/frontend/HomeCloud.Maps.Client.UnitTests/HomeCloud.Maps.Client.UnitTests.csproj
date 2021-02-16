@@ -24,10 +24,4 @@
     <ProjectReference Include="..\..\..\src\frontend\HomeCloud.Maps.Client\HomeCloud.Maps.Client.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="2021-01-31_311521186_Hattsteinweier.gpx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
