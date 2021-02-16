@@ -6,7 +6,7 @@
 
 @attribute [Authorize]
 
-@inject IHttpService httpService
+@inject IWebAPIClient Client
 @inject IJSRuntime jsRuntime
 
 <h3>@tour?.TourInfo?.Name</h3>
@@ -42,8 +42,7 @@
             Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
         });
 
-        var result = await httpService.GetAsync<TourDto>($"api/TourInfos/{TourId}");
-        tour = result.Response;
+        var tour = await Client.SendAsync(x => x.TourInfosAsync(TourId));
 
         var polygons = new RouteDrawer().Draw(tour.Route.Positions);
 

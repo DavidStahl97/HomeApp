@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace HomeCloud.Maps.Client.Services.Authentication
+namespace HomeCloud.Maps.Client.WebApi.Authentication
 {
     public class AuthenticationSettings
     {

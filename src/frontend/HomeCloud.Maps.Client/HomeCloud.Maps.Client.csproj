@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\backend\HomeCloud.Maps.Shared\HomeCloud.Maps.Shared.csproj" />
+    <ProjectReference Include="..\HomeCloud.Maps.Client.WebApi\HomeCloud.Maps.Client.WebApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

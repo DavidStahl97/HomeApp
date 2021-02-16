@@ -2,7 +2,7 @@
 
 @attribute [Authorize]
 
-@inject IHttpService httpService
+@inject IWebAPIClient Client
 @inject NavigationManager Navigation
 
 <h3>Tours</h3>
@@ -17,13 +17,11 @@
 }
 
 @code {
-    private IEnumerable<TourInfoDto> tours = new List<TourInfoDto>();
+    private IEnumerable<WebApi.TourInfoDto> tours = new List<WebApi.TourInfoDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpService.GetAsync<List<TourInfoDto>>("api/TourInfos");
-
-        tours = result.Response;
+        tours = await Client.SendAsync(x => x.TourInfosAllAsync());
     }
 
     private void OnTourClicked(string tourId)

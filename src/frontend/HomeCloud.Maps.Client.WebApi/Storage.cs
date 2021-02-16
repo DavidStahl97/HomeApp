@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace HomeCloud.Maps.Client.Services
+namespace HomeCloud.Maps.Client.WebApi
 {
     public class Storage : IStorage
     {
