@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace HomeCloud.Maps.Infrastructure.GPX.Model
 {
-    public class GPXSerializer : IGPXSerializer
+    class GPXSerializer : IGPXSerializer
     {
         public Route Deserialize(Stream stream)
         {

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Infrastructure.Komoot
 {
-    public class KomootService : IKomootService
+    class KomootService : IKomootService
     {
         private const string URL = "https://www.komoot.de/api/v007";
         

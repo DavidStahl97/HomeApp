@@ -1,5 +1,5 @@
-﻿using HomeCloud.Maps.Application.Commands;
-using HomeCloud.Maps.Application.Dto;
+﻿using HomeCloud.Maps.Application.Dto;
+using HomeCloud.Maps.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +16,13 @@ namespace HomeCloud.Maps.Server.Controllers
     [ApiController]
     public class UserSettingsController : ControllerBase
     {
-        private readonly IInsertUserSettings _insertUserSettings;
-        private readonly IReadUserSettings _readUserSettings;
         private readonly ILogger<UserSettingsController> _logger;
+        private readonly IUserSettingsService _userSettingsService;
 
-        public UserSettingsController(IInsertUserSettings insertUserSettings, IReadUserSettings readUserSettings, ILogger<UserSettingsController> logger)
+        public UserSettingsController(ILogger<UserSettingsController> logger, IUserSettingsService userSettingsService)
         {
-            _insertUserSettings = insertUserSettings;
-            _readUserSettings = readUserSettings;
             _logger = logger;
+            _userSettingsService = userSettingsService;
         }
 
         [HttpPost(Name = nameof(PostUserSettings))]
@@ -32,14 +30,14 @@ namespace HomeCloud.Maps.Server.Controllers
         {
             _logger.LogInformation($"Post UserSettings { body.KomootUserId }");
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-            await _insertUserSettings.ExecuteAsync(body, userId);
+            await _userSettingsService.InsertUserSettingsAsync(body, userId);
         }
 
         [HttpGet(Name = nameof(GetUserSettings))]
         public async Task<UserSettingsDto> GetUserSettings()
         {
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-            return await _readUserSettings.ExecuteAsync(userId);
+            return await _userSettingsService.GetUserSettingsAsync(userId);
         }
     }
 }

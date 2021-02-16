@@ -35,6 +35,6 @@
 
     private async Task OnUpdateKommotTourAsync()
     {
-        await Client.SendAsync(x => x.PatchKomootRoutesAsync(komootToursRequest));
+        await Client.SendAsync(x => x.PostToursAsync(komootToursRequest));
     }
 }

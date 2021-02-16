@@ -2,7 +2,7 @@
 
 namespace HomeCloud.Maps.Infrastructure.GPX.Model
 {
-    public interface IGPXSerializer
+    interface IGPXSerializer
     {
         Route Deserialize(Stream stream);
     }

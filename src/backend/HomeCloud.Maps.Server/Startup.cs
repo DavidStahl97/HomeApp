@@ -1,5 +1,6 @@
-using HomeCloud.Maps.Application.Commands;
+using HomeCloud.Maps.Application;
 using HomeCloud.Maps.Application.Komoot;
+using HomeCloud.Maps.Infrastructure;
 using HomeCloud.Maps.Infrastructure.Database;
 using HomeCloud.Maps.Infrastructure.GPX.Model;
 using HomeCloud.Maps.Infrastructure.Komoot;
@@ -46,9 +47,10 @@ namespace HomeCloud.Maps.Server
                 ConnectionString = Configuration["MongoDb:ConnectionString"]
             });
 
-            AddApplicationServices(services);
-
             services.AddSwaggerDocumentation();
+
+            services.AddApplicationServices();
+            services.AddInfrastructureServices();
         }
 
 
@@ -81,20 +83,6 @@ namespace HomeCloud.Maps.Server
 
             app.AddApiRouting();
             app.AddBlazorRouting();
-        }
-
-        private static void AddApplicationServices(IServiceCollection services)
-        {
-            services.AddScoped<IKomootService, KomootService>();
-            services.AddScoped<IGPXSerializer, GPXSerializer>();
-
-
-            services.AddScoped<IInsertUserSettings, InsertUserSettings>();
-            services.AddScoped<IReadUserSettings, ReadUserSettings>();            
-            services.AddScoped<IStoreKomootTour, StoreKomootTour>();
-            services.AddScoped<IReadTours, ReadTours>();
-            services.AddScoped<IReadTour, ReadTour>();
-            services.AddScoped<IReadAllRoutes, ReadAllRoutes>();
         }
     }
 }

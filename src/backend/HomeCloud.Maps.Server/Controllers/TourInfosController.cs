@@ -1,5 +1,5 @@
-﻿using HomeCloud.Maps.Application.Commands;
-using HomeCloud.Maps.Application.Dto.Tours;
+﻿using HomeCloud.Maps.Application.Dto.Tours;
+using HomeCloud.Maps.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,20 +17,20 @@ namespace HomeCloud.Maps.Server.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public class TourInfosController : ControllerBase
     {
+        private readonly ITourService _tourService;
+
+        public TourInfosController(ITourService tourService)
+        {
+            _tourService = tourService;
+        }
 
         [HttpGet(Name = nameof(GetAllTourInfos))]
-        public Task<IEnumerable<TourInfoDto>> GetAllTourInfos([FromServices] IReadTours service) 
+        public Task<IEnumerable<TourInfoDto>> GetAllTourInfos() 
         {
             // To-Do
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
 
-            return service.ExecuteAsync(userId);
-        }
-
-        [HttpGet("{id}", Name = nameof(GetTourInfosById))]
-        public async Task<TourDto> GetTourInfosById(string id, [FromServices] IReadTour service)
-        {
-            return await service.ExecuteAsync(id);
+            return _tourService.GetAllTourInfosAsync(userId);
         }
     }
 }

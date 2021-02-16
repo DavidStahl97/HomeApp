@@ -1,4 +1,5 @@
-﻿using HomeCloud.Maps.Application.Dto.Tours;
+﻿using HomeCloud.Maps.Application.Dto;
+using HomeCloud.Maps.Application.Dto.Tours;
 using HomeCloud.Maps.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,22 +16,31 @@ namespace HomeCloud.Maps.Server.Controllers
     [ApiController]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public class RoutesController : ControllerBase
+    public class TourController : ControllerBase
     {
         private readonly ITourService _tourService;
 
-        public RoutesController(ITourService tourService)
+        public TourController(ITourService tourService)
         {
             _tourService = tourService;
         }
 
-        [HttpGet(Name = nameof(GetAllRoutes))]
-        public async Task<IEnumerable<RouteDto>> GetAllRoutes()
+        [HttpGet("{tourId}", Name = nameof(GetTourInfosById))]
+        public async Task<TourDto> GetTourInfosById(string tourId)
         {
             // To-Do
             var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
 
-            return await _tourService.GetAllRoutes(userId);
+            return await _tourService.GetTourAsync(tourId, userId);
+        }
+
+        [HttpPost(Name = nameof(PostTours))]
+        public async Task PostTours([FromBody] KomootToursRequest request)
+        {
+            // To-Do
+            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
+
+            await _tourService.InsertToursFromKomoot(userId, request);
         }
     }
 }
