@@ -1,5 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Database;
-using HomeCloud.Maps.Shared.Tours;
+using HomeCloud.Maps.Application.Dto.Tours;
 using System;
 using System.Collections.Generic;
 using System.Linq;

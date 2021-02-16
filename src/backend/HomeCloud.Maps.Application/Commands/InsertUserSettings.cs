@@ -1,6 +1,6 @@
 ﻿using HomeCloud.Maps.Application.Database;
+using HomeCloud.Maps.Application.Dto;
 using HomeCloud.Maps.Domain.Settings;
-using HomeCloud.Maps.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;

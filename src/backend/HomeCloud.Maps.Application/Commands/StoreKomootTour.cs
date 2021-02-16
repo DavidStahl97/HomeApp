@@ -1,7 +1,7 @@
 ﻿using HomeCloud.Maps.Application.Database;
+using HomeCloud.Maps.Application.Dto;
 using HomeCloud.Maps.Application.Komoot;
 using HomeCloud.Maps.Domain.Tours;
-using HomeCloud.Maps.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

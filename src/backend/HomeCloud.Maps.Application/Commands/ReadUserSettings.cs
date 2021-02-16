@@ -1,9 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Database;
-using HomeCloud.Maps.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using HomeCloud.Maps.Application.Dto;
 using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Application.Commands

@@ -25,7 +25,6 @@
     <ProjectReference Include="..\HomeCloud.Maps.Application\HomeCloud.Maps.Application.csproj" />
     <ProjectReference Include="..\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj" />
     <ProjectReference Include="..\HomeCloud.Maps.Infrastructure\HomeCloud.Maps.Infrastructure.csproj" />
-    <ProjectReference Include="..\HomeCloud.Maps.Shared\HomeCloud.Maps.Shared.csproj" />
   </ItemGroup>
 
 

@@ -1,5 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Commands;
-using HomeCloud.Maps.Shared.Tours;
+using HomeCloud.Maps.Application.Dto.Tours;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

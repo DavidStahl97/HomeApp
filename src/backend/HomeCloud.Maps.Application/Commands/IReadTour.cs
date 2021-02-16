@@ -1,4 +1,4 @@
-﻿using HomeCloud.Maps.Shared.Tours;
+﻿using HomeCloud.Maps.Application.Dto.Tours;
 using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Application.Commands

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeCloud.Maps.Shared.Tours
+namespace HomeCloud.Maps.Application.Dto.Tours
 {
     public class PositionDto
     {
