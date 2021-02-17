@@ -1,6 +1,7 @@
 ﻿using HomeCloud.Maps.Application.Dto.Tours;
-using HomeCloud.Maps.Application.Services;
+using HomeCloud.Maps.Application.Handlers.Tours;
 using HomeCloud.Maps.Server.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,18 +19,24 @@ namespace HomeCloud.Maps.Server.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public class TourInfosController : ControllerBase
     {
-        private readonly ITourService _tourService;
+        private readonly IMediator _mediator;
 
-        public TourInfosController(ITourService tourService)
+        public TourInfosController(IMediator mediator)
         {
-            _tourService = tourService;
+            _mediator = mediator;
         }
 
         [HttpGet(Name = nameof(GetAllTourInfos))]
         public Task<IEnumerable<TourInfoDto>> GetAllTourInfos() 
         {
             var jwt = HttpContext.GetJsonWebToken();
-            return _tourService.GetAllTourInfosAsync(jwt.Subject);
+
+            var request = new GetAllTourInfosRequest
+            {
+                UserId = jwt.Subject
+            };
+
+            return _mediator.Send(request);
         }
     }
 }

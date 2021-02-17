@@ -1,7 +1,8 @@
 ﻿using HomeCloud.Maps.Application.Dto;
 using HomeCloud.Maps.Application.Dto.Tours;
-using HomeCloud.Maps.Application.Services;
+using HomeCloud.Maps.Application.Handlers.Tours;
 using HomeCloud.Maps.Server.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,27 +20,39 @@ namespace HomeCloud.Maps.Server.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public class TourController : ControllerBase
     {
-        private readonly ITourService _tourService;
+        private readonly IMediator _mediator;
 
-        public TourController(ITourService tourService)
+        public TourController(IMediator mediator)
         {
-            _tourService = tourService;
+            _mediator = mediator;
         }
 
         [HttpGet("{tourId}", Name = nameof(GetTourInfosById))]
-        public async Task<TourDto> GetTourInfosById(string tourId)
+        public Task<TourDto> GetTourInfosById(string tourId)
         {
             var jwt = HttpContext.GetJsonWebToken();
-            return await _tourService.GetTourAsync(tourId, jwt.Subject);
+
+            var request = new GetTourInfosByIdRequest
+            {
+                UserId = jwt.Subject,
+                TourId = tourId
+            };
+
+            return _mediator.Send(request);
         }
 
         [HttpPost(Name = nameof(PostTours))]
-        public async Task PostTours([FromBody] KomootToursRequest request)
+        public Task PostTours([FromBody] KomootToursRequest request)
         {
-            // To-Do
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
+            var jwt = HttpContext.GetJsonWebToken();
 
-            await _tourService.InsertToursFromKomoot(userId, request);
+            var insertRequest = new InsertToursFromKomootRequest
+            {
+                UserId = jwt.Subject,
+                KomootToursRequest = request
+            };
+
+            return _mediator.Send(insertRequest);
         }
     }
 }

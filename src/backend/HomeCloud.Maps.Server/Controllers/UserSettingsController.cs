@@ -1,6 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Dto;
 using HomeCloud.Maps.Application.Handlers.UserSettings;
-using HomeCloud.Maps.Application.Services;
 using HomeCloud.Maps.Server.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
