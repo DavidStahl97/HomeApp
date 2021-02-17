@@ -13,7 +13,6 @@ namespace HomeCloud.Maps.Application
         public static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<ITourService, TourService>();
-            services.AddScoped<IUserSettingsService, UserSettingsService>();
         }
     }
 }

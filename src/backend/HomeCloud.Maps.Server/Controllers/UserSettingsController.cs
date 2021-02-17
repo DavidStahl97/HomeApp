@@ -1,6 +1,8 @@
 ﻿using HomeCloud.Maps.Application.Dto;
+using HomeCloud.Maps.Application.Handlers.UserSettings;
 using HomeCloud.Maps.Application.Services;
 using HomeCloud.Maps.Server.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,26 +20,39 @@ namespace HomeCloud.Maps.Server.Controllers
     public class UserSettingsController : ControllerBase
     {
         private readonly ILogger<UserSettingsController> _logger;
-        private readonly IUserSettingsService _userSettingsService;
+        private readonly IMediator _mediator;
 
-        public UserSettingsController(ILogger<UserSettingsController> logger, IUserSettingsService userSettingsService)
+        public UserSettingsController(ILogger<UserSettingsController> logger, IMediator mediator)
         {
             _logger = logger;
-            _userSettingsService = userSettingsService;
+            _mediator = mediator;
         }
 
         [HttpPost(Name = nameof(PostUserSettings))]
-        public async Task PostUserSettings([FromBody] UserSettingsDto body)
+        public Task PostUserSettings([FromBody] UserSettingsDto body)
         {
             var jwt = HttpContext.GetJsonWebToken();
-            await _userSettingsService.InsertUserSettingsAsync(body, jwt.Subject);
+
+            var request = new UpdateUserSettingsRequest
+            {
+                UserId = jwt.Subject,
+                UserSettings = body
+            };
+
+            return _mediator.Send(request);
         }
 
         [HttpGet(Name = nameof(GetUserSettings))]
-        public async Task<UserSettingsDto> GetUserSettings()
+        public Task<UserSettingsDto> GetUserSettings()
         {
             var jwt = HttpContext.GetJsonWebToken();
-            return await _userSettingsService.GetUserSettingsAsync(jwt.Subject);
+
+            var request = new GetUserSettingsRequest
+            {
+                UserId = jwt.Subject
+            };
+
+            return _mediator.Send(request);
         }
     }
 }

@@ -5,6 +5,7 @@ using HomeCloud.Maps.Infrastructure.Database;
 using HomeCloud.Maps.Infrastructure.GPX.Model;
 using HomeCloud.Maps.Infrastructure.Komoot;
 using HomeCloud.Maps.Server.Configure;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,6 +49,8 @@ namespace HomeCloud.Maps.Server
             });
 
             services.AddSwaggerDocumentation();
+
+            services.AddMediatR(Application.Application.GetAssembly());
 
             services.AddApplicationServices();
             services.AddInfrastructureServices();
