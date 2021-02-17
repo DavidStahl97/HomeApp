@@ -17,31 +17,46 @@
     <MudToolBarSpacer />
     <Pagination @ref="@paginationComponent"
                 PageChangedEvent="@UpdateTourInfosPage"
-                Total="@(page is null ? 0 : page.Total)"/>
+                Total="@(page is null ? 0 : page.Total)" />
 </MudToolBar>
 
-
-@if (page is null)
-{
-    @foreach (var i in Enumerable.Range(1, 10))
+<MudGrid>
+    @if (page is null)
     {
-        <MudSkeleton SkeletonType="SkeletonType.Rectangle" 
-                     Height="50px" 
-                     Class="ma-5"/>
+        @foreach (var i in Enumerable.Range(1, 10))
+        {
+            <MudItem xs="6">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                             Height="125px"/>
+            </MudItem>
+        }
     }
-}
-else
-{
-    @foreach (var tour in page.Data)
+    else
     {
-        <MudPaper Elevation="3" 
-                  Class="ma-5">
-            <MudButton Variant="Variant.Text" Style="margin: 10px" OnClick="@(() => OnTourClicked(tour.TourId))">
-                @tour.Name
-            </MudButton>
-        </MudPaper>
+        @foreach (var tour in page.Data)
+        {
+            <MudItem xs="6">
+                <MudLink Underline="Underline.None"
+                         Href="@($"/tours/{tour.TourId}")">
+                    <MudPaper Elevation="3"
+                              Class="pa-5">
+                            <MudToolBar>
+                                <img src="@(CreateImageUrl(tour.ImageUrl))" class="ml-n5">
+                                <div class="ml-5">
+                                    <MudText Typo="Typo.h6" Class="mt-n3">@tour.Name</MudText>
+                                    <div class="ml-2">
+                                        <MudText>Date: @(tour.Date.ToString())</MudText>
+                                        <MudText>Distance:  @(tour.Distance)</MudText>
+                                    </div>
+                                </div>
+                                <MudToolBarSpacer/>
+                            </MudToolBar>
+                    </MudPaper>
+                </MudLink>
+            </MudItem>
+        }
     }
-}
+</MudGrid>
 
 @code {
     private string searchString;
@@ -53,11 +68,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         await UpdateTourInfosPage();
-    }
-
-    private void OnTourClicked(string tourId)
-    {
-        Navigation.NavigateTo($"/tours/{tourId}");
     }
 
     private async Task UpdateTourInfosPage()
@@ -72,4 +82,9 @@ else
 
         page = pageTask.Result;
     }
+
+    private string CreateImageUrl(string url)
+        => url.Replace("{width}", "100")
+              .Replace("{height}", "100")
+              .Replace("&crop={crop}", string.Empty);
 }
