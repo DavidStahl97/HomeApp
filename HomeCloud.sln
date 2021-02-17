@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{F2EC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Server.UnitTests", "test\backend\HomeCloud.Maps.Server.UnitTests\HomeCloud.Maps.Server.UnitTests.csproj", "{AD23C04E-DF28-46BF-84EF-7AEBAAD366A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.Infrastructure.UnitTests", "test\backend\HomeCloud.Maps.Infrastructure.UnitTests\HomeCloud.Maps.Infrastructure.UnitTests.csproj", "{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Infrastructure.UnitTests", "test\backend\HomeCloud.Maps.Infrastructure.UnitTests\HomeCloud.Maps.Infrastructure.UnitTests.csproj", "{C2869DBC-8D1B-4DE0-88C2-C170DDED05C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

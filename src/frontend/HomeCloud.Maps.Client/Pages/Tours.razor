@@ -5,7 +5,18 @@
 @inject IWebAPIClient Client
 @inject NavigationManager Navigation
 
-<h3>Tours</h3>
+<MudToolBar Class="mb-15">
+    <MudText Typo="Typo.h6">Tours</MudText>
+    <MudToolBarSpacer />
+    <MudTextField @bind-Value="searchString"
+                  Placeholder="Search"
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Search"
+                  IconSize="Size.Small"
+                  Class="mt-n5" />
+    <MudToolBarSpacer />
+    <Pagination />
+</MudToolBar>
 
 @foreach (var tour in tours)
 {
@@ -17,6 +28,8 @@
 }
 
 @code {
+    private string searchString = "";
+
     private IEnumerable<WebApi.TourInfoDto> tours = new List<WebApi.TourInfoDto>();
 
     protected override async Task OnInitializedAsync()
