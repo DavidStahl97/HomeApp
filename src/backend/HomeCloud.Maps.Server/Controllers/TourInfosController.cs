@@ -1,4 +1,5 @@
-﻿using HomeCloud.Maps.Application.Dto.Tours;
+﻿using HomeCloud.Maps.Application.Dto;
+using HomeCloud.Maps.Application.Dto.Tours;
 using HomeCloud.Maps.Application.Handlers;
 using HomeCloud.Maps.Application.Handlers.Tours;
 using HomeCloud.Maps.Server.Extensions;
@@ -28,7 +29,7 @@ namespace HomeCloud.Maps.Server.Controllers
         }
 
         [HttpGet(Name = nameof(GetTourInfosPagination))]
-        public Task<IEnumerable<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0) 
+        public Task<PaginationResult<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0) 
         {
             var jwt = HttpContext.GetJsonWebToken();
 

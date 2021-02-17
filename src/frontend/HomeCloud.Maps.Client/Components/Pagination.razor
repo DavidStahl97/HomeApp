@@ -49,7 +49,15 @@
     public EventCallback PageChangedEvent { get; set; }
 
     private string CurrentSelectedPage
-        => $"{PageIndex * PageSize + 1}-{PageIndex * PageSize + PageSize} of {Total}";
+        => $"{FirstElementOfPage}-{LastElementOfPage} of {Total}";
+
+    private int LastElementOfPage
+        => PageIndex == LastPageIndex ? Total : PageIndex * PageSize + PageSize;
+
+    private int FirstElementOfPage
+        => Total == 0 ? 0 : PageIndex * PageSize + 1;
+
+    private int LastPageIndex => (Total - 1) / PageSize;
 
     private async Task OnSelectFirstPage()
     {
@@ -74,6 +82,4 @@
         PageIndex = LastPageIndex;
         await PageChangedEvent.InvokeAsync();
     }
-
-    private int LastPageIndex => (Total - 1) / PageSize;
 }

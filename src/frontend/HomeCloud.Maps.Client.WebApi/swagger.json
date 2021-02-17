@@ -233,26 +233,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TourInfoDto"
-                  }
+                  "$ref": "#/components/schemas/TourInfoDtoPaginationResult"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TourInfoDto"
-                  }
+                  "$ref": "#/components/schemas/TourInfoDtoPaginationResult"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TourInfoDto"
-                  }
+                  "$ref": "#/components/schemas/TourInfoDtoPaginationResult"
                 }
               }
             }
@@ -420,6 +411,23 @@
           },
           "ImageUrl": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TourInfoDtoPaginationResult": {
+        "type": "object",
+        "properties": {
+          "Total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TourInfoDto"
+            },
             "nullable": true
           }
         },

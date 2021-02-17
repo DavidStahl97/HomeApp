@@ -16,13 +16,14 @@
                   Class="mt-n5" />
     <MudToolBarSpacer />
     <Pagination @ref="@paginationComponent"
-                PageChangedEvent="@UpdateTourInfosPage"/>
+                PageChangedEvent="@UpdateTourInfosPage"
+                Total="@(page is null ? 0 : page.Total)"/>
 </MudToolBar>
 
 
-@if (tours is null)
+@if (page is null)
 {
-    @foreach (var i in Enumerable.Range(1, 5))
+    @foreach (var i in Enumerable.Range(1, 10))
     {
         <MudSkeleton SkeletonType="SkeletonType.Rectangle" 
                      Height="75px" 
@@ -31,9 +32,10 @@
 }
 else
 {
-    @foreach (var tour in tours)
+    @foreach (var tour in page.Data)
     {
-        <MudPaper Elevation="3" Class="ma-5">
+        <MudPaper Elevation="3" 
+                  Class="ma-5">
             <MudButton Variant="Variant.Text" Style="margin: 10px" OnClick="@(() => OnTourClicked(tour.TourId))">
                 @tour.Name
             </MudButton>
@@ -43,7 +45,8 @@ else
 
 @code {
     private string searchString;
-    private IEnumerable<WebApi.TourInfoDto> tours;
+    private TourInfoDtoPaginationResult page;
+
 
     private Pagination paginationComponent;
 
@@ -59,7 +62,8 @@ else
 
     private async Task UpdateTourInfosPage()
     {
-        tours = await Client.SendAsync(
+        await Task.Delay(2000);
+        page = await Client.SendAsync(
             x => x.GetTourInfosPaginationAsync(paginationComponent.PageSize, paginationComponent.PageIndex));
     }
 }
