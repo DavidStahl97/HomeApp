@@ -26,7 +26,7 @@
     @foreach (var i in Enumerable.Range(1, 10))
     {
         <MudSkeleton SkeletonType="SkeletonType.Rectangle" 
-                     Height="75px" 
+                     Height="50px" 
                      Class="ma-5"/>
     }
 }
@@ -62,8 +62,14 @@ else
 
     private async Task UpdateTourInfosPage()
     {
-        await Task.Delay(2000);
-        page = await Client.SendAsync(
+        page = null;
+
+        var pageTask = Client.SendAsync(
             x => x.GetTourInfosPaginationAsync(paginationComponent.PageSize, paginationComponent.PageIndex));
+        var delayTask = Task.Delay(1000);
+
+        await Task.WhenAll(pageTask, delayTask);
+
+        page = pageTask.Result;
     }
 }
