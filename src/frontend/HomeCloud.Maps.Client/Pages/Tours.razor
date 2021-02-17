@@ -15,7 +15,8 @@
                   IconSize="Size.Small"
                   Class="mt-n5" />
     <MudToolBarSpacer />
-    <Pagination />
+    <Pagination @ref="@paginationComponent"
+                PageChangedEvent="@UpdateTourInfosPage"/>
 </MudToolBar>
 
 
@@ -41,17 +42,24 @@ else
 }
 
 @code {
-    private string searchString = "";
-
+    private string searchString;
     private IEnumerable<WebApi.TourInfoDto> tours;
+
+    private Pagination paginationComponent;
 
     protected override async Task OnInitializedAsync()
     {
-        tours = await Client.SendAsync(x => x.GetAllTourInfosAsync());
+        await UpdateTourInfosPage();
     }
 
     private void OnTourClicked(string tourId)
     {
         Navigation.NavigateTo($"/tours/{tourId}");
+    }
+
+    private async Task UpdateTourInfosPage()
+    {
+        tours = await Client.SendAsync(
+            x => x.GetTourInfosPaginationAsync(paginationComponent.PageSize, paginationComponent.PageIndex));
     }
 }

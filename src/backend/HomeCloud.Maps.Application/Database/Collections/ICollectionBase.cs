@@ -17,6 +17,8 @@ namespace HomeCloud.Maps.Application.Database.Collections
 
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression);
 
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression, int index, int pageSize);
+
         Task ReplaceOrInsert(Expression<Func<T, bool>> expression, T document);
     }
 }

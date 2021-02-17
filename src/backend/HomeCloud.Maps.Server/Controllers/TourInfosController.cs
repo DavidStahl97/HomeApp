@@ -1,4 +1,5 @@
 ﻿using HomeCloud.Maps.Application.Dto.Tours;
+using HomeCloud.Maps.Application.Handlers;
 using HomeCloud.Maps.Application.Handlers.Tours;
 using HomeCloud.Maps.Server.Extensions;
 using MediatR;
@@ -26,14 +27,15 @@ namespace HomeCloud.Maps.Server.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = nameof(GetAllTourInfos))]
-        public Task<IEnumerable<TourInfoDto>> GetAllTourInfos() 
+        [HttpGet(Name = nameof(GetTourInfosPagination))]
+        public Task<IEnumerable<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0) 
         {
             var jwt = HttpContext.GetJsonWebToken();
 
-            var request = new GetAllTourInfosRequest
+            var request = new GetTourInfoPaginationRequest
             {
-                UserId = jwt.Subject
+                UserId = jwt.Subject,
+                Page = new Page { Index = pageIndex, Size = pageSize }
             };
 
             return _mediator.Send(request);

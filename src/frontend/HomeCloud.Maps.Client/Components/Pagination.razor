@@ -7,8 +7,8 @@
     <MudSelect T="int" 
                Class="mud-table-pagination-select" 
                DisableUnderLine="true" 
-               Dense="true">
-        
+               Dense="true"
+               @bind-Value="@PageSize">        
         @foreach (var pageItem in new List<int> { 10, 25, 50, 100 })
         {
             <MudSelectItem Value="@pageItem"/>
@@ -17,16 +17,63 @@
 </span>
 
 <MudText Typo="Typo.body2" Class="mud-table-pagination-caption">
-    1-10 of 88
+    @CurrentSelectedPage
 </MudText>
 
 <div class="mud-table-pagination-actions">
-    <MudIconButton Icon="@Icons.Material.Filled.FirstPage" />
-    <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" />
-    <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" />
-    <MudIconButton Icon="@Icons.Material.Filled.LastPage" />
+    <MudIconButton Icon="@Icons.Material.Filled.FirstPage" 
+                   @onclick="@OnSelectFirstPage"
+                   Disabled="@(PageIndex == 0)"/>
+    <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore"
+                   @onclick="@OnSelectBeforePage"
+                   Disabled="@(PageIndex == 0)"/>
+    <MudIconButton Icon="@Icons.Material.Filled.NavigateNext"
+                   @onclick="@OnSelectNextPage"
+                   Disabled="(PageIndex == LastPageIndex)"/>
+    <MudIconButton Icon="@Icons.Material.Filled.LastPage" 
+                   @onclick="@OnSelectLastPage"
+                   Disabled="(PageIndex == LastPageIndex)"/>
 </div>
 
 @code {
+    [Parameter]
+    public int PageSize { get; set; } = 10;
 
+    [Parameter]
+    public int PageIndex { get; set; } = 0;
+
+    [Parameter]
+    public int Total { get; set; } = 100;
+
+    [Parameter]
+    public EventCallback PageChangedEvent { get; set; }
+
+    private string CurrentSelectedPage
+        => $"{PageIndex * PageSize + 1}-{PageIndex * PageSize + PageSize} of {Total}";
+
+    private async Task OnSelectFirstPage()
+    {
+        PageIndex = 0;
+        await PageChangedEvent.InvokeAsync();
+    }
+
+    private async Task OnSelectNextPage()
+    {
+        PageIndex++;
+        await PageChangedEvent.InvokeAsync();
+    }
+
+    private async Task OnSelectBeforePage()
+    {
+        PageIndex--;
+        await PageChangedEvent.InvokeAsync();
+    }
+
+    private async Task OnSelectLastPage()
+    {
+        PageIndex = LastPageIndex;
+        await PageChangedEvent.InvokeAsync();
+    }
+
+    private int LastPageIndex => (Total - 1) / PageSize;
 }
