@@ -18,19 +18,32 @@
     <Pagination />
 </MudToolBar>
 
-@foreach (var tour in tours)
+
+@if (tours is null)
 {
-    <MudPaper Elevation="3" Style="margin: 10px">
-        <MudButton Variant="Variant.Text" Style="margin: 10px" OnClick="@(() => OnTourClicked(tour.TourId))">
-            @tour.Name
-        </MudButton>
-    </MudPaper>
+    @foreach (var i in Enumerable.Range(1, 5))
+    {
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" 
+                     Height="75px" 
+                     Class="ma-5"/>
+    }
+}
+else
+{
+    @foreach (var tour in tours)
+    {
+        <MudPaper Elevation="3" Class="ma-5">
+            <MudButton Variant="Variant.Text" Style="margin: 10px" OnClick="@(() => OnTourClicked(tour.TourId))">
+                @tour.Name
+            </MudButton>
+        </MudPaper>
+    }
 }
 
 @code {
     private string searchString = "";
 
-    private IEnumerable<WebApi.TourInfoDto> tours = new List<WebApi.TourInfoDto>();
+    private IEnumerable<WebApi.TourInfoDto> tours;
 
     protected override async Task OnInitializedAsync()
     {
