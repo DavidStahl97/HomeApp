@@ -26,8 +26,27 @@
         @foreach (var i in Enumerable.Range(1, 10))
         {
             <MudItem xs="6">
-                <MudSkeleton SkeletonType="SkeletonType.Rectangle"
-                             Height="125px"/>
+                <MudPaper Elevation="3" Class="pa-5">
+                    <MudToolBar>
+                        <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                                     Height="100px"
+                                     Width="100px"
+                                     Class="ml-n5"/>
+                        <div class="ml-5">
+                            <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                                         Height="20px"
+                                         Width="100px"
+                                         Class="mt-n3"/>
+                            <div class="ml-2 mt-3">
+                                <MudSkeleton SkeletonType="SkeletonType.Text"
+                                             Width="200x" />
+                                <MudSkeleton SkeletonType="SkeletonType.Text"
+                                             Width="135px" />
+                            </div>
+                        </div>
+                        <MudToolBarSpacer />
+                    </MudToolBar>
+                </MudPaper>
             </MudItem>
         }
     }

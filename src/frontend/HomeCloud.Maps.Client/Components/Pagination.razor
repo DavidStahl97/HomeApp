@@ -8,7 +8,8 @@
                Class="mud-table-pagination-select" 
                DisableUnderLine="true" 
                Dense="true"
-               @bind-Value="@PageSize">        
+               Value="@PageSize"
+               ValueChanged="@OnPageSizeChanged">        
         @foreach (var pageItem in new List<int> { 10, 25, 50, 100 })
         {
             <MudSelectItem Value="@pageItem"/>
@@ -80,6 +81,13 @@
     private async Task OnSelectLastPage()
     {
         PageIndex = LastPageIndex;
+        await PageChangedEvent.InvokeAsync();
+    }
+
+    private async Task OnPageSizeChanged(int pageSize)
+    {
+        PageIndex = 0;
+        PageSize = pageSize;
         await PageChangedEvent.InvokeAsync();
     }
 }
