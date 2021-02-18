@@ -19,7 +19,10 @@ namespace HomeCloud.Maps.Client.WebApi
         {
             _jwtStorage = jwtStorage;
             _httpClient = httpClient;
-            _swaggerClient = new swaggerClient(_httpClient);
+            _swaggerClient = new swaggerClient(_httpClient)
+            {
+                BaseUrl = _httpClient.BaseAddress.ToString()
+            };
         }
 
         public async Task<T> SendAsync<T>(Func<swaggerClient, Task<T>> sendFunc)
