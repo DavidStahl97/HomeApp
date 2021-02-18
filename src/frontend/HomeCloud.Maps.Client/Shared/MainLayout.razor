@@ -29,9 +29,11 @@
         <NavMenu />
     </MudDrawer>
     <MudMainContent Class="mudblazor-main-content">
-        <MudPaper Elevation="3" Class="pa-5 ma-7">
-            @Body
-        </MudPaper>
+        <MudContainer>
+            <MudPaper Elevation="3" Class="pa-5 mt-10">
+                @Body
+            </MudPaper>
+        </MudContainer>
         <MudScrollToTop TopOffset="400">
             <MudFab Icon="@Icons.Material.Filled.KeyboardArrowUp" Color="Color.Primary" />
         </MudScrollToTop>
