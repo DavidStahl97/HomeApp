@@ -23,11 +23,12 @@ namespace HomeCloud.Maps.Server.Configure
               .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
               .Enrich.FromLogContext()
               .WriteTo.Debug()
+              .WriteTo.Console()
               .WriteTo.MongoDB(db,
                 eventLevel,
                 "homecloud-maps-logs",
                 1,
-                TimeSpan.Zero)
+                TimeSpan.FromSeconds(1))
               .CreateLogger();
 
             Log.Logger = logger;
