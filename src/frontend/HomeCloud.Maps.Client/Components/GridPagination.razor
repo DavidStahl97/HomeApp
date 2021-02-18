@@ -1,0 +1,150 @@
+﻿@typeparam TItem
+
+@using System.Timers
+
+<Timer TimeInSeconds="1" Tick="OnTick"/>
+
+<CascadingValue Value="pagination">
+    <MudToolBar Class="mb-15">
+        <MudText Typo="Typo.h6">@Title</MudText>
+        <MudToolBarSpacer />
+        <MudTextFieldString Placeholder="Search"
+                            Adornment="Adornment.Start"
+                            AdornmentIcon="@Icons.Material.Filled.Search"
+                            IconSize="Size.Small"
+                            Class="mt-n5"
+                            @bind-Value="search"
+                            Immediate="true"
+                            @onkeyup="@OnSearchKeyUp"/>
+        <MudToolBarSpacer />
+        <SelectPage TItem="TItem" PageChangedEvent="@SearchAsync" />
+    </MudToolBar>
+    
+    <MudGrid>
+        @if (showSkeleton)
+        {
+            @foreach (var i in Enumerable.Range(1, 10))
+            {
+                <MudItem xs="6">
+                    <MudPaper Elevation="3" Class="pa-5">
+                        @SkeletonItemContent
+                    </MudPaper>
+                </MudItem>
+            }
+        }
+        else
+        {
+            @foreach (var item in items)
+            {
+                <MudItem xs="6">
+                    <MudLink Underline="Underline.None"
+                             @onclick="LinkClicked">
+                        <MudPaper Elevation="3"
+                                  Class="pa-5">
+                            @ItemContent(item)
+                        </MudPaper>
+                    </MudLink>
+                </MudItem>
+            }
+        }
+    </MudGrid>
+</CascadingValue>
+
+@code {
+    private string lastSearch = string.Empty;
+    private string search = string.Empty;
+    private bool showSkeleton = true;
+
+    private Pagination pagination = Pagination.Default;
+
+    private IEnumerable<TItem> items;
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> ItemContent { get; set; }
+
+    [Parameter]
+    public RenderFragment SkeletonItemContent { get; set; }
+
+    [Parameter]
+    public EventCallback LinkClicked { get; set; }
+
+    [Parameter]
+    public Func<SearchQuery, Task<SearchResult<TItem>>> SearchFunction { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        return SearchAsync();
+    }
+
+    private async Task SearchAsync()
+    {
+        showSkeleton = true;
+
+        var query = CreateSearchQuery();
+        var searchTask = SearchFunction(query);
+
+        var delayTask = Task.Delay(1000);
+
+        await Task.WhenAll(searchTask, delayTask);
+
+        var result = searchTask.Result;
+        SetPage(query, result);
+
+        showSkeleton = false;
+    }
+
+    private async Task OnTick()
+    {
+        if (IsSearching == false)
+        {
+            return;
+        }
+
+        lastSearch = search;
+
+        var query = CreateSearchQuery() with { PageIndex = 0 };
+        var result = await SearchFunction(query);
+
+        if (IsSearching)
+        {
+            return;
+        }
+
+        SetPage(query, result);
+        showSkeleton = false;
+    }
+
+    private void OnSearchKeyUp()
+    {
+        if (IsSearching)
+        {
+            showSkeleton = true;
+        }
+    }
+
+    private bool IsSearching => lastSearch != search;
+
+    private SearchQuery CreateSearchQuery()
+    {
+        return new SearchQuery
+        {
+            PageIndex = pagination.PageIndex,
+            PageSize = pagination.PageSize,
+            SearchString = search
+        };
+    }
+
+    private void SetPage(SearchQuery query, SearchResult<TItem> result)
+    {
+        pagination = new Pagination
+        {
+            PageIndex = query.PageIndex,
+            PageSize = query.PageSize,
+            Total = result.Total
+        };
+        items = result.Items;
+    }
+}

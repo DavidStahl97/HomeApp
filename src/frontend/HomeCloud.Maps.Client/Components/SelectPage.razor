@@ -1,4 +1,5 @@
-﻿
+﻿@typeparam TItem
+
 <MudText Typo="Typo.body2" Class="mud-table-pagination-caption">
     Rows per Page
 </MudText>
@@ -8,7 +9,7 @@
                Class="mud-table-pagination-select" 
                DisableUnderLine="true" 
                Dense="true"
-               Value="@PageSize"
+               Value="@Pagination.PageSize"
                ValueChanged="@OnPageSizeChanged">        
         @foreach (var pageItem in new List<int> { 10, 25, 50, 100 })
         {
@@ -17,77 +18,73 @@
     </MudSelect>
 </span>
 
-<MudText Typo="Typo.body2" Class="mud-table-pagination-caption">
+<MudText Typo="Typo.body2" 
+         Class="mud-table-pagination-caption"
+         Style="width: 100px">
     @CurrentSelectedPage
 </MudText>
 
 <div class="mud-table-pagination-actions">
     <MudIconButton Icon="@Icons.Material.Filled.FirstPage" 
                    @onclick="@OnSelectFirstPage"
-                   Disabled="@(PageIndex == 0)"/>
+                   Disabled="@(Pagination.PageIndex == 0)"/>
     <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore"
                    @onclick="@OnSelectBeforePage"
-                   Disabled="@(PageIndex == 0)"/>
+                   Disabled="@(Pagination.PageIndex == 0)"/>
     <MudIconButton Icon="@Icons.Material.Filled.NavigateNext"
                    @onclick="@OnSelectNextPage"
-                   Disabled="(PageIndex == LastPageIndex)"/>
+                   Disabled="(Pagination.PageIndex == LastPageIndex)"/>
     <MudIconButton Icon="@Icons.Material.Filled.LastPage" 
                    @onclick="@OnSelectLastPage"
-                   Disabled="(PageIndex == LastPageIndex)"/>
+                   Disabled="(Pagination.PageIndex == LastPageIndex)"/>
 </div>
 
 @code {
-    [Parameter]
-    public int PageSize { get; set; } = 10;
-
-    [Parameter]
-    public int PageIndex { get; set; } = 0;
-
-    [Parameter]
-    public int Total { get; set; } = 100;
+    [CascadingParameter]
+    public Pagination Pagination { get; set; }
 
     [Parameter]
     public EventCallback PageChangedEvent { get; set; }
 
     private string CurrentSelectedPage
-        => $"{FirstElementOfPage}-{LastElementOfPage} of {Total}";
+        => $"{FirstElementOfPage}-{LastElementOfPage} of {Pagination.Total}";
 
     private int LastElementOfPage
-        => PageIndex == LastPageIndex ? Total : PageIndex * PageSize + PageSize;
+        => Pagination.PageIndex == LastPageIndex ? Pagination.Total : Pagination.PageIndex * Pagination.PageSize + Pagination.PageSize;
 
     private int FirstElementOfPage
-        => Total == 0 ? 0 : PageIndex * PageSize + 1;
+        => Pagination.Total == 0 ? 0 : Pagination.PageIndex * Pagination.PageSize + 1;
 
-    private int LastPageIndex => (Total - 1) / PageSize;
+    private int LastPageIndex => (Pagination.Total - 1) / Pagination.PageSize;
 
     private async Task OnSelectFirstPage()
     {
-        PageIndex = 0;
+        Pagination.PageIndex = 0;
         await PageChangedEvent.InvokeAsync();
     }
 
     private async Task OnSelectNextPage()
     {
-        PageIndex++;
+        Pagination.PageIndex++;
         await PageChangedEvent.InvokeAsync();
     }
 
     private async Task OnSelectBeforePage()
     {
-        PageIndex--;
+        Pagination.PageIndex--;
         await PageChangedEvent.InvokeAsync();
     }
 
     private async Task OnSelectLastPage()
     {
-        PageIndex = LastPageIndex;
+        Pagination.PageIndex = LastPageIndex;
         await PageChangedEvent.InvokeAsync();
     }
 
     private async Task OnPageSizeChanged(int pageSize)
     {
-        PageIndex = 0;
-        PageSize = pageSize;
+        Pagination.PageIndex = 0;
+        Pagination.PageSize = pageSize;
         await PageChangedEvent.InvokeAsync();
     }
 }

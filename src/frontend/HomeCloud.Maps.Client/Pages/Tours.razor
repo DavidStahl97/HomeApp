@@ -5,105 +5,61 @@
 @inject IWebAPIClient Client
 @inject NavigationManager Navigation
 
-<MudToolBar Class="mb-15">
-    <MudText Typo="Typo.h6">Tours</MudText>
-    <MudToolBarSpacer />
-    <MudTextField @bind-Value="searchString"
-                  Placeholder="Search"
-                  Adornment="Adornment.Start"
-                  AdornmentIcon="@Icons.Material.Filled.Search"
-                  IconSize="Size.Small"
-                  Class="mt-n5" />
-    <MudToolBarSpacer />
-    <Pagination @ref="@paginationComponent"
-                PageChangedEvent="@UpdateTourInfosPage"
-                Total="@(page is null ? 0 : page.Total)" />
-</MudToolBar>
-
-<MudGrid>
-    @if (page is null)
-    {
-        @foreach (var i in Enumerable.Range(1, 10))
-        {
-            <MudItem xs="6">
-                <MudPaper Elevation="3" Class="pa-5">
-                    <MudToolBar>
-                        <MudSkeleton SkeletonType="SkeletonType.Rectangle"
-                                     Height="100px"
-                                     Width="100px"
-                                     Class="ml-n5"/>
-                        <div class="ml-5">
-                            <MudSkeleton SkeletonType="SkeletonType.Rectangle"
-                                         Height="20px"
-                                         Width="100px"
-                                         Class="mt-n3"/>
-                            <div class="ml-2 mt-3">
-                                <MudSkeleton SkeletonType="SkeletonType.Text"
-                                             Width="200x" />
-                                <MudSkeleton SkeletonType="SkeletonType.Text"
-                                             Width="135px" />
-                            </div>
-                        </div>
-                        <MudToolBarSpacer />
-                    </MudToolBar>
-                </MudPaper>
-            </MudItem>
-        }
-    }
-    else
-    {
-        @foreach (var tour in page.Data)
-        {
-            <MudItem xs="6">
-                <MudLink Underline="Underline.None"
-                         Href="@($"/tours/{tour.TourId}")">
-                    <MudPaper Elevation="3"
-                              Class="pa-5">
-                            <MudToolBar>
-                                <img src="@(CreateImageUrl(tour.ImageUrl))" class="ml-n5">
-                                <div class="ml-5">
-                                    <MudText Typo="Typo.h6" Class="mt-n3">@tour.Name</MudText>
-                                    <div class="ml-2">
-                                        <MudText>Date: @(tour.Date.ToString())</MudText>
-                                        <MudText>Distance:  @(tour.Distance)</MudText>
-                                    </div>
-                                </div>
-                                <MudToolBarSpacer/>
-                            </MudToolBar>
-                    </MudPaper>
-                </MudLink>
-            </MudItem>
-        }
-    }
-</MudGrid>
+<GridPagination Title="Tours" SearchFunction="SearchAsync">
+    <ItemContent Context="tour">
+        <MudToolBar>
+            <img src="@(CreateImageUrl(tour.ImageUrl))" class="ml-n5">
+            <div class="ml-5">
+                <MudText Typo="Typo.h6" Class="mt-n3">@tour.Name</MudText>
+                <div class="ml-2">
+                    <MudText>Date: @(tour.Date.ToString())</MudText>
+                    <MudText>Distance:  @(tour.Distance)</MudText>
+                </div>
+            </div>
+            <MudToolBarSpacer />
+        </MudToolBar>
+    </ItemContent>
+    <SkeletonItemContent>
+        <MudToolBar>
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                         Height="100px"
+                         Width="100px"
+                         Class="ml-n5" />
+            <div class="ml-5">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                             Height="20px"
+                             Width="100px"
+                             Class="mt-n3" />
+                <div class="ml-2 mt-3">
+                    <MudSkeleton SkeletonType="SkeletonType.Text"
+                                 Width="200x" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text"
+                                 Width="135px" />
+                </div>
+            </div>
+            <MudToolBarSpacer />
+        </MudToolBar>
+    </SkeletonItemContent>
+</GridPagination>
 
 @code {
-    private string searchString;
-    private TourInfoDtoPaginationResult page;
 
-
-    private Pagination paginationComponent;
-
-    protected override async Task OnInitializedAsync()
+    private async Task<SearchResult<TourInfoDto>> SearchAsync(SearchQuery query)
     {
-        await UpdateTourInfosPage();
-    }
+        var result = await Client.SendAsync(
+            x => x.GetTourInfosPaginationAsync(query.PageSize, query.PageIndex, query.SearchString));
 
-    private async Task UpdateTourInfosPage()
-    {
-        page = null;
+        var searchResult = new SearchResult<TourInfoDto>
+        {
+            Items = result.Data,
+            Total = result.Total
+        };
 
-        var pageTask = Client.SendAsync(
-            x => x.GetTourInfosPaginationAsync(paginationComponent.PageSize, paginationComponent.PageIndex));
-        var delayTask = Task.Delay(1000);
-
-        await Task.WhenAll(pageTask, delayTask);
-
-        page = pageTask.Result;
+        return searchResult;
     }
 
     private string CreateImageUrl(string url)
-        => url.Replace("{width}", "100")
-              .Replace("{height}", "100")
-              .Replace("&crop={crop}", string.Empty);
+    => url.Replace("{width}", "100")
+          .Replace("{height}", "100")
+          .Replace("&crop={crop}", string.Empty);
 }

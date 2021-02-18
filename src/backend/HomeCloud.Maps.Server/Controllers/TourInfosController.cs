@@ -7,10 +7,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OneOf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static OneOf.Types.TrueFalseOrNull;
 
 namespace HomeCloud.Maps.Server.Controllers
 {
@@ -29,13 +31,16 @@ namespace HomeCloud.Maps.Server.Controllers
         }
 
         [HttpGet(Name = nameof(GetTourInfosPagination))]
-        public Task<PaginationResult<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0) 
+        public Task<PaginationResult<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0, string tourNameFilter = "") 
         {
             var jwt = HttpContext.GetJsonWebToken();
 
-            var request = new GetTourInfoPaginationRequest
+            OneOf<string, Null> filter = string.IsNullOrEmpty(tourNameFilter) ? new Null() : tourNameFilter;
+
+            var request = new GetTourInfoPagination
             {
                 UserId = jwt.Subject,
+                TourNameFilter = filter,
                 Page = new Page { Index = pageIndex, Size = pageSize }
             };
 
