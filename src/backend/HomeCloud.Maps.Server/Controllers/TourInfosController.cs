@@ -1,12 +1,18 @@
-﻿using HomeCloud.Maps.Application.Commands;
-using HomeCloud.Maps.Shared.Tours;
+﻿using HomeCloud.Maps.Application.Dto;
+using HomeCloud.Maps.Application.Dto.Tours;
+using HomeCloud.Maps.Application.Handlers;
+using HomeCloud.Maps.Application.Handlers.Tours;
+using HomeCloud.Maps.Server.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OneOf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static OneOf.Types.TrueFalseOrNull;
 
 namespace HomeCloud.Maps.Server.Controllers
 {
@@ -17,20 +23,28 @@ namespace HomeCloud.Maps.Server.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public class TourInfosController : ControllerBase
     {
+        private readonly IMediator _mediator;
 
-        [HttpGet]
-        public Task<IEnumerable<TourInfoDto>> Get([FromServices] IReadTours service) 
+        public TourInfosController(IMediator mediator)
         {
-            // To-Do
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-
-            return service.ExecuteAsync(userId);
+            _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        public async Task<TourDto> Get(string id, [FromServices] IReadTour service)
+        [HttpGet(Name = nameof(GetTourInfosPagination))]
+        public Task<PaginationResult<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0, string tourNameFilter = "") 
         {
-            return await service.ExecuteAsync(id);
+            var jwt = HttpContext.GetJsonWebToken();
+
+            OneOf<string, Null> filter = string.IsNullOrEmpty(tourNameFilter) ? new Null() : tourNameFilter;
+
+            var request = new GetTourInfoPagination
+            {
+                UserId = jwt.Subject,
+                TourNameFilter = filter,
+                Page = new Page { Index = pageIndex, Size = pageSize }
+            };
+
+            return _mediator.Send(request);
         }
     }
 }

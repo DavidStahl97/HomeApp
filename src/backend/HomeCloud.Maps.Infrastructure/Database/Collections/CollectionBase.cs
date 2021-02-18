@@ -28,15 +28,34 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collection
             return GetCollection().InsertManyAsync(documents);
         }
 
-        public async Task<T> SingleAsync(Expression<Func<T, bool>> expression)
+        public Task<T> SingleAsync(Expression<Func<T, bool>> expression)
         {
-            var result = await GetCollection().Find(expression).SingleOrDefaultAsync();
-            return result;
+            return GetCollection().Find(expression).SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
         {
             return await GetCollection().Find(expression).ToListAsync();
+        }
+
+        public async Task<(IEnumerable<T> Page, long Count)> FindPageAsync(Expression<Func<T, bool>> expression, int index, int pageSize)
+        {
+            var pageTask = GetCollection()
+                .Find(expression)
+                .Skip(pageSize * index)
+                .Limit(pageSize)
+                .ToListAsync();
+
+            var countTask = CountAsync(expression);
+
+            await Task.WhenAll(pageTask, countTask);
+
+            return (pageTask.Result, countTask.Result);
+        }
+
+        public Task<long> CountAsync(Expression<Func<T, bool>> expression)
+        {
+            return GetCollection().CountDocumentsAsync(expression);
         }
 
         public Task ReplaceOrInsert(Expression<Func<T, bool>> expression, T document)

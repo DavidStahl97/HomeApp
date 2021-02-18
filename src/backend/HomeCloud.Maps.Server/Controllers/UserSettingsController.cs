@@ -1,5 +1,7 @@
-﻿using HomeCloud.Maps.Application.Commands;
-using HomeCloud.Maps.Shared;
+﻿using HomeCloud.Maps.Application.Dto;
+using HomeCloud.Maps.Application.Handlers.UserSettings;
+using HomeCloud.Maps.Server.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,30 +18,40 @@ namespace HomeCloud.Maps.Server.Controllers
     [ApiController]
     public class UserSettingsController : ControllerBase
     {
-        private readonly IInsertUserSettings _insertUserSettings;
-        private readonly IReadUserSettings _readUserSettings;
         private readonly ILogger<UserSettingsController> _logger;
+        private readonly IMediator _mediator;
 
-        public UserSettingsController(IInsertUserSettings insertUserSettings, IReadUserSettings readUserSettings, ILogger<UserSettingsController> logger)
+        public UserSettingsController(ILogger<UserSettingsController> logger, IMediator mediator)
         {
-            _insertUserSettings = insertUserSettings;
-            _readUserSettings = readUserSettings;
             _logger = logger;
+            _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task Post([FromBody] UserSettingsDto body)
+        [HttpPost(Name = nameof(PostUserSettings))]
+        public Task PostUserSettings([FromBody] UserSettingsDto body)
         {
-            _logger.LogInformation($"Post UserSettings { body.KomootUserId }");
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-            await _insertUserSettings.ExecuteAsync(body, userId);
+            var jwt = HttpContext.GetJsonWebToken();
+
+            var request = new UpdateUserSettingsRequest
+            {
+                UserId = jwt.Subject,
+                UserSettings = body
+            };
+
+            return _mediator.Send(request);
         }
 
-        [HttpGet]
-        public async Task<UserSettingsDto> Get()
+        [HttpGet(Name = nameof(GetUserSettings))]
+        public Task<UserSettingsDto> GetUserSettings()
         {
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
-            return await _readUserSettings.ExecuteAsync(userId);
+            var jwt = HttpContext.GetJsonWebToken();
+
+            var request = new GetUserSettingsRequest
+            {
+                UserId = jwt.Subject
+            };
+
+            return _mediator.Send(request);
         }
     }
 }

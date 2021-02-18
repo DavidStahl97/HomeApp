@@ -1,0 +1,38 @@
+﻿@inject IWebAPIClient Client
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="cookies"
+                      Label="Cookies"
+                      Variant="Variant.Outlined"
+                      Class="ml-2 mt-2 mb-2 mr-10" />
+    </DialogContent>
+    <DialogActions>
+        @if (progress)
+        {
+            <MudProgressCircular Color="Color.Primary" 
+                                 Size="Size.Small" 
+                                 Indeterminate="true" />
+        }
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary"
+                   OnClick="Submit"
+                   Disabled="progress">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private string cookies;
+    private bool progress = false;
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private async Task Submit()
+    {
+        progress = true;
+        await Client.SendAsync(x => x.PostToursAsync(new KomootToursRequest { Cookies = cookies }));
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

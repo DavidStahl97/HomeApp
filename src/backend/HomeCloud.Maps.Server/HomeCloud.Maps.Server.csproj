@@ -10,9 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="Hellang.Authentication.JwtBearer.Google" Version="2.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.6" />
+    <PackageReference Include="OneOf" Version="3.0.178" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
@@ -25,7 +27,6 @@
     <ProjectReference Include="..\HomeCloud.Maps.Application\HomeCloud.Maps.Application.csproj" />
     <ProjectReference Include="..\HomeCloud.Maps.Domain\HomeCloud.Maps.Domain.csproj" />
     <ProjectReference Include="..\HomeCloud.Maps.Infrastructure\HomeCloud.Maps.Infrastructure.csproj" />
-    <ProjectReference Include="..\HomeCloud.Maps.Shared\HomeCloud.Maps.Shared.csproj" />
   </ItemGroup>
 
 

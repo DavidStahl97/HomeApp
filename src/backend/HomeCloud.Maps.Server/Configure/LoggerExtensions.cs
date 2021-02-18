@@ -31,7 +31,11 @@ namespace HomeCloud.Maps.Server.Configure
               .CreateLogger();
 
             Log.Logger = logger;
-            Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+
+            if (inProduction == false)
+            {
+                Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+            }
         }
     }
 }

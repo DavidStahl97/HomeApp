@@ -2,32 +2,64 @@
 
 @attribute [Authorize]
 
-@inject IHttpService httpService
+@inject IWebAPIClient Client
 @inject NavigationManager Navigation
 
-<h3>Tours</h3>
-
-@foreach (var tour in tours)
-{
-    <MudPaper Elevation="3" Style="margin: 10px">
-        <MudButton Variant="Variant.Text" Style="margin: 10px" OnClick="@(() => OnTourClicked(tour.TourId))">
-            @tour.Name
-        </MudButton>
-    </MudPaper>
-}
+<GridPagination Title="Tours" SearchFunction="SearchAsync">
+    <ItemContent Context="tour">
+        <MudToolBar>
+            <img src="@(CreateImageUrl(tour.ImageUrl))" class="ml-n5">
+            <div class="ml-5">
+                <MudText Typo="Typo.h6" Class="mt-n3">@tour.Name</MudText>
+                <div class="ml-2">
+                    <MudText>Date: @(tour.Date.ToString())</MudText>
+                    <MudText>Distance:  @(tour.Distance)</MudText>
+                </div>
+            </div>
+            <MudToolBarSpacer />
+        </MudToolBar>
+    </ItemContent>
+    <SkeletonItemContent>
+        <MudToolBar>
+            <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                         Height="100px"
+                         Width="100px"
+                         Class="ml-n5" />
+            <div class="ml-5">
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle"
+                             Height="20px"
+                             Width="100px"
+                             Class="mt-n3" />
+                <div class="ml-2 mt-3">
+                    <MudSkeleton SkeletonType="SkeletonType.Text"
+                                 Width="200x" />
+                    <MudSkeleton SkeletonType="SkeletonType.Text"
+                                 Width="135px" />
+                </div>
+            </div>
+            <MudToolBarSpacer />
+        </MudToolBar>
+    </SkeletonItemContent>
+</GridPagination>
 
 @code {
-    private IEnumerable<TourInfoDto> tours = new List<TourInfoDto>();
 
-    protected override async Task OnInitializedAsync()
+    private async Task<SearchResult<TourInfoDto>> SearchAsync(SearchQuery query)
     {
-        var result = await httpService.GetAsync<List<TourInfoDto>>("api/TourInfos");
+        var result = await Client.SendAsync(
+            x => x.GetTourInfosPaginationAsync(query.PageSize, query.PageIndex, query.SearchString));
 
-        tours = result.Response;
+        var searchResult = new SearchResult<TourInfoDto>
+        {
+            Items = result.Data,
+            Total = result.Total
+        };
+
+        return searchResult;
     }
 
-    private void OnTourClicked(string tourId)
-    {
-        Navigation.NavigateTo($"/tours/{tourId}");
-    }
+    private string CreateImageUrl(string url)
+    => url.Replace("{width}", "100")
+          .Replace("{height}", "100")
+          .Replace("&crop={crop}", string.Empty);
 }

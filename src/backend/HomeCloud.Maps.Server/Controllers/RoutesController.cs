@@ -1,5 +1,7 @@
-﻿using HomeCloud.Maps.Application.Commands;
-using HomeCloud.Maps.Shared.Tours;
+﻿using HomeCloud.Maps.Application.Dto.Tours;
+using HomeCloud.Maps.Application.Handlers.Tours;
+using HomeCloud.Maps.Server.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +19,24 @@ namespace HomeCloud.Maps.Server.Controllers
     [ProducesResponseType(StatusCodes.Status200OK)]
     public class RoutesController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IEnumerable<RouteDto>> GetAll([FromServices] IReadAllRoutes service)
-        {
-            // To-Do
-            var userId = HttpContext.User.Claims.Single(x => x.Type == "sub").Value;
+        private readonly IMediator _mediator;
 
-            return await service.ExecuteAsync(userId);
+        public RoutesController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet(Name = nameof(GetAllRoutes))]
+        public Task<IEnumerable<RouteDto>> GetAllRoutes()
+        {
+            var jwt = HttpContext.GetJsonWebToken();
+
+            var request = new GetAllRoutesRequest
+            {
+                UserId = jwt.Subject
+            };
+
+            return _mediator.Send(request);
         }
     }
 }

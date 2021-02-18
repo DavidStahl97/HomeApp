@@ -1,5 +1,6 @@
 using HomeCloud.Maps.Client.Services;
-using HomeCloud.Maps.Client.Services.Authentication;
+using HomeCloud.Maps.Client.WebApi;
+using HomeCloud.Maps.Client.WebApi.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,9 +51,9 @@ namespace HomeCloud.Maps.Client
 
         private static void AddServices(IServiceCollection services)
         {
-            services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<IStorage, Storage>();
             services.AddScoped<IJwtStorage, JwtStorage>();
+            services.AddScoped<IWebAPIClient, WebAPIClient>();
         }
     }
 }

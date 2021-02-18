@@ -1,23 +1,30 @@
 ﻿@page "/settings"
 
-@using HomeCloud.Maps.Shared
 @attribute [Authorize]
 
-@inject IHttpService httpService
+@using HomeCloud.Maps.Client.Dialogs
 
-<h3>Settings</h3>
+@inject IWebAPIClient Client
+@inject IDialogService Dialog
 
-<div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Komoot User Id</label>
-    <input class="form-control" aria-describedby="emailHelp" @bind="@userSettings.KomootUserId" />
-</div>
-<button class="btn btn-primary" @onclick="@OnSubmitAsync">Submit</button>
 
-<div class="mb-3">
-    <label>Cookie</label>
-    <input class="form-control" @bind="@komootToursRequest.Cookies" />
-</div>
-<button @onclick="OnUpdateKommotTourAsync">Update Komoot Tours</button>
+<MudText Typo="Typo.h5" Class="mb-5">Sync Komoot</MudText>
+
+<MudTextField @bind-Value="userSettings.KomootUserId"
+              Label="Komoot-UserId"
+              Variant="Variant.Outlined"
+              Class="mr-5"
+              Style="width: 200px" />
+
+<MudToolBar Class="d-flex justify-start ml-n3 mt-3">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               @onclick="OnSubmitAsync"
+               Class="mr-3">Save</MudButton>
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               @onclick="OnUpdateKommotTourAsync">Sync Tours</MudButton>
+</MudToolBar>
 
 @code {
     private UserSettingsDto userSettings = new UserSettingsDto();
@@ -26,17 +33,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await httpService.GetAsync<UserSettingsDto>("api/UserSettings");
-        userSettings = result.Response;
+        userSettings = await Client.SendAsync(x => x.GetUserSettingsAsync());
     }
 
     private async Task OnSubmitAsync()
     {
-        await httpService.PostAsync("api/UserSettings", userSettings);
+        await Client.SendAsync(x => x.PostUserSettingsAsync(userSettings));
     }
 
-    private async Task OnUpdateKommotTourAsync()
+    private void OnUpdateKommotTourAsync()
     {
-        await httpService.PatchAsync("api/Komoot", komootToursRequest);
+        //await Client.SendAsync(x => x.PostToursAsync(komootToursRequest));
+        Dialog.Show<SyncKomootDialog>("Sync Komoot Tours");
     }
 }
