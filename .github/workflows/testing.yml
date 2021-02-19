@@ -20,7 +20,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Build
-      run: dotnet build HomeCloud.sln
+      run: dotnet build HomeCloud.sln --no-restore
     - name: Test
-      run: dotnet test HomeCloud.sln /p:CollectCoverage=true
+      run: dotnet test HomeCloud.sln /p:CollectCoverage=true --no-build --verbosity normal
