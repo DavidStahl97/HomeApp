@@ -15,7 +15,7 @@
                             Immediate="true"
                             @onkeyup="@OnSearchKeyUp"/>
         <MudToolBarSpacer />
-        <SelectPage TItem="TItem" PageChangedEvent="@SearchAsync" />
+        <SelectPage PageChangedEvent="@SearchAsync" />
     </MudToolBar>
     
     <MudGrid>
@@ -35,13 +35,15 @@
             @foreach (var item in items)
             {
                 <MudItem xs="6">
-                    <MudLink Underline="Underline.None"
-                             @onclick="LinkClicked">
+                    <MudButton Variant="Variant.Text"
+                               OnClick="@(() => ItemClicked.InvokeAsync(item))"
+                               Style="width: 100%">
                         <MudPaper Elevation="3"
-                                  Class="pa-5">
+                                  Class="pa-5"
+                                  Style="width: 100%">
                             @ItemContent(item)
                         </MudPaper>
-                    </MudLink>
+                    </MudButton>
                 </MudItem>
             }
         }
@@ -67,7 +69,7 @@
     public RenderFragment SkeletonItemContent { get; set; }
 
     [Parameter]
-    public EventCallback LinkClicked { get; set; }
+    public EventCallback<TItem> ItemClicked { get; set; }
 
     [Parameter]
     public Func<SearchQuery, Task<SearchResult<TItem>>> SearchFunction { get; set; }

@@ -29,10 +29,10 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
         public async Task<TourDto> Handle(GetTourInfosByIdRequest request, CancellationToken cancellationToken)
         {
             var tourInfo = await _repository.TourInfoCollection
-                .SingleAsync(x => x.TourId == request.TourId && x.UserId == request.UserId);
+                .FirstAsync(x => x.TourId == request.TourId && x.UserId == request.UserId);
 
             var route = await _repository.RouteCollection
-                .SingleAsync(x => x.TourId == request.TourId && x.UserId == request.UserId);
+                .FirstAsync(x => x.TourId == request.TourId && x.UserId == request.UserId);
 
             return new TourDto
             {
