@@ -10,7 +10,7 @@ on:
       - release
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -23,4 +23,4 @@ jobs:
     - name: Build
       run: dotnet build HomeCloud.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test HomeCloud.sln /p:CollectCoverage=true
