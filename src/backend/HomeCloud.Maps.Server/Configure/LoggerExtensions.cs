@@ -19,17 +19,23 @@ namespace HomeCloud.Maps.Server.Configure
 
             var eventLevel = inProduction ? LogEventLevel.Information : LogEventLevel.Debug;
 
-            var logger = new LoggerConfiguration()
+            var configuration = new LoggerConfiguration()
               .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
               .Enrich.FromLogContext()
-              .WriteTo.Debug()
-              .WriteTo.Console()
               .WriteTo.MongoDB(db,
                 eventLevel,
                 "homecloud-maps-logs",
                 1,
-                TimeSpan.FromSeconds(1))
-              .CreateLogger();
+                TimeSpan.FromSeconds(1));
+
+            if (inProduction == false)
+            {
+                configuration = configuration
+                    .WriteTo.Debug()
+                    .WriteTo.Console();
+            }
+
+            var logger = configuration.CreateLogger();
 
             Log.Logger = logger;
 
