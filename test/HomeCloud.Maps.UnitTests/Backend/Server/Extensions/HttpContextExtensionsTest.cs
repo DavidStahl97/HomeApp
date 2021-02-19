@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace HomeCloud.Maps.Server.UnitTests.Extensions
+namespace HomeCloud.Maps.UnitTests.Backend.Server.Extensions
 {
     public class HttpContextExtensionsTest
     {

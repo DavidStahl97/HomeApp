@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using Xunit;
 
-namespace HomeCloud.Maps.Infrastructure.UnitTests.GPX
+namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.GPX
 {
     public class GPXSerializerTests
     {
@@ -13,7 +13,7 @@ namespace HomeCloud.Maps.Infrastructure.UnitTests.GPX
         public void Deserialze()
         {
             // Arrange
-            using var stream = new FileStream("GPX/2021-01-31_311521186_Hattsteinweier.gpx", FileMode.Open);
+            using var stream = new FileStream("Backend/Infrastructure/GPX/2021-01-31_311521186_Hattsteinweier.gpx", FileMode.Open);
             var serializer = new GPXSerializer();
 
             // Act

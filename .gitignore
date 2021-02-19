@@ -3,7 +3,7 @@ mongo-volumne/
 
 # code coverage
 coveragereport/
-CoverageResults/
+code-coverage/
 *.cobertura.xml
 
 ## Ignore Visual Studio temporary files, build results, and
