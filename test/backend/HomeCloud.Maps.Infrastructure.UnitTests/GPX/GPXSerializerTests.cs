@@ -12,6 +12,8 @@ namespace HomeCloud.Maps.Infrastructure.UnitTests.GPX
         [Fact]
         public void Deserialze()
         {
+            throw new ArgumentException("test fail");
+
             // Arrange
             using var stream = new FileStream("GPX/2021-01-31_311521186_Hattsteinweier.gpx", FileMode.Open);
             var serializer = new GPXSerializer();
