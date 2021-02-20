@@ -48,7 +48,7 @@ namespace HomeCloud.Maps.Server.Controllers
 
             MaybeNull<string> filter = string.IsNullOrEmpty(tourNameFilter) ? new Null() : tourNameFilter;
 
-            var request = new GetTourInfoPaginationRequest
+            var request = new GetTourInfosPaginationRequest
             {
                 UserId = jwt.Subject,
                 TourNameFilter = filter,

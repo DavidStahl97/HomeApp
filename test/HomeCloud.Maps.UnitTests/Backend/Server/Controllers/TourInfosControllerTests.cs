@@ -26,7 +26,7 @@ namespace HomeCloud.Maps.UnitTests.Backend.Server.Controllers
         public Task GetTourInfosPagination_ShouldSendTourNameFilter(int pageIndex, int pageSize, 
             string tourNameFilter, string userId)
         {
-            return TestRequestAsync<GetTourInfoPaginationRequest, PaginationResult<TourInfoDto>>(
+            return TestRequestAsync<GetTourInfosPaginationRequest, PaginationResult<TourInfoDto>>(
                 x => x.GetTourInfosPagination(pageSize, pageIndex, tourNameFilter),
                 actual => 
                 {
@@ -42,7 +42,7 @@ namespace HomeCloud.Maps.UnitTests.Backend.Server.Controllers
         [InlineData("userid-test")]
         public Task GetTourInfosPagination_ShouldSendTourNameFilterNull(string userId)
         {
-            return TestRequestAsync<GetTourInfoPaginationRequest, PaginationResult<TourInfoDto>>(
+            return TestRequestAsync<GetTourInfosPaginationRequest, PaginationResult<TourInfoDto>>(
                 x => x.GetTourInfosPagination(0, 0, null),
                 actual => actual.TourNameFilter.IsNull.Should().BeTrue(),
                 userId);
@@ -53,7 +53,7 @@ namespace HomeCloud.Maps.UnitTests.Backend.Server.Controllers
         {
             var expected = Fixture.Create<PaginationResult<TourInfoDto>>();
 
-            return TestResponseAsync<GetTourInfoPaginationRequest, PaginationResult<TourInfoDto>>(
+            return TestResponseAsync<GetTourInfosPaginationRequest, PaginationResult<TourInfoDto>>(
                 x => x.GetTourInfosPagination(),
                 actual => actual.Should().BeEquivalentTo(expected),
                 expected);
