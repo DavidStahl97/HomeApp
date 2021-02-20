@@ -16,7 +16,7 @@ using HomeCloud.Maps.Domain.Types;
 
 namespace HomeCloud.Maps.Application.Handlers.Tours
 {
-    public class GetTourInfoPagination : IRequest<PaginationResult<TourInfoDto>>
+    public class GetTourInfoPaginationRequest : IRequest<PaginationResult<TourInfoDto>>
     {
         public string UserId { get; init; }
 
@@ -25,18 +25,18 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
         public Page Page { get; init; }
     }
 
-    public class GetTourInfoPaginationHandler : IRequestHandler<GetTourInfoPagination, PaginationResult<TourInfoDto>>
+    public class GetTourInfoPaginationHandler : IRequestHandler<GetTourInfoPaginationRequest, PaginationResult<TourInfoDto>>
     {
         private readonly IRepository _repository;
-        private readonly ILogger<GetTourInfoPagination> _logger;
+        private readonly ILogger<GetTourInfoPaginationRequest> _logger;
 
-        public GetTourInfoPaginationHandler(IRepository repository, ILogger<GetTourInfoPagination> logger)
+        public GetTourInfoPaginationHandler(IRepository repository, ILogger<GetTourInfoPaginationRequest> logger)
         {
             _repository = repository;
             _logger = logger;
         }
 
-        public async Task<PaginationResult<TourInfoDto>> Handle(GetTourInfoPagination request, CancellationToken cancellationToken)
+        public async Task<PaginationResult<TourInfoDto>> Handle(GetTourInfoPaginationRequest request, CancellationToken cancellationToken)
         {
             _logger.WriteInformation("Find Tour Page",
                 (nameof(request.UserId), request.UserId),

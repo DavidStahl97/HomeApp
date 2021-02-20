@@ -19,5 +19,7 @@ namespace HomeCloud.Maps.Domain.Types
         public static implicit operator MaybeNull<TItem>(Null _) => new MaybeNull<TItem>(_);
 
         public new TItem Value => IsT0 ? AsT0 : null;
+
+        public bool IsNull => IsT1;
     }
 }
