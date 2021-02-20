@@ -18,11 +18,11 @@ namespace HomeCloud.Maps.Server.Controllers
     [ApiController]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public class TourController : ControllerBase
+    public class ToursController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public TourController(IMediator mediator)
+        public ToursController(IMediator mediator)
         {
             _mediator = mediator;
         }

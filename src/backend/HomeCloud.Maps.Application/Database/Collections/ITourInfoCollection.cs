@@ -1,4 +1,5 @@
 ﻿using HomeCloud.Maps.Domain.Tours;
+using HomeCloud.Maps.Domain.Types;
 using OneOf;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,6 @@ namespace HomeCloud.Maps.Application.Database.Collections
 {
     public interface ITourInfoCollection : ICollectionBase<TourInfo>
     {
-        Task<(IEnumerable<TourInfo> Page, long Count)> FindPageAsync(string userId, int index, int pageSize, OneOf<string, Null> tourNameFilter);
+        Task<(IEnumerable<TourInfo> Page, long Count)> FindPageAsync(string userId, int index, int pageSize, MaybeNull<string> tourNameFilter);
     }
 }

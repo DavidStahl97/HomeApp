@@ -1,5 +1,6 @@
 ﻿using HomeCloud.Maps.Application.Database.Collections;
 using HomeCloud.Maps.Domain.Tours;
+using HomeCloud.Maps.Domain.Types;
 using HomeCloud.Maps.Infrastructure.Database.Collection;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -19,7 +20,7 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collections
         {
         }
 
-        public async Task<(IEnumerable<TourInfo> Page, long Count)> FindPageAsync(string userId, int index, int pageSize, OneOf<string, Null> tourNameFilter)
+        public async Task<(IEnumerable<TourInfo> Page, long Count)> FindPageAsync(string userId, int index, int pageSize, MaybeNull<string> tourNameFilter)
         {
             var filter = Builders<TourInfo>.Filter.Eq(x => x.UserId, userId);
 
