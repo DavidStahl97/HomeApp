@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Hellang.Authentication.JwtBearer.Google" Version="2.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.6" />
     <PackageReference Include="OneOf" Version="3.0.178" />
@@ -19,7 +19,7 @@
     <PackageReference Include="Serilog.Extensions.Hosting" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.MongoDB" Version="4.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
