@@ -1,4 +1,5 @@
-﻿using Autofac.Extras.Moq;
+﻿using Autofac;
+using Autofac.Extras.Moq;
 using AutoFixture;
 using FluentAssertions;
 using HomeCloud.Maps.Application.Database;
@@ -8,6 +9,7 @@ using HomeCloud.Maps.Application.Handlers.Tours;
 using HomeCloud.Maps.Domain.Tours;
 using HomeCloud.Maps.Domain.Types;
 using Jmansar.SemanticComparisonExtensions;
+using MongoDB.Bson;
 using Moq;
 using SemanticComparison.Fluent;
 using System;
@@ -64,7 +66,8 @@ namespace HomeCloud.Maps.UnitTests.Backend.Application.Handlers
             var request = CreateRequest();
             var dbResponse = CreateDbResponse();
 
-            using var mock = AutoMock.GetLoose();
+            using var mock = AutoMock.GetLoose(cfg => 
+                cfg.RegisterInstance(MappingFactory.CreateMapper()));
 
             mock.Mock<IRepository>()
                 .Setup(x => x.TourInfoCollection.FindPageAsync(
@@ -78,6 +81,7 @@ namespace HomeCloud.Maps.UnitTests.Backend.Application.Handlers
 
             // Assert
             actual.Total.Should().Be(dbResponse.Count);
+            dbResponse.Data.Should().NotBeEmpty();
             actual.Data.Should().HaveSameCount(dbResponse.Data);
 
             foreach (var expected in dbResponse.Data)

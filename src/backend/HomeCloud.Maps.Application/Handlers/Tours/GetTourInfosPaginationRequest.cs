@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using HomeCloud.Maps.Domain.Types;
 using AutoMapper;
 using System.Collections.Generic;
+using HomeCloud.Maps.Domain.Tours;
 
 namespace HomeCloud.Maps.Application.Handlers.Tours
 {
@@ -52,7 +53,7 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
                 (nameof(result.Count), result.Count),
                 (nameof(resultPageSize), resultPageSize));
 
-            var tours = _mapper.Map<IEnumerable<TourInfoDto>>(result.Page);
+            var tours = _mapper.Map<IEnumerable<TourInfo>, IEnumerable<TourInfoDto>>(result.Page);
 
             return new PaginationResult<TourInfoDto>
             {

@@ -17,10 +17,7 @@ namespace HomeCloud.Maps.UnitTests.Backend.Application.Mapping
 
         public MappingTestBase()
         {
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            }).CreateMapper();
+            var mapper = MappingFactory.CreateMapper();
 
             Source = FixtureFactory.GetCustomizedFixture().Create<TSource>();
             Destination = mapper.Map<TDestination>(Source);
