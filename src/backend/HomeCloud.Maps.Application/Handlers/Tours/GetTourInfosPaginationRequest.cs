@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using HomeCloud.Maps.Domain.Types;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace HomeCloud.Maps.Application.Handlers.Tours
 {
@@ -24,11 +26,13 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
     {
         private readonly IRepository _repository;
         private readonly ILogger<GetTourInfosPaginationRequest> _logger;
+        private readonly IMapper _mapper;
 
-        public GetTourInfoPaginationHandler(IRepository repository, ILogger<GetTourInfosPaginationRequest> logger)
+        public GetTourInfoPaginationHandler(IRepository repository, ILogger<GetTourInfosPaginationRequest> logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async Task<PaginationResult<TourInfoDto>> Handle(GetTourInfosPaginationRequest request, CancellationToken cancellationToken)
@@ -48,14 +52,7 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
                 (nameof(result.Count), result.Count),
                 (nameof(resultPageSize), resultPageSize));
 
-            var tours = result.Page.Select(x => new TourInfoDto
-            {
-                TourId = x.TourId,
-                Date = x.Date,
-                Name = x.Name,
-                Distance = x.Distance,
-                ImageUrl = x.ImageUrl,
-            }).ToList();
+            var tours = _mapper.Map<IEnumerable<TourInfoDto>>(result.Page);
 
             return new PaginationResult<TourInfoDto>
             {
