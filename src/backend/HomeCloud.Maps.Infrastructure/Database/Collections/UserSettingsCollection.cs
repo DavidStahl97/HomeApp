@@ -17,5 +17,8 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collections
 
         public Task<UserSettings> FirstAsync(string userId)
             => FirstAsync(x => x.UserId == userId);
+
+        public Task ReplaceOrInsert(UserSettings settings)
+            => ReplaceOrInsert(x => x.UserId == settings.UserId, settings);
     }
 }

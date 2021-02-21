@@ -34,8 +34,7 @@ namespace HomeCloud.Maps.Application.Handlers.UserSettings
                 KomootUserId = request.UserSettings.KomootUserId
             };
 
-            await _repository.UserSettingsCollection
-                .ReplaceOrInsert(x => x.UserId == request.UserId, userSettings);
+            await _repository.UserSettingsCollection.ReplaceOrInsert(userSettings);
 
             return Unit.Value;
         }
