@@ -14,24 +14,24 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
 {
-    public abstract class DatabaseTestBase<TCollection, TDataType>
+    public abstract class DatabaseTestBase<TCollection, TDataType> : IDisposable
         where TCollection : ICollectionBase<TDataType>
     {
-        private readonly MongoDbRunner _runner;
-        private readonly MongoClient _client;
-        private readonly IMongoDatabase _database;
-        private readonly IMongoCollection<TDataType> _collection;
+        private const string DATABASE_NAME = "homecloud-maps";
 
-        public DatabaseTestBase()
+        private readonly IMongoCollection<TDataType> _collection;
+        private readonly IMongoDatabase _database;
+        private readonly IMongoClient _client;
+
+        public DatabaseTestBase(DatabaseFixture databaseFixture)
         {
             Fixture = FixtureFactory.GetCustomizedFixture();
 
-            _runner = MongoDbRunner.Start();
-            _client = new MongoClient(_runner.ConnectionString);
-            _database = _client.GetDatabase("homecloud-maps");
+            _client = databaseFixture.Client;
+            _database = _client.GetDatabase(DATABASE_NAME);
             _collection = _database.GetCollection<TDataType>(typeof(TDataType).Name);
 
-            Repository = new Repository(_client);            
+            Repository = new Repository(databaseFixture.Client);            
         }
 
         protected IFixture Fixture { get; }
@@ -91,5 +91,10 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
 
         private async Task<IEnumerable<TDataType>> GetAllAsync()
             => await _collection.Find((_) => true).ToListAsync();
+
+        public void Dispose()
+        {
+            _client.DropDatabase(DATABASE_NAME);
+        }
     }
 }

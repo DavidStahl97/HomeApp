@@ -11,10 +11,15 @@ using System.Threading.Tasks;
 using Xunit;
 using static OneOf.Types.TrueFalseOrNull;
 
-namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
+namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database.Collections
 {
+    [Collection("DB")]
     public class TourInfoCollectionTests : DatabaseTestBase<ITourInfoCollection, TourInfo>
     {
+        public TourInfoCollectionTests(DatabaseFixture databaseFixture) : base(databaseFixture)
+        {
+        }
+
         protected override ICollectionBase<TourInfo> GetCollection(IRepository repository)
             => repository.TourInfoCollection;
 
