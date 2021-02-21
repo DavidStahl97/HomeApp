@@ -27,7 +27,7 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
         public async Task<IEnumerable<RouteDto>> Handle(GetAllRoutesRequest request, CancellationToken cancellationToken)
         {
             var routes = await _repository.RouteCollection
-                .FindAsync(x => x.UserId == request.UserId);
+                .FindAsync(request.UserId);
 
             var dtos = routes.Select(x => new RouteDto
             {

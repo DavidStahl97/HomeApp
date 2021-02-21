@@ -33,7 +33,7 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collection
             return GetCollection().Find(expression).FirstAsync();
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
+        protected async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
         {
             return await GetCollection().Find(expression).ToListAsync();
         }

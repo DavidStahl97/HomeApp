@@ -16,6 +16,9 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collections
         {
         }
 
+        public Task<IEnumerable<Route>> FindAsync(string userId)
+            => FindAsync(x => x.UserId == userId);
+
         public Task<Route> FirstAsync(string userId, string tourId)
             => FirstAsync(x => x.TourId == tourId && x.UserId == userId);
     }
