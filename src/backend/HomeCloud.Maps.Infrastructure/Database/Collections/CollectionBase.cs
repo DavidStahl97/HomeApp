@@ -1,14 +1,17 @@
 ﻿using HomeCloud.Maps.Application.Database.Collections;
+using HomeCloud.Maps.Domain.Types;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static OneOf.Types.TrueFalseOrNull;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collection
 {
     public abstract class CollectionBase<T> : ICollectionBase<T>
+        where T : class
     {
         private const string _database = "homecloud-maps";
         private readonly MongoClient _client;
@@ -28,9 +31,10 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collection
             return GetCollection().InsertManyAsync(documents);
         }
 
-        protected Task<T> FirstAsync(Expression<Func<T, bool>> expression)
+        protected async Task<MaybeFound<T>> FirstAsync(Expression<Func<T, bool>> expression)
         {
-            return GetCollection().Find(expression).FirstAsync();
+            var result = await GetCollection().Find(expression).FirstOrDefaultAsync();
+            return NotFound.Create(result);
         }
 
         protected async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)

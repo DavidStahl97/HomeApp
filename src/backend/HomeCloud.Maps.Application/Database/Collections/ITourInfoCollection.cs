@@ -14,6 +14,6 @@ namespace HomeCloud.Maps.Application.Database.Collections
     {
         Task<(IEnumerable<TourInfo> Page, long Count)> FindPageAsync(string userId, int index, int pageSize, MaybeNull<string> tourNameFilter);
 
-        Task<TourInfo> FirstAsync(string userId, string tourId);
+        Task<MaybeFound<TourInfo>> FirstAsync(string userId, string tourId);
     }
 }

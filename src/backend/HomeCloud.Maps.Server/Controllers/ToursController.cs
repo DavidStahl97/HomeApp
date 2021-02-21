@@ -28,7 +28,8 @@ namespace HomeCloud.Maps.Server.Controllers
         }
 
         [HttpGet("{tourId}", Name = nameof(GetTourInfosById))]
-        public Task<TourDto> GetTourInfosById(string tourId)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TourDto>> GetTourInfosById(string tourId)
         {
             var jwt = HttpContext.GetJsonWebToken();
 
@@ -38,11 +39,14 @@ namespace HomeCloud.Maps.Server.Controllers
                 TourId = tourId
             };
 
-            return _mediator.Send(request);
+            var result = await _mediator.Send(request);
+            return result.Match<ActionResult<TourDto>>(
+                x => Ok(x),
+                x => NotFound());
         }
 
         [HttpPost(Name = nameof(PostTours))]
-        public Task PostTours([FromBody] KomootToursRequest request)
+        public async Task<IActionResult> PostTours([FromBody] KomootToursRequest request)
         {
             var jwt = HttpContext.GetJsonWebToken();
 
@@ -52,7 +56,11 @@ namespace HomeCloud.Maps.Server.Controllers
                 KomootToursRequest = request
             };
 
-            return _mediator.Send(insertRequest);
+            var result = await _mediator.Send(insertRequest);
+
+            return result.Match<IActionResult>(
+                succesful => Ok(),
+                settingsNotFound => NotFound());
         }
     }
 }

@@ -46,7 +46,8 @@ namespace HomeCloud.Maps.Server.Controllers
                 (nameof(tourNameFilter), tourNameFilter),
                 (nameof(jwt.Subject), jwt.Subject));
 
-            MaybeNull<string> filter = string.IsNullOrEmpty(tourNameFilter) ? new Null() : tourNameFilter;
+            var filter = MaybeNull.Create(
+                string.IsNullOrEmpty(tourNameFilter) ? null : tourNameFilter);
 
             var request = new GetTourInfosPaginationRequest
             {

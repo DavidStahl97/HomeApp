@@ -30,9 +30,14 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database.Collections
         public Task TourInfo_InsertManyAsync() => InsertManyAsync();
 
         [Fact]
-        public Task TourInfo_FirstAsync()
-            => FirstAsync(expected =>
+        public Task FirstAsync_ShouldReturnTour()
+            => FirstAsync_ShouldReturnElement(expected =>
                 Repository.TourInfoCollection.FirstAsync(expected.UserId, expected.TourId));
+
+        [Theory]
+        [InlineData("test-userid", "test-tourid")]
+        public Task FirstAsync_ShouldReturnNull(string userId, string tourId)
+            => FirsAsync_ShouldReturnNull(() => Repository.TourInfoCollection.FirstAsync(userId, tourId));
 
         [Theory]
         [InlineData("Hausberg", "berg")]

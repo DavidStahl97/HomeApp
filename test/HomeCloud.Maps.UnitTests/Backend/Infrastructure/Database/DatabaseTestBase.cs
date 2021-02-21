@@ -2,6 +2,7 @@
 using FluentAssertions;
 using HomeCloud.Maps.Application.Database;
 using HomeCloud.Maps.Application.Database.Collections;
+using HomeCloud.Maps.Domain.Types;
 using HomeCloud.Maps.Infrastructure.Database;
 using Mongo2Go;
 using MongoDB.Driver;
@@ -16,6 +17,7 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
 {
     public abstract class DatabaseTestBase<TCollection, TDataType> : IDisposable
         where TCollection : ICollectionBase<TDataType>
+        where TDataType : class
     {
         private const string DATABASE_NAME = "homecloud-maps";
 
@@ -73,7 +75,8 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
                 options => options.AddDateTimeCloseToExpected());
         }
 
-        protected async Task FirstAsync(Func<TDataType, Task<TDataType>> executeTest)
+        protected async Task FirstAsync_ShouldReturnElement(
+            Func<TDataType, Task<MaybeFound<TDataType>>> executeTest)
         {
             // Arrange
             var data = Fixture.CreateList<TDataType>(10);
@@ -85,8 +88,23 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
             var actual = await executeTest(expected);
 
             // Assert
-            actual.Should().BeEquivalentTo(expected,
+            actual.Value.Should().BeEquivalentTo(expected,
                 options => options.AddDateTimeCloseToExpected());
+        }
+
+        protected async Task FirsAsync_ShouldReturnNull(
+            Func<Task<MaybeFound<TDataType>>> executeTest)
+        {
+            // Arrange
+            var data = Fixture.CreateList<TDataType>(10);
+
+            await GetCollection(Repository).InsertManyAsync(data);
+
+            // Act
+            var actual = await executeTest();
+
+            // Assert
+            actual.IsNull.Should().BeTrue();
         }
 
         private async Task<IEnumerable<TDataType>> GetAllAsync()

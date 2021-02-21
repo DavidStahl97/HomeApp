@@ -40,7 +40,7 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
         {
             _logger.WriteInformation("Find Tour Page",
                 (nameof(request.UserId), request.UserId),
-                (nameof(request.TourNameFilter), request.TourNameFilter.Value),
+                (nameof(request.TourNameFilter), request.TourNameFilter),
                 (nameof(request.Page.Index), request.Page.Index),
                 (nameof(request.Page.Size), request.Page.Size));
             

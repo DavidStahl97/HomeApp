@@ -42,7 +42,7 @@ namespace HomeCloud.Maps.Server.Controllers
         }
 
         [HttpGet(Name = nameof(GetUserSettings))]
-        public Task<UserSettingsDto> GetUserSettings()
+        public async Task<ActionResult<UserSettingsDto>> GetUserSettings()
         {
             var jwt = HttpContext.GetJsonWebToken();
 
@@ -51,7 +51,11 @@ namespace HomeCloud.Maps.Server.Controllers
                 UserId = jwt.Subject
             };
 
-            return _mediator.Send(request);
+            var result = await _mediator.Send(request);
+
+            return result.Match<ActionResult<UserSettingsDto>>(
+                userSettings => Ok(userSettings),
+                notFound => NotFound());
         }
     }
 }
