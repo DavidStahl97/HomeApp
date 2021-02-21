@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collections
 {
-    class RouteCollection : CollectionBase<Route>, IRouteCollection
+    public class RouteCollection : CollectionBase<Route>, IRouteCollection
     {
         public RouteCollection(MongoClient client) : base(client)
         {

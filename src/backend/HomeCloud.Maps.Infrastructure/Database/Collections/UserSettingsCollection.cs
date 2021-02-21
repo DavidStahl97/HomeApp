@@ -8,7 +8,7 @@ using System.Text;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collections
 {
-    class UserSettingsCollection : CollectionBase<UserSettings>, IUserSettingsCollection
+    public class UserSettingsCollection : CollectionBase<UserSettings>, IUserSettingsCollection
     {
         public UserSettingsCollection(MongoClient client) : base(client)
         {

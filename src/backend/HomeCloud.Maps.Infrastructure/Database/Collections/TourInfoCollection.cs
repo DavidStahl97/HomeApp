@@ -14,7 +14,7 @@ using static OneOf.Types.TrueFalseOrNull;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collections
 {
-    class TourInfoCollection : CollectionBase<TourInfo>, ITourInfoCollection
+    public class TourInfoCollection : CollectionBase<TourInfo>, ITourInfoCollection
     {
         public TourInfoCollection(MongoClient client) : base(client)
         {

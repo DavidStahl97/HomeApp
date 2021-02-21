@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collection
 {
-    abstract class CollectionBase<T> : ICollectionBase<T>
+    public abstract class CollectionBase<T> : ICollectionBase<T>
     {
         private const string _database = "homecloud-maps";
         private readonly MongoClient _client;
