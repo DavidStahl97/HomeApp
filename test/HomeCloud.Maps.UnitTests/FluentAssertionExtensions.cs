@@ -13,7 +13,8 @@ namespace HomeCloud.Maps.UnitTests
         public static EquivalencyAssertionOptions<TExpectation> AddDateTimeCloseToExpected<TExpectation>(
             this EquivalencyAssertionOptions<TExpectation> options)
         {
-            return options.Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation))
+            return options.Using<DateTime>(ctx => 
+                    ctx.Subject.ToUniversalTime().Should().BeCloseTo(ctx.Expectation.ToUniversalTime()))
                 .WhenTypeIs<DateTime>();
         }
     }

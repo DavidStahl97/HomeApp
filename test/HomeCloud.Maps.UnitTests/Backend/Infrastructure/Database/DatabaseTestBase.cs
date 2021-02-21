@@ -47,12 +47,31 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
             await GetCollection(_repository).InsertAsync(expected);
 
             // Assert
-            var data = await _collection.Find((_) => true).ToListAsync();
+            var data = await GetAllAsync();
             data.Should().HaveCount(1);
             var actual = data.First();
             
             actual.Should().BeEquivalentTo(expected, 
                 options => options.AddDateTimeCloseToExpected());
         }
+
+        protected async Task InsertManyAsync()
+        {
+            // Arrange
+            var expected = _fixture.Create<IEnumerable<TDataType>>();
+
+            // Act
+            await GetCollection(_repository).InsertManyAsync(expected);
+
+            // Assert
+            var actual = await GetAllAsync();
+
+            actual.Should().HaveCount(expected.Count());
+            actual.Should().BeEquivalentTo(expected, 
+                options => options.AddDateTimeCloseToExpected());
+        }
+
+        private async Task<IEnumerable<TDataType>> GetAllAsync()
+            => await _collection.Find((_) => true).ToListAsync();
     }
 }

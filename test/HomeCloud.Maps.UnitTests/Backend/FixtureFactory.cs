@@ -26,8 +26,7 @@ namespace HomeCloud.Maps.UnitTests.Backend
                     .With(p => p.TourNameFilter, Guid.NewGuid().ToString()));
 
                 fixture.Customize<TourInfo>(x => x
-                    .With(p => p.Id, ObjectId.Empty)
-                    .With(p => p.Date, DateTime.UtcNow));
+                    .Without(x => x.Id));
             }
         }
     }

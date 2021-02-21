@@ -18,5 +18,8 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
 
         [Fact]
         public Task TourInfo_InsertAsync() => InsertAsync();
+
+        [Fact]
+        public Task TourInfo_InsertManyAsync() => InsertManyAsync();
     }
 }
