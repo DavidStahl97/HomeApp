@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Domain", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.Client.WebApi", "src\frontend\HomeCloud.Maps.Client.WebApi\HomeCloud.Maps.Client.WebApi.csproj", "{AB42C617-0737-422B-8BBC-89996AB3F51F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCloud.Maps.UnitTests", "test\HomeCloud.Maps.UnitTests\HomeCloud.Maps.UnitTests.csproj", "{714E1804-194E-46A8-93DB-A496896A62BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCloud.Maps.UnitTests", "test\HomeCloud.Maps.UnitTests\HomeCloud.Maps.UnitTests.csproj", "{714E1804-194E-46A8-93DB-A496896A62BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

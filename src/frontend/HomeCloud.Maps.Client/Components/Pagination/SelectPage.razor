@@ -1,45 +1,47 @@
-﻿<MudText Typo="Typo.body2" Class="mud-table-pagination-caption">
+﻿@namespace HomeCloud.Maps.Client.Components
+
+<MudText Typo="Typo.body2" Class="mud-table-pagination-caption">
     Rows per Page
 </MudText>
 
 <span style="width: 75px" class="ml-3 mr-5">
-    <MudSelect T="int" 
-               Class="mud-table-pagination-select" 
-               DisableUnderLine="true" 
+    <MudSelect T="int"
+               Class="mud-table-pagination-select"
+               DisableUnderLine="true"
                Dense="true"
                Value="@Pagination.PageSize"
-               ValueChanged="@OnPageSizeChanged">        
+               ValueChanged="@OnPageSizeChanged">
         @foreach (var pageItem in new List<int> { 10, 25, 50, 100 })
         {
-            <MudSelectItem Value="@pageItem"/>
+            <MudSelectItem Value="@pageItem" />
         }
     </MudSelect>
 </span>
 
-<MudText Typo="Typo.body2" 
+<MudText Typo="Typo.body2"
          Class="mud-table-pagination-caption"
          Style="width: 100px">
     @CurrentSelectedPage
 </MudText>
 
 <div class="mud-table-pagination-actions">
-    <MudIconButton Icon="@Icons.Material.Filled.FirstPage" 
+    <MudIconButton Icon="@Icons.Material.Filled.FirstPage"
                    @onclick="@OnSelectFirstPage"
-                   Disabled="@(Pagination.PageIndex == 0)"/>
+                   Disabled="@(Pagination.PageIndex == 0)" />
     <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore"
                    @onclick="@OnSelectBeforePage"
-                   Disabled="@(Pagination.PageIndex == 0)"/>
+                   Disabled="@(Pagination.PageIndex == 0)" />
     <MudIconButton Icon="@Icons.Material.Filled.NavigateNext"
                    @onclick="@OnSelectNextPage"
-                   Disabled="(Pagination.PageIndex == LastPageIndex)"/>
-    <MudIconButton Icon="@Icons.Material.Filled.LastPage" 
+                   Disabled="(Pagination.PageIndex == LastPageIndex)" />
+    <MudIconButton Icon="@Icons.Material.Filled.LastPage"
                    @onclick="@OnSelectLastPage"
-                   Disabled="(Pagination.PageIndex == LastPageIndex)"/>
+                   Disabled="(Pagination.PageIndex == LastPageIndex)" />
 </div>
 
 @code {
     [CascadingParameter]
-    public Pagination Pagination { get; set; }
+    public PaginationInfo Pagination { get; set; }
 
     [Parameter]
     public EventCallback PageChangedEvent { get; set; }
