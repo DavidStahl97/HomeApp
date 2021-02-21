@@ -15,5 +15,8 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collections
         public RouteCollection(MongoClient client) : base(client)
         {
         }
+
+        public Task<Route> FirstAsync(string userId, string tourId)
+            => FirstAsync(x => x.TourId == tourId && x.UserId == userId);
     }
 }

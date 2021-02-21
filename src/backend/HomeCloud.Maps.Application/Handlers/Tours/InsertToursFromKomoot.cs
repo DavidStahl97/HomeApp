@@ -33,7 +33,7 @@ namespace HomeCloud.Maps.Application.Handlers.Tours
         public async Task<Unit> Handle(InsertToursFromKomootRequest request, CancellationToken cancellationToken)
         {
             var settings = await _repository.UserSettingsCollection
-                .FirstAsync(x => x.UserId == request.UserId);
+                .FirstAsync(request.UserId);
 
             var tours = await _komootService.GetAllTours(settings.KomootUserId, request.KomootToursRequest.Cookies);
 

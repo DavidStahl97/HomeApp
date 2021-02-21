@@ -9,5 +9,6 @@ namespace HomeCloud.Maps.Application.Database.Collections
 {
     public interface IRouteCollection : ICollectionBase<Route>
     {
+        Task<Route> FirstAsync(string userId, string tourId);
     }
 }

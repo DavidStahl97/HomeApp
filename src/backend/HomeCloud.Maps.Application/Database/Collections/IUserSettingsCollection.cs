@@ -9,5 +9,6 @@ namespace HomeCloud.Maps.Application.Database.Collections
 {
     public interface IUserSettingsCollection : ICollectionBase<UserSettings>
     {
+        Task<UserSettings> FirstAsync(string userId);
     }
 }

@@ -13,5 +13,7 @@ namespace HomeCloud.Maps.Application.Database.Collections
     public interface ITourInfoCollection : ICollectionBase<TourInfo>
     {
         Task<(IEnumerable<TourInfo> Page, long Count)> FindPageAsync(string userId, int index, int pageSize, MaybeNull<string> tourNameFilter);
+
+        Task<TourInfo> FirstAsync(string userId, string tourId);
     }
 }

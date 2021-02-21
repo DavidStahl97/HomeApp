@@ -13,8 +13,6 @@ namespace HomeCloud.Maps.Application.Database.Collections
 
         Task InsertManyAsync(IEnumerable<T> documents);
 
-        Task<T> FirstAsync(Expression<Func<T, bool>> expression);
-
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression);
 
         Task<(IEnumerable<T> Page, long Count)> FindPageAsync(Expression<Func<T, bool>> expression, int index, int pageSize);

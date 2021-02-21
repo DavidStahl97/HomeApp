@@ -26,8 +26,7 @@ namespace HomeCloud.Maps.Application.Handlers.UserSettings
 
         public async Task<UserSettingsDto> Handle(GetUserSettingsRequest request, CancellationToken cancellationToken)
         {
-            var settings = await _repository.UserSettingsCollection
-                .FirstAsync(x => x.UserId == request.UserId);
+            var settings = await _repository.UserSettingsCollection.FirstAsync(request.UserId);
 
             if (settings == null)
             {

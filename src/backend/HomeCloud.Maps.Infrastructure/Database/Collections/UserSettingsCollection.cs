@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collections
 {
@@ -13,5 +14,8 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collections
         public UserSettingsCollection(MongoClient client) : base(client)
         {
         }
+
+        public Task<UserSettings> FirstAsync(string userId)
+            => FirstAsync(x => x.UserId == userId);
     }
 }
