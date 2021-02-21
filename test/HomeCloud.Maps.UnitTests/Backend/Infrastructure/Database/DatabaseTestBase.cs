@@ -21,30 +21,32 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
         private readonly MongoClient _client;
         private readonly IMongoDatabase _database;
         private readonly IMongoCollection<TDataType> _collection;
-        private readonly Repository _repository;
-        private readonly IFixture _fixture;
 
         public DatabaseTestBase()
         {
-            _fixture = FixtureFactory.GetCustomizedFixture();
+            Fixture = FixtureFactory.GetCustomizedFixture();
 
             _runner = MongoDbRunner.Start();
             _client = new MongoClient(_runner.ConnectionString);
             _database = _client.GetDatabase("homecloud-maps");
             _collection = _database.GetCollection<TDataType>(typeof(TDataType).Name);
 
-            _repository = new Repository(_client);            
+            Repository = new Repository(_client);            
         }
+
+        protected IFixture Fixture { get; }
+
+        protected IRepository Repository { get; }
 
         protected abstract ICollectionBase<TDataType> GetCollection(IRepository repository);
 
         protected async Task InsertAsync()
         {
             // Arrange
-            var expected = _fixture.Create<TDataType>();
+            var expected = Fixture.Create<TDataType>();
 
             // Act
-            await GetCollection(_repository).InsertAsync(expected);
+            await GetCollection(Repository).InsertAsync(expected);
 
             // Assert
             var data = await GetAllAsync();
@@ -58,16 +60,32 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
         protected async Task InsertManyAsync()
         {
             // Arrange
-            var expected = _fixture.Create<IEnumerable<TDataType>>();
+            var expected = Fixture.Create<IEnumerable<TDataType>>();
 
             // Act
-            await GetCollection(_repository).InsertManyAsync(expected);
+            await GetCollection(Repository).InsertManyAsync(expected);
 
             // Assert
             var actual = await GetAllAsync();
 
             actual.Should().HaveCount(expected.Count());
             actual.Should().BeEquivalentTo(expected, 
+                options => options.AddDateTimeCloseToExpected());
+        }
+
+        protected async Task FirstAsync(Func<TDataType, Task<TDataType>> executeTest)
+        {
+            // Arrange
+            var data = Fixture.CreateList<TDataType>(10);
+            var expected = data.Skip(5).First();
+
+            await GetCollection(Repository).InsertManyAsync(data);
+
+            // Act
+            var actual = await executeTest(expected);
+
+            // Assert
+            actual.Should().BeEquivalentTo(expected,
                 options => options.AddDateTimeCloseToExpected());
         }
 

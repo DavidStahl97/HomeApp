@@ -1,4 +1,5 @@
-﻿using HomeCloud.Maps.Application.Database;
+﻿using FluentAssertions;
+using HomeCloud.Maps.Application.Database;
 using HomeCloud.Maps.Application.Database.Collections;
 using HomeCloud.Maps.Domain.Tours;
 using HomeCloud.Maps.Infrastructure.Database.Collection;
@@ -21,5 +22,10 @@ namespace HomeCloud.Maps.UnitTests.Backend.Infrastructure.Database
 
         [Fact]
         public Task TourInfo_InsertManyAsync() => InsertManyAsync();
+
+        [Fact]
+        public Task TourInfo_FirstAsync()
+            => FirstAsync(expected =>
+                Repository.TourInfoCollection.FirstAsync(expected.UserId, expected.TourId));
     }
 }
