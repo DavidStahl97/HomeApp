@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static OneOf.Types.TrueFalseOrNull;
 
@@ -28,9 +29,9 @@ namespace HomeCloud.Maps.Infrastructure.Database.Collections
             var filter = Builders<TourInfo>.Filter.Eq(x => x.UserId, userId);
 
             filter = tourNameFilter.Match(
-                x => filter & Builders<TourInfo>.Filter.Regex(x => x.Name, new BsonRegularExpression(x)),
-                x => filter
-            );
+                x => filter & Builders<TourInfo>.Filter.Regex(x => x.Name, 
+                    new BsonRegularExpression(new Regex(x, RegexOptions.IgnoreCase))),
+                x => filter);
 
             var pageTask = GetCollection()
                 .Find(filter)
