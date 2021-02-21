@@ -1,0 +1,18 @@
+﻿<MudButton Variant="Variant.Text"
+           OnClick="@OnClick"
+           Style="width: 100%;
+                  text-transform: none;">
+    <MudPaper Elevation="3"
+              Class="pa-9"
+              Style="width: 100%;">
+        @ChildContent
+    </MudPaper>
+</MudButton>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+}

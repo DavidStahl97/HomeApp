@@ -8,7 +8,7 @@ using System.Text;
 
 namespace HomeCloud.Maps.Infrastructure.Database
 {
-    class Repository : IRepository
+    public class Repository : IRepository
     {
         private readonly MongoClient _client;
 

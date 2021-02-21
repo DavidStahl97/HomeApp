@@ -1,4 +1,5 @@
-﻿@typeparam TItem
+﻿@namespace HomeCloud.Maps.Client.Components
+@typeparam TItem
 
 <Timer TimeInSeconds="1" Tick="OnTick"/>
 
@@ -18,7 +19,7 @@
         <SelectPage PageChangedEvent="@SearchAsync" />
     </MudToolBar>
     
-    <MudGrid>
+    <MudGrid Class="pb-5">
         @if (showSkeleton)
         {
             @foreach (var i in Enumerable.Range(1, 10))
@@ -30,20 +31,19 @@
                 </MudItem>
             }
         }
+        else if(items.Any() == false)
+        {
+            @EmptyContent
+        }
         else
         {
             @foreach (var item in items)
             {
-                <MudItem xs="6">
-                    <MudButton Variant="Variant.Text"
-                               OnClick="@(() => ItemClicked.InvokeAsync(item))"
-                               Style="width: 100%">
-                        <MudPaper Elevation="3"
-                                  Class="pa-5"
-                                  Style="width: 100%">
-                            @ItemContent(item)
-                        </MudPaper>
-                    </MudButton>
+                <MudItem xs="6"
+                         Class="mb-n5">
+                    <PaperButton OnClick="@(() => ItemClicked.InvokeAsync(item))">
+                        @ItemContent(item)
+                    </PaperButton>
                 </MudItem>
             }
         }
@@ -55,7 +55,7 @@
     private string search = string.Empty;
     private bool showSkeleton = true;
 
-    private Pagination pagination = Pagination.Default;
+    private PaginationInfo pagination = PaginationInfo.Default;
 
     private IEnumerable<TItem> items;
 
@@ -67,6 +67,9 @@
 
     [Parameter]
     public RenderFragment SkeletonItemContent { get; set; }
+
+    [Parameter]
+    public RenderFragment EmptyContent { get; set; }
 
     [Parameter]
     public EventCallback<TItem> ItemClicked { get; set; }
@@ -139,7 +142,7 @@
 
     private void SetPage(SearchQuery query, SearchResult<TItem> result)
     {
-        pagination = new Pagination
+        pagination = new PaginationInfo
         {
             PageIndex = query.PageIndex,
             PageSize = query.PageSize,

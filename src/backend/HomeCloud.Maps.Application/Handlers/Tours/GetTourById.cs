@@ -1,5 +1,8 @@
-﻿using HomeCloud.Maps.Application.Database;
+﻿using AutoMapper;
+using HomeCloud.Maps.Application.Database;
 using HomeCloud.Maps.Application.Dto.Tours;
+using HomeCloud.Maps.Domain.Tours;
+using HomeCloud.Maps.Domain.Types;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,49 +13,40 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Application.Handlers.Tours
 {
-    public class GetTourInfosByIdRequest : IRequest<TourDto>
+    public class GetTourInfosByIdRequest : IRequest<MaybeNull<TourDto>>
     {
         public string UserId { get; init; }
 
         public string TourId { get; init; }
     }
 
-    public class GetTourByIdHandler : IRequestHandler<GetTourInfosByIdRequest, TourDto>
+    public class GetTourByIdHandler : IRequestHandler<GetTourInfosByIdRequest, MaybeNull<TourDto>>
     {
         private readonly IRepository _repository;
+        private readonly IMapper _mapper;
 
-        public GetTourByIdHandler(IRepository repository)
+        public GetTourByIdHandler(IRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<TourDto> Handle(GetTourInfosByIdRequest request, CancellationToken cancellationToken)
+        public async Task<MaybeNull<TourDto>> Handle(GetTourInfosByIdRequest request, CancellationToken cancellationToken)
         {
-            var tourInfo = await _repository.TourInfoCollection
-                .FirstAsync(x => x.TourId == request.TourId && x.UserId == request.UserId);
+            var tourInfoTask = _repository.TourInfoCollection
+                .FirstAsync(request.UserId, request.TourId);
 
-            var route = await _repository.RouteCollection
-                .FirstAsync(x => x.TourId == request.TourId && x.UserId == request.UserId);
+            var routeTask = _repository.RouteCollection
+                .FirstAsync(request.UserId, request.TourId);
 
-            return new TourDto
-            {
-                TourInfo = new TourInfoDto
+            await Task.WhenAll(tourInfoTask, routeTask);
+
+            return MaybeNull.Merge<TourInfo, Route>(tourInfoTask.Result, routeTask.Result)
+                .Match<TourDto>(result => new TourDto
                 {
-                    TourId = request.TourId,
-                    Date = tourInfo.Date,
-                    Distance = tourInfo.Distance,
-                    Name = tourInfo.Name,
-                    ImageUrl = tourInfo.ImageUrl
-                },
-                Route = new RouteDto
-                {
-                    Positions = route.Positions.Select(x => new PositionDto
-                    {
-                        Latitude = x.Latitude,
-                        Longitude = x.Longitude
-                    }).ToList()
-                }
-            };
+                    TourInfo = _mapper.Map<TourInfoDto>(result.X),
+                    Route = _mapper.Map<RouteDto>(result.Y),
+                });                    
         }
     }
 }

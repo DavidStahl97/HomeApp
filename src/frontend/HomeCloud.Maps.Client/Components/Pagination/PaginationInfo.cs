@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Client.Components
 {
-    public class Pagination
+    public class PaginationInfo
     {
         public int PageIndex { get; set; }
 
@@ -13,7 +13,7 @@ namespace HomeCloud.Maps.Client.Components
 
         public int Total { get; set; }
 
-        public static Pagination Default = new Pagination
+        public static PaginationInfo Default = new PaginationInfo
         {
             PageIndex = 0,
             PageSize = 10,

@@ -2,11 +2,14 @@
 using HomeCloud.Maps.Application.Dto.Tours;
 using HomeCloud.Maps.Application.Handlers;
 using HomeCloud.Maps.Application.Handlers.Tours;
+using HomeCloud.Maps.Domain;
+using HomeCloud.Maps.Domain.Types;
 using HomeCloud.Maps.Server.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using OneOf;
 using System;
 using System.Collections.Generic;
@@ -24,27 +27,41 @@ namespace HomeCloud.Maps.Server.Controllers
     public class TourInfosController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<TourInfosController> _logger;
 
-        public TourInfosController(IMediator mediator)
+        public TourInfosController(IMediator mediator, ILogger<TourInfosController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet(Name = nameof(GetTourInfosPagination))]
-        public Task<PaginationResult<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0, string tourNameFilter = "") 
+        public async Task<PaginationResult<TourInfoDto>> GetTourInfosPagination(int pageSize = 10, int pageIndex = 0, string tourNameFilter = "") 
         {
             var jwt = HttpContext.GetJsonWebToken();
 
-            OneOf<string, Null> filter = string.IsNullOrEmpty(tourNameFilter) ? new Null() : tourNameFilter;
+            _logger.WriteInformation("Get Tour Info Page",
+                (nameof(pageSize), pageSize),
+                (nameof(pageIndex), pageIndex),
+                (nameof(tourNameFilter), tourNameFilter),
+                (nameof(jwt.Subject), jwt.Subject));
 
-            var request = new GetTourInfoPagination
+            var filter = MaybeNull.Create(
+                string.IsNullOrEmpty(tourNameFilter) ? null : tourNameFilter);
+
+            var request = new GetTourInfosPaginationRequest
             {
                 UserId = jwt.Subject,
                 TourNameFilter = filter,
                 Page = new Page { Index = pageIndex, Size = pageSize }
             };
 
-            return _mediator.Send(request);
+            var result = await _mediator.Send(request);
+
+            _logger.WriteInformation("Get Tour Info Page Result",
+                (nameof(result.Total), result.Total));
+
+            return result;
         }
     }
 }

@@ -52,6 +52,8 @@ namespace HomeCloud.Maps.Server
 
             services.AddMediatR(Application.Application.GetAssembly());
 
+            services.AddAutoMapper(Application.Application.GetAssembly());
+
             services.AddInfrastructureServices();
         }
 

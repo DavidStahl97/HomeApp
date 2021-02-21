@@ -1,5 +1,6 @@
 ﻿using HomeCloud.Maps.Application.Database.Collections;
 using HomeCloud.Maps.Domain.Tours;
+using HomeCloud.Maps.Domain.Types;
 using HomeCloud.Maps.Infrastructure.Database.Collection;
 using MongoDB.Driver;
 using System;
@@ -10,10 +11,16 @@ using System.Threading.Tasks;
 
 namespace HomeCloud.Maps.Infrastructure.Database.Collections
 {
-    class RouteCollection : CollectionBase<Route>, IRouteCollection
+    public class RouteCollection : CollectionBase<Route>, IRouteCollection
     {
         public RouteCollection(MongoClient client) : base(client)
         {
         }
+
+        public Task<IEnumerable<Route>> FindAsync(string userId)
+            => FindAsync(x => x.UserId == userId);
+
+        public Task<MaybeFound<Route>> FirstAsync(string userId, string tourId)
+            => FirstAsync(x => x.TourId == tourId && x.UserId == userId);
     }
 }
